@@ -13,13 +13,46 @@ html {
   margin: auto;
 }
 
-.glassy{
+details>summary {
+  list-style-type: 'More ▶️';
+}
+
+details[open] summary {
+  list-style-type: 'Less ⏷';
+  animation: open .5s ease-in-out;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+    margin-top: -100px
+  }
+
+  100% {
+    opacity: 1;
+    margin-top: 0px
+  }
+}
+
+@keyframes close {
+  0% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+
+  100% {
+    opacity: 0;
+    margin-top: -100px
+  }
+}
+
+.glassy {
   filter: opacity(90%);
   backdrop-filter: blur(1rem);
 }
 
 .small-icon {
-  height:22px;
+  height: 22px;
 }
 
 b,
@@ -38,7 +71,7 @@ a:hover {
 
 .inverted {
   -webkit-filter: invert(.75);
-          filter: invert(.75);
+  filter: invert(.75);
 }
 
 a {
@@ -127,8 +160,8 @@ ul {
   width: 25px;
 }
 
-.tree > ul > li::before,
-.tree > ul > li::after {
+.tree>ul>li::before,
+.tree>ul>li::after {
   border: 0;
 }
 
