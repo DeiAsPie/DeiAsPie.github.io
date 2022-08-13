@@ -13,24 +13,24 @@ html {
   margin: auto;
 }
 
-details>summary {
-  list-style-type: 'More ▶️';
+details > summary {
+  list-style-type: "More ▶️";
 }
 
 details[open] summary {
-  list-style-type: 'Less ⏷';
-  animation: open .5s ease-in-out;
+  list-style-type: "Less ▼";
+  animation: open 0.5s ease-in-out;
 }
 
 @keyframes open {
   0% {
     opacity: 0;
-    margin-top: -100px
+    margin-top: -100px;
   }
 
   100% {
     opacity: 1;
-    margin-top: 0px
+    margin-top: 0px;
   }
 }
 
@@ -42,7 +42,7 @@ details[open] summary {
 
   100% {
     opacity: 0;
-    margin-top: -100px
+    margin-top: -100px;
   }
 }
 
@@ -70,8 +70,8 @@ a:hover {
 }
 
 .inverted {
-  -webkit-filter: invert(.75);
-  filter: invert(.75);
+  -webkit-filter: invert(0.75);
+  filter: invert(0.75);
 }
 
 a {
@@ -105,6 +105,13 @@ a {
   border-radius: 10px;
   background-color: #202020;
   box-sizing: border-box;
+  transition: all;
+  transition-duration: 0.3s;
+}
+
+.button:hover {
+  border: 1px solid #fff;
+  background-color: rgba(255, 255, 255, 0.081);
 }
 
 .center {
@@ -152,8 +159,8 @@ ul {
   width: 25px;
 }
 
-.tree>ul>li::before,
-.tree>ul>li::after {
+.tree > ul > li::before,
+.tree > ul > li::after {
   border: 0;
 }
 
