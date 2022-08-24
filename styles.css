@@ -3,7 +3,7 @@
 html {
   font-family: monospace, monospace;
   font-style: normal;
-  font-size: calc(1em + 0.125vmax);
+  font-size: 1em;
   line-height: 1.5;
   color: #dadada;
   background-color: #202020;
