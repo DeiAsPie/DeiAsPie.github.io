@@ -51,7 +51,7 @@ details[open] summary {
 }
 
 .small-icon {
-  height: 22px;
+  height: 20px;
 }
 
 b,
@@ -130,7 +130,7 @@ a {
 
 .tree li {
   list-style-type: none;
-  padding: 15px 10px 10px 10px;
+  padding: 15px 10px 10px 0px;
   position: relative;
 }
 
@@ -139,7 +139,6 @@ a {
   content: "";
   left: -30px;
   position: absolute;
-  right: -50px;
 }
 
 .tree li::before {
@@ -150,7 +149,7 @@ a {
 
 .tree li::after {
   border-top: 1px solid #94ebeb;
-  top: 25px;
+  top: 30px;
   width: 15px;
 }
 
@@ -160,5 +159,5 @@ a {
 }
 
 .tree li:last-child::before {
-  height: 25px;
+  height: 30px;
 }
