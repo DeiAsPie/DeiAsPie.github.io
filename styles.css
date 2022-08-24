@@ -3,7 +3,6 @@
 html {
   font-family: monospace, monospace;
   font-style: normal;
-  font-size: 1em;
   line-height: 1.5;
   color: #dadada;
   background-color: #202020;
@@ -125,26 +124,22 @@ a {
   border-bottom: 0px;
 }
 
-ul {
-  overflow: hidden;
-}
-
 .tree {
-  padding: 19px;
+  padding: 10px;
 }
 
 .tree li {
   list-style-type: none;
-  padding: 15px 10px 10px 15px;
+  padding: 15px 10px 10px 10px;
   position: relative;
 }
 
 .tree li::before,
 .tree li::after {
   content: "";
-  left: -20px;
+  left: -30px;
   position: absolute;
-  right: auto;
+  right: -50px;
 }
 
 .tree li::before {
@@ -155,8 +150,8 @@ ul {
 
 .tree li::after {
   border-top: 1px solid #94ebeb;
-  top: 30px;
-  width: 25px;
+  top: 25px;
+  width: 15px;
 }
 
 .tree > ul > li::before,
@@ -165,5 +160,5 @@ ul {
 }
 
 .tree li:last-child::before {
-  height: 30px;
+  height: 25px;
 }
