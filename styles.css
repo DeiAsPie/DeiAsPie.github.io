@@ -50,6 +50,17 @@ details[open] summary {
   backdrop-filter: blur(1rem);
 }
 
+.tabs {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tabs a {
+  border: 0;
+}
+
 .small-icon {
   height: 20px;
 }
