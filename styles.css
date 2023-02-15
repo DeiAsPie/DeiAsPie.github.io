@@ -62,7 +62,9 @@ details[open] summary {
 }
 
 .small-icon {
-  height: 20px;
+  height: 25px;
+  position: relative;
+  bottom: -5px;
 }
 
 b,
