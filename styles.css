@@ -1,4 +1,4 @@
-/* Copyright © 2023 DeiAsPie. This work by DeiAsPie is licensed under CC BY-NC-ND 4.0. */
+/* Copyright © 2024 DeiAsPie. This work by DeiAsPie is licensed under CC BY-NC-ND 4.0. */
 
 html {
   font-family: monospace, monospace;
@@ -12,7 +12,7 @@ html {
   margin: auto;
 }
 
-details > summary {
+details>summary {
   list-style-type: "More ▶️";
 }
 
@@ -59,6 +59,7 @@ details[open] summary {
 
 .tabs a {
   border: 0;
+  margin: 0.5vmin;
 }
 
 .small-icon {
@@ -166,8 +167,8 @@ a {
   width: 25px;
 }
 
-.tree > ul > li::before,
-.tree > ul > li::after {
+.tree>ul>li::before,
+.tree>ul>li::after {
   border: 0;
 }
 
