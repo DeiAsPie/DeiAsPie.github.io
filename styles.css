@@ -1,177 +1,177 @@
 /* Copyright © 2024 DeiAsPie. This work by DeiAsPie is licensed under CC BY-NC-ND 4.0. */
 
 html {
-  font-family: monospace, monospace;
-  font-style: normal;
-  line-height: 1.5;
-  color: #dadada;
-  background-color: #202020;
-  max-width: 700px;
-  width: 90vw;
-  min-height: 100vh;
-  margin: auto;
+    font-family: monospace, monospace;
+    font-style: normal;
+    line-height: 1.5;
+    color: #dadada;
+    background-color: #202020;
+    max-width: 700px;
+    width: 90vw;
+    min-height: 100vh;
+    margin: auto;
 }
 
 details>summary {
-  list-style-type: "More ▶️";
+    list-style-type: "More ▶️";
 }
 
 details[open] summary {
-  list-style-type: "Less ▼";
-  animation: open 0.5s ease-in-out;
+    list-style-type: "Less ▼";
+    animation: open 0.5s ease-in-out;
 }
 
 @keyframes open {
-  0% {
-    opacity: 0;
-    margin-top: -100px;
-  }
+    0% {
+        opacity: 0;
+        margin-top: -100px;
+    }
 
-  100% {
-    opacity: 1;
-    margin-top: 0px;
-  }
+    100% {
+        opacity: 1;
+        margin-top: 0px;
+    }
 }
 
 @keyframes close {
-  0% {
-    opacity: 1;
-    margin-top: 0px;
-  }
+    0% {
+        opacity: 1;
+        margin-top: 0px;
+    }
 
-  100% {
-    opacity: 0;
-    margin-top: -100px;
-  }
+    100% {
+        opacity: 0;
+        margin-top: -100px;
+    }
 }
 
 .glassy {
-  filter: opacity(90%);
-  backdrop-filter: blur(1rem);
+    filter: opacity(90%);
+    backdrop-filter: blur(1rem);
 }
 
 .tabs {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-around;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .tabs a {
-  border: 0;
-  margin: 0.5vmin;
+    border: 0;
+    margin: 0.5vmin;
 }
 
 .small-icon {
-  height: 25px;
-  position: relative;
-  bottom: -5px;
+    height: 25px;
+    position: relative;
+    bottom: -5px;
 }
 
 b,
 strong {
-  font-weight: bolder;
+    font-weight: bolder;
 }
 
 i,
 em {
-  font-style: italic;
+    font-style: italic;
 }
 
 a:hover {
-  color: #94ebeb;
+    color: #94ebeb;
 }
 
 .inverted {
-  -webkit-filter: invert(0.75);
-  filter: invert(0.75);
+    -webkit-filter: invert(0.75);
+    filter: invert(0.75);
 }
 
 a {
-  text-decoration: none;
-  border-bottom: 1px solid #94ebeb;
-  color: inherit;
-  outline-offset: 2px;
+    text-decoration: none;
+    border-bottom: 1px solid #94ebeb;
+    color: inherit;
+    outline-offset: 2px;
 }
 
 .sticker {
-  position: sticky;
-  z-index: 500;
-  padding: 5px;
-  background-color: #202020;
+    position: sticky;
+    z-index: 500;
+    padding: 5px;
+    background-color: #202020;
 }
 
 .top {
-  top: 0;
+    top: 0;
 }
 
 .bottom {
-  bottom: 2vh;
+    bottom: 2vh;
 }
 
 .button {
-  width: auto;
-  border: 1px solid #94ebeb;
-  color: inherit;
-  outline-offset: 1px;
-  padding: 0.5rem;
-  border-radius: 10px;
-  background-color: #202020;
-  box-sizing: border-box;
-  transition: all;
-  transition-duration: 0.3s;
+    width: auto;
+    border: 1px solid #94ebeb;
+    color: inherit;
+    outline-offset: 1px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: #202020;
+    box-sizing: border-box;
+    transition: all;
+    transition-duration: 0.3s;
 }
 
 .button:hover {
-  border: 1px solid #fff;
-  background-color: rgba(255, 255, 255, 0.081);
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.081);
 }
 
 .center {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    align-items: center;
 }
 
 .button a {
-  border-bottom: 0px;
+    border-bottom: 0px;
 }
 
 .tree {
-  padding: 10px;
+    padding: 10px;
 }
 
 .tree li {
-  list-style-type: none;
-  padding: 15px 10px 10px 0px;
-  position: relative;
+    list-style-type: none;
+    padding: 15px 10px 10px 0px;
+    position: relative;
 }
 
 .tree li::before,
 .tree li::after {
-  content: "";
-  left: -30px;
-  position: absolute;
+    content: "";
+    left: -30px;
+    position: absolute;
 }
 
 .tree li::before {
-  border-left: 1px solid #94ebeb;
-  height: 100%;
-  top: 0;
+    border-left: 1px solid #94ebeb;
+    height: 100%;
+    top: 0;
 }
 
 .tree li::after {
-  border-top: 1px solid #94ebeb;
-  top: 30px;
-  width: 25px;
+    border-top: 1px solid #94ebeb;
+    top: 30px;
+    width: 25px;
 }
 
 .tree>ul>li::before,
 .tree>ul>li::after {
-  border: 0;
+    border: 0;
 }
 
 .tree li:last-child::before {
-  height: 30px;
+    height: 30px;
 }
