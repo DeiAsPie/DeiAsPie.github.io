@@ -1,14 +1,13 @@
 {{ define "main" }}
-<section class="mb-12">
-  <div class="text-center max-w-3xl mx-auto">
-    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3">Curated by {{ .Site.Params.author }}</h1>
-    <p class="text-lg text-slate-600 dark:text-slate-300">{{ .Site.Params.description }}</p>
+<section class="mb-8">
+  <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert">
+    {{ .Content }}
   </div>
 </section>
 
 <section class="mb-12">
   <div class="flex items-center justify-between mb-5">
-    <h2 class="text-2xl font-semibold">Latest Recommendations</h2>
+    <h2 class="text-2xl font-semibold">Latest Privacy Tools</h2>
     <a class="nav-link" href="{{ "/recommendations/" | relURL }}">View all →</a>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

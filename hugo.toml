@@ -1,5 +1,5 @@
 baseURL = "https://deiaspie.github.io/"
-title = "Curated by DeiAsPie"
+title = "DeiAsPie - Privacy & Security Recommendations"
 languageCode = "en-us"
 theme = "curated"
 summaryLength = 24
@@ -21,7 +21,7 @@ enableRobotsTXT = true
   term = ["HTML"]
 
 [params]
-  description = "A personal collection of tools, tech, and resources I use and recommend."
+  description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
   author = "DeiAsPie"
 
 [minify]
