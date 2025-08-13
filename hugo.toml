@@ -2,7 +2,6 @@ baseURL = "https://deiaspie.github.io/"
 title = "Curated by DeiAsPie"
 languageCode = "en-us"
 theme = "curated"
-paginate = 12
 summaryLength = 24
 enableRobotsTXT = true
 
@@ -27,3 +26,6 @@ enableRobotsTXT = true
 
 [minify]
   minifyOutput = true
+
+[pagination]
+  pagerSize = 12
