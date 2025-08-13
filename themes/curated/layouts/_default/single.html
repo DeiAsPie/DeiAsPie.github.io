@@ -2,6 +2,7 @@
 <article>
   <header class="mb-8">
     <h1 class="text-3xl font-bold mb-2">{{ .Title }}</h1>
+    <p class="mb-4"><a class="nav-link" href="{{ " /recommendations/" | relURL }}">← Back to all</a></p>
     {{ if .Params.link }}
     <a class="btn" href="{{ .Params.link }}" target="_blank" rel="noopener">Visit Website</a>
     {{ end }}

@@ -1,11 +1,16 @@
+<a href="#main"
+  class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-slate-900 text-white dark:bg-white dark:text-slate-900 rounded px-3 py-1">Skip
+  to content</a>
 <header class="py-6 flex items-center justify-between">
-  <a class="text-xl font-bold" href="{{ "/" | relURL }}">{{ .Site.Title }}</a>
+  <a class="text-xl font-bold" href="{{ " /" | relURL }}">{{ .Site.Title }}</a>
   <nav class="flex items-center gap-6">
-  <a class="nav-link" href="{{ "/" | relURL }}">Home</a>
-  <a class="nav-link" href="{{ "/recommendations/" | relURL }}">All</a>
-  <a class="nav-link" href="{{ "/recommendations/courses/" | relURL }}">Courses</a>
-  <a class="nav-link" href="{{ "/categories/" | relURL }}">Categories</a>
-  <a class="nav-link" href="{{ "/tags/" | relURL }}">Tags</a>
-  <a class="nav-link" href="{{ "/about/" | relURL }}">About</a>
+    {{ $current := . }}
+    {{ range .Site.Menus.main }}
+    {{ $isActive := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq .URL $current.RelPermalink) }}
+    <a class="nav-link {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
+      href="{{ .URL | relURL }}">{{ .Name }}</a>
+    {{ end }}
+    <button id="theme-toggle" class="ml-2 rounded-md border border-slate-200 dark:border-slate-700 px-2 py-1 text-xs"
+      aria-label="Toggle theme">Theme</button>
   </nav>
 </header>

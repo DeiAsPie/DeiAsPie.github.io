@@ -8,24 +8,54 @@ enableRobotsTXT = true
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = true
+    unsafe = true
 
 [taxonomies]
-  category = "categories"
-  tag = "tags"
+category = "categories"
+tag = "tags"
 
 [outputs]
-  home = ["HTML", "RSS"]
-  section = ["HTML", "RSS"]
-  taxonomy = ["HTML"]
-  term = ["HTML"]
+home = ["HTML", "RSS"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML"]
+term = ["HTML"]
 
 [params]
-  description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
-  author = "DeiAsPie"
+description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
+author = "DeiAsPie"
 
 [minify]
-  minifyOutput = true
+minifyOutput = true
 
 [pagination]
-  pagerSize = 12
+pagerSize = 12
+
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All"
+url = "/recommendations/"
+weight = 2
+
+[[menu.main]]
+name = "Courses"
+url = "/recommendations/courses/"
+weight = 3
+
+[[menu.main]]
+name = "Categories"
+url = "/categories/"
+weight = 4
+
+[[menu.main]]
+name = "Tags"
+url = "/tags/"
+weight = 5
+
+[[menu.main]]
+name = "About"
+url = "/about/"
+weight = 6

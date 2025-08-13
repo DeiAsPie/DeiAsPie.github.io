@@ -13,11 +13,25 @@
 
 /* Card component */
 .card {
-  @apply rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 shadow-sm hover:shadow-md transition-shadow;
+  @apply rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow;
 }
-.card-body { @apply p-5; }
-.card-title { @apply text-lg font-semibold mb-1; }
-.card-meta { @apply text-sm text-slate-500 dark:text-slate-400; }
+
+.card-body {
+  @apply p-5;
+}
+
+.card-title {
+  @apply text-lg font-semibold mb-1;
+}
+
+.card-meta {
+  @apply text-sm text-slate-500 dark:text-slate-400;
+}
+
+/* Card images */
+img.card-img {
+  @apply w-full h-40 object-contain p-4;
+}
 
 /* Buttons */
 .btn {
@@ -25,4 +39,6 @@
 }
 
 /* Header nav */
-.nav-link { @apply text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors; }
+.nav-link {
+  @apply text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors;
+}

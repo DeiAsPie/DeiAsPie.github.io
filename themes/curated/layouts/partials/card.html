@@ -3,9 +3,9 @@
     {{ with .Params.image }}
     {{ $img := . }}
     {{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
-    <img class="w-full h-40 object-contain p-4" src="{{ $img }}" alt="{{ $.Title }} logo" loading="lazy" />
+    <img class="card-img" src="{{ $img }}" alt="{{ $.Title }} logo" loading="lazy" />
     {{ else }}
-    <img class="w-full h-40 object-contain p-4" src="{{ $img | relURL }}" alt="{{ $.Title }} logo" loading="lazy" />
+    <img class="card-img" src="{{ $img | relURL }}" alt="{{ $.Title }} logo" loading="lazy" />
     {{ end }}
     {{ end }}
     <div class="card-body">
