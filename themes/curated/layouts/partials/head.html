@@ -1,0 +1,15 @@
+{{ $styles := resources.Get "css/main.css" | postCSS (dict "config" "postcss.config.js") }}
+{{ if hugo.IsServer }}
+  {{ $styles = $styles | resources.ExecuteAsTemplate "css/main.css" . | postCSS }}
+{{ end }}
+{{ if not hugo.IsServer }}
+  {{ $styles = $styles | minify | fingerprint }}
+{{ end }}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+<meta name="description" content="{{ .Site.Params.description }}" />
+<link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="RSS" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}">

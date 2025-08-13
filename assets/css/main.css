@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimal base styles */
+:root {
+  color-scheme: light dark;
+}
+
+.prose img {
+  border-radius: 0.375rem;
+}
+
+/* Card component */
+.card {
+  @apply rounded-xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 shadow-sm hover:shadow-md transition-shadow;
+}
+.card-body { @apply p-5; }
+.card-title { @apply text-lg font-semibold mb-1; }
+.card-meta { @apply text-sm text-slate-500 dark:text-slate-400; }
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-700 dark:bg-slate-200 dark:text-slate-900 dark:hover:bg-white transition-colors;
+}
+
+/* Header nav */
+.nav-link { @apply text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors; }

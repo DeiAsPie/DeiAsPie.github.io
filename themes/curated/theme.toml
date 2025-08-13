@@ -1,0 +1,4 @@
+name = "curated"
+author = "DeiAsPie"
+license = "MIT"
+min_version = "0.125.0"

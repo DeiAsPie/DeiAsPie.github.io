@@ -1,0 +1,29 @@
+baseURL = "https://deiaspie.github.io/"
+title = "Curated by DeiAsPie"
+languageCode = "en-us"
+theme = "curated"
+paginate = 12
+summaryLength = 24
+enableRobotsTXT = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
+[params]
+  description = "A personal collection of tools, tech, and resources I use and recommend."
+  author = "DeiAsPie"
+
+[minify]
+  minifyOutput = true
