@@ -16,12 +16,18 @@
     </div>
   </header>
 
-  {{ with .Params.image }}
-  {{ $img := . }}
+  {{ $img := .Params.image }}
+  {{ if $img }}
   {{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
   <img class="w-full max-h-72 object-contain mb-6" src="{{ $img }}" alt="{{ $.Title }} image" />
   {{ else }}
   <img class="w-full max-h-72 object-contain mb-6" src="{{ $img | relURL }}" alt="{{ $.Title }} image" />
+  {{ end }}
+  {{ else }}
+  {{ $resources := .Resources.ByType "image" }}
+  {{ with first 1 $resources }}
+  {{ $r := index . 0 }}
+  <img class="w-full max-h-72 object-contain mb-6" src="{{ $r.RelPermalink }}" alt="{{ $.Title }} image" />
   {{ end }}
   {{ end }}
 

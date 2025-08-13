@@ -35,7 +35,23 @@
 <meta property="og:url" content="{{ $absURL }}" />
 <meta property="og:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
 <meta property="og:description" content="{{ .Site.Params.description }}" />
-{{ $ogimg := (cond (and .Params.image (or (hasPrefix .Params.image "http://") (hasPrefix .Params.image "https://"))) .Params.image (cond .Params.image (.Params.image | absURL) (print ("/favicon.svg" | absURL)))) }}
+{{/* Derive OG image: prefer front-matter image (abs/local), else first page resource image, else favicon */}}
+{{ $ogimg := "" }}
+{{ if .Params.image }}
+{{ if or (hasPrefix .Params.image "http://") (hasPrefix .Params.image "https://") }}
+{{ $ogimg = .Params.image }}
+{{ else }}
+{{ $ogimg = (.Params.image | absURL) }}
+{{ end }}
+{{ else }}
+{{ $res := .Resources.ByType "image" }}
+{{ with first 1 $res }}
+{{ $first := index . 0 }}
+{{ $ogimg = ($first.Permalink) }}
+{{ else }}
+{{ $ogimg = ("/favicon.svg" | absURL) }}
+{{ end }}
+{{ end }}
 <meta property="og:image" content="{{ $ogimg }}" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />

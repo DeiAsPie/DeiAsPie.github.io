@@ -83,3 +83,26 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 ## Deploy
 
 Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` branch via Pages.
+
+## Single-file authoring (easier adds)
+
+You can create a recommendation as a page bundle with a single `index.md` and an image next to it. If `image` isn’t set in front matter, the first image in the bundle is used automatically. If `summary` isn’t provided, the card falls back to the first sentence of the content.
+
+Example structure:
+
+```
+content/recommendations/my-tool/
+	index.md
+	logo.png
+```
+
+Minimal front matter:
+
+```yaml
+---
+title: "My Tool"
+link: "https://example.com"
+---
+```
+
+Then write your Markdown content below. The listing card will pick up the summary from the first sentence automatically if you omit `summary`.
