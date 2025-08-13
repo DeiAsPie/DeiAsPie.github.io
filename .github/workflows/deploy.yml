@@ -40,12 +40,12 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
       - name: Install Node Modules
-        run: npm install
+        run: npm ci || npm install
       - name: Build with Hugo
         env:
           HUGO_ENV: production
-          HUGO_baseURL: ${{ steps.pages.outputs.base_url }}
-        run: hugo
+        run: |
+          hugo --minify --gc --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
