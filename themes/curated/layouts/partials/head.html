@@ -1,14 +1,43 @@
 {{ $styles := resources.Get "css/main.css" | postCSS (dict "config" "postcss.config.js") }}
 {{ if hugo.IsServer }}
-  {{ $styles = $styles | resources.ExecuteAsTemplate "css/main.css" . | postCSS }}
+{{ $styles = $styles | resources.ExecuteAsTemplate "css/main.css" . | postCSS }}
 {{ end }}
 {{ if not hugo.IsServer }}
-  {{ $styles = $styles | minify | fingerprint }}
+{{ $styles = $styles | minify | fingerprint }}
 {{ end }}
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
 <meta name="description" content="{{ .Site.Params.description }}" />
+<link rel="icon" href="{{ "/favicon.svg" | relURL }}" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="{{ "/favicon.svg" | relURL }}" />
+<meta name="theme-color" content="#0f172a" />
+
+<!-- Open Graph / Twitter -->
+{{ $absURL := .Permalink }}
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ $absURL }}" />
+<meta property="og:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
+<meta property="og:description" content="{{ .Site.Params.description }}" />
+{{ with .Params.image }}
+{{ $img := . }}
+{{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
+<meta property="og:image" content="{{ $img }}" />
+{{ else }}
+<meta property="og:image" content="{{ $img | absURL }}" />
+{{ end }}
+{{ end }}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
+<meta name="twitter:description" content="{{ .Site.Params.description }}" />
+{{ with .Params.image }}
+{{ $img := . }}
+{{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
+<meta name="twitter:image" content="{{ $img }}" />
+{{ else }}
+<meta name="twitter:image" content="{{ $img | absURL }}" />
+{{ end }}
+{{ end }}
 <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="RSS" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">

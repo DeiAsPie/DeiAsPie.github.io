@@ -1,0 +1,13 @@
+---
+title: "HTML, CSS and JavaScript"
+date: 2024-01-09
+draft: false
+categories: ["Courses"]
+tags: ["course"]
+link: "https://www.coursera.org/learn/html-css-javascript-for-web-developers"
+video: "https://www.coursera.org/learn/html-css-javascript-for-web-developers"
+image: "/courses/images/posts/webDevBasics.png"
+summary: "HTML, CSS and JavaScript course by Johns Hopkins University"
+---
+
+A practical intro to front-end basics with responsive design and DOM scripting.
