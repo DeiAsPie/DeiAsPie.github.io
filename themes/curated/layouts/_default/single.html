@@ -2,7 +2,19 @@
 <article>
   <header class="mb-8">
     <h1 class="text-3xl font-bold mb-2">{{ .Title }}</h1>
-    <p class="mb-4"><a class="nav-link" href="{{ " /recommendations/" | relURL }}">← Back to all</a></p>
+    {{/* Show back link only for recommendation pages; route courses to their hub */}}
+    {{ $.Scratch.Set "back" "" }}
+    {{ if eq .Section "recommendations" }}
+    {{ if and .CurrentSection (eq .CurrentSection.RelPermalink "/recommendations/courses/") }}
+    {{ $.Scratch.Set "back" ("/recommendations/courses/" | relURL) }}
+    {{ else }}
+    {{ $.Scratch.Set "back" ("/recommendations/" | relURL) }}
+    {{ end }}
+    {{ end }}
+    {{ $back := $.Scratch.Get "back" }}
+    {{ if $back }}
+    <p class="mb-4"><a class="nav-link" href="{{ $back }}">← Back to all</a></p>
+    {{ end }}
     {{ if .Params.link }}
     <a class="btn" href="{{ .Params.link }}" target="_blank" rel="noopener">Visit Website</a>
     {{ end }}

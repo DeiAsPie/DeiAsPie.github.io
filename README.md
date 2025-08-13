@@ -51,8 +51,8 @@ Key paths used by the site:
 
 ### Images
 
-- Prefer local images under `static/images/` for tools, and `static/courses/images/posts/` for courses.
-- Reference with absolute paths in front matter, e.g. `/images/tool.png` or `/courses/images/posts/ml.png`.
+- Recommended (new): use page bundles. Place your image next to `index.md`; omit `image` in front matter to auto-pick. This keeps content portable.
+- Legacy: images under `static/images/` (tools) and `static/courses/images/posts/` (courses) still work; reference with absolute paths like `/images/tool.png` or `/courses/images/posts/ml.png`.
 
 ### Courses hierarchy
 
