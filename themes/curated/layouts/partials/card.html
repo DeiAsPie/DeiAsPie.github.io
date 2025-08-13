@@ -1,7 +1,8 @@
 <article class="card">
   <a href="{{ .RelPermalink }}" class="block">
     {{ with .Params.image }}
-      <img class="w-full h-40 object-contain p-4" src="{{ . | relURL }}" alt="{{ $.Title }} logo" loading="lazy" />
+      {{ $img := . }}
+      <img class="w-full h-40 object-contain p-4" src="{{ if hasPrefix $img "http" }}{{ $img }}{{ else if hasPrefix $img "/courses/images/posts/" }}{{ printf "https://raw.githubusercontent.com/DeiAsPie/courses/main%s" $img }}{{ else }}{{ $img | relURL }}{{ end }}" alt="{{ $.Title }} logo" loading="lazy" />
     {{ end }}
     <div class="card-body">
       <h3 class="card-title">{{ .Title }}</h3>
