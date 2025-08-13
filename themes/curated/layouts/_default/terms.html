@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold">{{ .Title }}</h1>
+  </header>
+  <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    {{ range .Data.Terms.Alphabetical }}
+      <li>
+  <a class="block px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900" href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }} <span class="text-slate-500">({{ .Count }})</span></a>
+      </li>
+    {{ else }}
+      <li class="text-slate-500">No terms yet.</li>
+    {{ end }}
+  </ul>
+{{ end }}

@@ -1,0 +1,22 @@
+{{ define "main" }}
+<article>
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold mb-2">{{ .Title }}</h1>
+    {{ if .Params.link }}
+      <a class="btn" href="{{ .Params.link }}" target="_blank" rel="noopener">Visit Website</a>
+    {{ end }}
+    <div class="mt-3 flex flex-wrap gap-2">
+  {{ range .Params.categories }}<a class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2 py-1 rounded" href="{{ (printf "/categories/%s/" (urlize .) | relURL) }}">{{ . }}</a>{{ end }}
+  {{ range .Params.tags }}<a class="text-xs bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-2 py-1 rounded border border-slate-200 dark:border-slate-800" href="{{ (printf "/tags/%s/" (urlize .) | relURL) }}">#{{ . }}</a>{{ end }}
+    </div>
+  </header>
+
+  {{ with .Params.image }}
+    <img class="w-full max-h-72 object-contain mb-6" src="{{ . | relURL }}" alt="{{ $.Title }} image" />
+  {{ end }}
+
+  <div class="prose prose-slate dark:prose-invert max-w-none">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

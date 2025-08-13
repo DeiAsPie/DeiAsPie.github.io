@@ -1,0 +1,15 @@
+<article class="card">
+  <a href="{{ .RelPermalink }}" class="block">
+    {{ with .Params.image }}
+      <img class="w-full h-40 object-contain p-4" src="{{ . | relURL }}" alt="{{ $.Title }} logo" loading="lazy" />
+    {{ end }}
+    <div class="card-body">
+      <h3 class="card-title">{{ .Title }}</h3>
+      {{ with .Params.summary }}<p class="text-slate-600 dark:text-slate-300">{{ . }}</p>{{ end }}
+      <div class="mt-3 flex flex-wrap gap-2">
+        {{ range .Params.categories }}<span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2 py-1 rounded">{{ . }}</span>{{ end }}
+        {{ range .Params.tags }}<span class="text-xs bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-2 py-1 rounded border border-slate-200 dark:border-slate-800">#{{ . }}</span>{{ end }}
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,31 @@
+baseURL = "https://deiaspie.github.io/"
+title = "DeiAsPie - Privacy & Security Recommendations"
+languageCode = "en-us"
+theme = "curated"
+summaryLength = 24
+enableRobotsTXT = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
+[params]
+  description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
+  author = "DeiAsPie"
+
+[minify]
+  minifyOutput = true
+
+[pagination]
+  pagerSize = 12

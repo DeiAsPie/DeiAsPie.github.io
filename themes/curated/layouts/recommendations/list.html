@@ -1,0 +1,15 @@
+{{ define "main" }}
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold">All Recommendations</h1>
+    {{ with .Content }}<div class="mt-4 prose prose-slate dark:prose-invert">{{ . }}</div>{{ end }}
+  </header>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {{ $p := .Paginate ((where .Pages "Type" "recommendations").ByDate.Reverse) }}
+    {{ range $p.Pages }}
+      {{ partial "card.html" . }}
+    {{ end }}
+  </div>
+
+  {{ partial "pagination.html" . }}
+{{ end }}
