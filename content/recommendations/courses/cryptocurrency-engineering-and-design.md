@@ -9,6 +9,7 @@ link: "https://ocw.mit.edu/courses/media-arts-and-sciences/mas-s62-cryptocurrenc
 video: "https://redirect.invidious.io/playlist?list=PLUl4u3cNGP61KHzhg3JIJdK08JLSlcLId"
 image: "/courses/images/posts/crypto.png"
 summary: "Cryptocurrency Engineering and Design Course by MIT OCW"
+aliases: ["/recommendations/cryptocurrency-engineering-and-design/"]
 ---
 
 From consensus to smart contracts and cryptoeconomics; a rigorous look at crypto systems.

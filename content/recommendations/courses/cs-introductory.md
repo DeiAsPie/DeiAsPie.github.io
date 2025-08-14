@@ -9,6 +9,7 @@ link: "https://cs50.harvard.edu/x/"
 video: "https://redirect.invidious.io/watch?v=YoXxevp1WRQ&list=PLhQjrBD2T382_R182iC2gNZI9HzWFMC_8"
 image: "/courses/images/posts/cs50.png"
 summary: "CS50’s Introduction to Computer Science"
+aliases: ["/recommendations/cs-introductory/"]
 ---
 
 Beloved CS50: rigorous, accessible, and fun. Excellent first course with weekly problem sets.

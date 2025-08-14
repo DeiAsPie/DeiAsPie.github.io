@@ -8,6 +8,7 @@ link: "https://www.freecodecamp.org/news/become-a-full-stack-developer-with-svel
 video: "https://redirect.invidious.io/watch?v=OUzaUJ3gEug"
 image: "/courses/images/posts/freecodecampWebDev.png"
 summary: "Full Stack Web Development Course by FreeCodeCamp using latest technologies"
+aliases: ["/recommendations/web-development/"]
 ---
 
 A comprehensive full-stack path with modern tooling; start building end-to-end apps.

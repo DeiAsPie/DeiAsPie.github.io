@@ -13,6 +13,22 @@
 			"group": "build"
 		},
 		{
+			"label": "Remove build artifacts",
+			"type": "shell",
+			"command": "rm -rf public resources",
+			"args": [],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Delete duplicate top-level course files",
+			"type": "shell",
+			"command": "rm -f content/recommendations/{advanced-algorithms.md,html-css-and-javascript.md,introduction-to-algorithms.md,game-theory-with-ben-polak.md,computer-networking.md,algorithms-and-data-structures.md,databases.md,git.md,linux.md,java.md,operating-systems.md,machine-learning.md,web-development.md,cyber-security.md,cryptocurrency-engineering-and-design.md,cs-introductory.md}",
+			"args": [],
+			"isBackground": false,
+			"group": "build"
+		},
+		{
 			"label": "Build site (Hugo)",
 			"type": "shell",
 			"command": "npm run build",

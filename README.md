@@ -18,24 +18,28 @@ npm install
 hugo server -D
 ```
 
-## Content model
+## Content model (new flow)
 
-Add markdown files under `content/recommendations/` using this front matter:
+Preferred: page bundles with minimal front matter. Create a folder and an `index.md`:
+
+```
+content/recommendations/my-tool/
+	index.md
+	logo.png   # optional; first image is auto-used if `image` is omitted
+```
+
+Minimal front matter:
 
 ```yaml
 ---
-title: "Name of the Tool or Service"
-date: YYYY-MM-DD
-draft: false
-categories: ["Category A", "Category B"]
-tags: ["tag-a", "tag-b", "tag-c"]
-link: "https://example.com/"
-image: "/images/tool-logo.png"
-summary: "A concise one-sentence summary for display on list pages."
+title: "My Tool"
+link: "https://example.com"
 ---
-
-Full recommendation text in Markdown...
 ```
+
+- Image: omit `image` to auto-pick the first image in the folder. Remote URLs still work if you prefer.
+- Summary: omit `summary` to auto-use the first sentence of the content for cards.
+- Tags/Categories: optional.
 
 ### Directory structure
 
@@ -77,32 +81,16 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 
 - Run `hugo server -D` during authoring for live preview.
 - Use `hugo --gc --minify` for a production build.
-- Add new recommendations under `content/recommendations/` and keep `summary` concise.
+- Add new recommendations as page bundles under `content/recommendations/`.
 - For Courses, set `area` for correct grouping on the Courses page.
 
 ## Deploy
 
 Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` branch via Pages.
 
-## Single-file authoring (easier adds)
+## Generated output
 
-You can create a recommendation as a page bundle with a single `index.md` and an image next to it. If `image` isn’t set in front matter, the first image in the bundle is used automatically. If `summary` isn’t provided, the card falls back to the first sentence of the content.
+Do not commit build artifacts. Git ignores:
 
-Example structure:
-
-```
-content/recommendations/my-tool/
-	index.md
-	logo.png
-```
-
-Minimal front matter:
-
-```yaml
----
-title: "My Tool"
-link: "https://example.com"
----
-```
-
-Then write your Markdown content below. The listing card will pick up the summary from the first sentence automatically if you omit `summary`.
+- `public/` (Hugo output)
+- `resources/` (Hugo cache/pipeline)

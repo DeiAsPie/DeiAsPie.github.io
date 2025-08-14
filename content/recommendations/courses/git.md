@@ -8,6 +8,7 @@ area: "Programming"
 link: "https://learngitbranching.js.org/"
 image: "/courses/images/posts/git.png"
 summary: "Learn Git"
+aliases: ["/recommendations/git/"]
 ---
 
 Interactive Git branching exercises that teach commits, merges, rebases, and more.

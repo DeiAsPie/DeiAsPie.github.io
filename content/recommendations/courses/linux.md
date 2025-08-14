@@ -9,6 +9,7 @@ link: "https://www.edx.org/course/introduction-to-linux"
 video: "https://www.edx.org/course/introduction-to-linux"
 image: "/courses/images/posts/linux.png"
 summary: "Linux (Both GUI and CLI) introductory course The Linux Foundation"
+aliases: ["/recommendations/linux/"]
 ---
 
 Start your Linux journey: shell, filesystems, permissions, and basic administration.

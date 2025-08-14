@@ -8,6 +8,7 @@ link: "https://www.coursera.org/learn/html-css-javascript-for-web-developers"
 video: "https://www.coursera.org/learn/html-css-javascript-for-web-developers"
 image: "/courses/images/posts/webDevBasics.png"
 summary: "HTML, CSS and JavaScript course by Johns Hopkins University"
+aliases: ["/recommendations/html-css-and-javascript/"]
 ---
 
 A practical intro to front-end basics with responsive design and DOM scripting.
