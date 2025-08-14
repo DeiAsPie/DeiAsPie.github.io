@@ -55,12 +55,12 @@ Key paths used by the site:
 
 ### Images
 
-- Recommended (new): use page bundles. Place your image next to `index.md`; omit `image` in front matter to auto-pick. This keeps content portable.
-- Legacy: images under `static/images/` (tools) and `static/courses/images/posts/` (courses) still work; reference with absolute paths like `/images/tool.png` or `/courses/images/posts/ml.png`.
+- Preferred: page bundles. Place your image next to `index.md`; omit `image` in front matter to auto-pick the first local image. This keeps content portable and avoids path mismatches.
+- Legacy paths under `static/` still work, but new content should colocate images with the page.
 
-### Courses hierarchy
+### Courses hierarchy (bundle-first)
 
-Courses render grouped by an `area` front matter field (Computer Science, Programming, Web Development, Systems, Security, Data, Economics, Finance, Other). Example:
+Each course is now a page bundle: `content/recommendations/courses/<slug>/index.md` plus an image file in the same folder. Courses render grouped by an `area` front matter field (Computer Science, Programming, Web Development, Systems, Security, Data, Economics, Finance, Other). Example:
 
 ```yaml
 ---
@@ -68,9 +68,8 @@ title: "Introduction to Algorithms"
 categories: ["Courses"]
 tags: ["course"]
 area: "Computer Science"
-image: "/courses/images/posts/introToAlgo.png"
+ # Image optional; prefer placing `introToAlgo.png` in the same folder as `index.md` and omit `image:`
 summary: "MIT 6.006 lecture series."
----
 ```
 
 ### Menus
@@ -87,6 +86,12 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 ## Deploy
 
 Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` branch via Pages.
+
+CI notes:
+
+- Uses Hugo Extended v0.142.0 (same as local) for consistency.
+- Publishes a `.nojekyll` file to prevent GitHub Pages from altering output.
+- Old URLs are preserved using `aliases` in front matter; keep aliases when renaming/moving content.
 
 ## Generated output
 
