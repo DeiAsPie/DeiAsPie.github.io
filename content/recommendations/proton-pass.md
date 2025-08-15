@@ -1,8 +1,8 @@
 ---
 title: "Proton Pass"
-date: 2025-08-16T03:00:00+00:00
-categories: ["Recommendations", "Passwords"]
-tags: ["passwords", "password manager", "privacy"]
+date: 2025-01-01T03:00:00+00:00
+categories: ["Password Manager", "Security"]
+tags: ["password-manager", "cloud", "sync", "privacy"]
 image: "/images/proton-pass.svg"
 summary: "Proton Pass — a privacy-focused password manager from Proton that offers end-to-end encryption and cross-platform sync."
 ---
