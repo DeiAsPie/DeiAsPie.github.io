@@ -41,7 +41,12 @@
   {{ $resources := .Resources.ByType "image" }}
   {{ with first 1 $resources }}
   {{ $r := index . 0 }}
-  <img class="w-full max-h-72 object-contain mb-6" src="{{ $r.RelPermalink }}" alt="{{ $.Title }} image" />
+  {{ $webp := $r.Resize "800x webp q85" }}
+  {{ $fallback := $r.Resize "800x q85" }}
+  <picture>
+    <source srcset="{{ $webp.RelPermalink }}" type="image/webp">
+    <img class="w-full max-h-72 object-contain mb-6" src="{{ $fallback.RelPermalink }}" alt="{{ $.Title }} image" />
+  </picture>
   {{ end }}
   {{ end }}
 
