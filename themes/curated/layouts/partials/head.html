@@ -25,8 +25,8 @@
 <meta name="description" content="{{ .Site.Params.description }}" />
 <meta name="author" content="{{ .Site.Params.author }}" />
 <link rel="canonical" href="{{ .Permalink }}" />
-<link rel="icon" href="{{ "/favicon.svg" | relURL }}" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="{{ "/favicon.svg" | relURL }}" />
+<link rel="icon" href="{{ " /favicon.svg" | relURL }}" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="{{ " /favicon.svg" | relURL }}" />
 <meta name="theme-color" content="#0f172a" />
 
 <!-- Open Graph / Twitter -->
@@ -58,6 +58,7 @@
 <meta name="twitter:description" content="{{ .Site.Params.description }}" />
 <meta name="twitter:image" content="{{ $ogimg }}" />
 <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="RSS" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Prefetch likely next pages to improve perceived navigation speed -->
+<link rel="prefetch" href="{{ " /recommendations/" | relURL }}">
+<link rel="prefetch" href="{{ " /recommendations/courses/" | relURL }}">
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}">

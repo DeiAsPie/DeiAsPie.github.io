@@ -21,19 +21,21 @@
     <div class="mt-3 flex flex-wrap gap-2">
       {{ range .Params.categories }}<a
         class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2 py-1 rounded"
-  href="{{ (printf "/categories/%s/" (urlize .) | relURL) }}">{{ . }}</a>{{ end }}
+        href="{{ (printf " /categories/%s/" (urlize .) | relURL) }}">{{ . }}</a>{{ end }}
       {{ range .Params.tags }}<a
         class="text-xs bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-2 py-1 rounded border border-slate-200 dark:border-slate-800"
-  href="{{ (printf "/tags/%s/" (urlize .) | relURL) }}">#{{ . }}</a>{{ end }}
+        href="{{ (printf " /tags/%s/" (urlize .) | relURL) }}">#{{ . }}</a>{{ end }}
     </div>
   </header>
 
   {{ $img := .Params.image }}
   {{ if $img }}
   {{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
-  <img class="w-full max-h-72 object-contain mb-6" src="{{ $img }}" alt="{{ $.Title }} image" />
+  <img class="w-full max-h-72 object-contain mb-6" src="{{ $img }}" alt="{{ $.Title }} image" loading="lazy"
+    decoding="async" />
   {{ else }}
-  <img class="w-full max-h-72 object-contain mb-6" src="{{ $img | relURL }}" alt="{{ $.Title }} image" />
+  <img class="w-full max-h-72 object-contain mb-6" src="{{ $img | relURL }}" alt="{{ $.Title }} image" loading="lazy"
+    decoding="async" />
   {{ end }}
   {{ else }}
   {{ $resources := .Resources.ByType "image" }}
