@@ -1,7 +1,7 @@
 ---
 title: "Proton Authenticator"
 date: 2025-01-01T03:05:00+00:00
-categories: ["Security"]
+categories: ["Authenticator", "Security"]
 tags: ["2fa", "password-manager", "authenticator", "privacy"]
 image: "/images/proton-authenticator.svg"
 summary: "Proton Authenticator — a privacy-conscious two-factor authenticator app from Proton for TOTP and passwordless sign-ins."
