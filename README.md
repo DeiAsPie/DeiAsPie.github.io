@@ -89,9 +89,20 @@ Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` br
 
 CI notes:
 
-- Uses Hugo Extended v0.142.0 (same as local) for consistency.
+- Uses Hugo Extended v0.148.2 in the Actions workflow for consistent image-processing features.
 - Publishes a `.nojekyll` file to prevent GitHub Pages from altering output.
 - Old URLs are preserved using `aliases` in front matter; keep aliases when renaming/moving content.
+
+### Local production build (fish)
+
+```fish
+# install deps and build Tailwind CSS
+npm ci
+npm run build:css
+
+# production Hugo build
+hugo --minify --gc
+```
 
 ## Generated output
 

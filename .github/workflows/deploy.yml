@@ -22,7 +22,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: '0.142.0'
+      HUGO_VERSION: '0.148.2'
     steps:
       - name: Install Hugo CLI
         run: |
@@ -41,6 +41,9 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Install Node Modules
         run: npm ci || npm install
+      - name: Build Tailwind CSS
+        run: |
+          npm run build:css
       - name: Build with Hugo
         env:
           HUGO_ENV: production

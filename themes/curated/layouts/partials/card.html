@@ -14,7 +14,9 @@
     {{ $webp := $r.Resize "400x webp q80" }}
     {{ $fallback := $r.Resize "400x q80" }}
     <picture>
-      <source srcset="{{ $webp.RelPermalink }}" type="image/webp">
+      {{ with $webp }}
+      <source srcset="{{ .RelPermalink }}" type="image/webp">
+      {{ end }}
       <img class="card-img" src="{{ $fallback.RelPermalink }}" alt="{{ $.Title }} image" loading="lazy" decoding="async"
         fetchpriority="low" />
     </picture>
