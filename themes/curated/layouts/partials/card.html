@@ -5,21 +5,42 @@
     {{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
     <img class="card-img" src="{{ $img }}" alt="{{ $.Title }} logo" loading="lazy" />
     {{ else }}
-    <img class="card-img" src="{{ $img | relURL }}" alt="{{ $.Title }} logo" loading="lazy" />
-    {{ end }}
+    {{/* Normalize potential leading slash and test existence in /static */}}
+    {{ $clean := strings.TrimPrefix "/" $img }}
+    {{ $staticPath := printf "static/%s" $clean }}
+  {{ if (fileExists $staticPath) }}
+  <img class="card-img" src="{{ (printf "/%s" $clean) | relURL }}" alt="{{ $.Title }} logo" loading="lazy" />
     {{ else }}
+    {{/* Fallback to bundle resources if provided image missing */}}
+    {{ $img = "" }}
+    {{ end }}
+    {{ end }}
+    {{ end }}
+    {{ if not $img }}
     {{ $resources := .Resources.ByType "image" }}
-    {{ with first 1 $resources }}
-    {{ $r := index . 0 }}
-    {{ $webp := $r.Resize "400x webp q80" }}
-    {{ $fallback := $r.Resize "400x q80" }}
+    {{ with index $resources 0 }}
+    {{ $base := . }}
+    {{ if ne (lower $base.MediaType.SubType) "svg" }}
+    {{ $widths := slice 200 320 400 }}
+    {{ $webpSet := slice }}
+    {{ $fallbackSet := slice }}
+    {{ range $w := $widths }}
+    {{ $webpVar := $base.Resize (printf "%dx webp q80" $w) }}
+    {{ $origVar := $base.Resize (printf "%dx q80" $w) }}
+    {{ $webpSet = $webpSet | append (printf "%s %dw" $webpVar.RelPermalink $w) }}
+    {{ $fallbackSet = $fallbackSet | append (printf "%s %dw" $origVar.RelPermalink $w) }}
+    {{ end }}
+    {{ $largest := $base.Resize "400x q80" }}
     <picture>
-      {{ with $webp }}
-      <source srcset="{{ .RelPermalink }}" type="image/webp">
-      {{ end }}
-      <img class="card-img" src="{{ $fallback.RelPermalink }}" alt="{{ $.Title }} image" loading="lazy" decoding="async"
+  <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="(max-width: 480px) 50vw, 200px">
+  <img class="card-img" src="{{ $largest.RelPermalink }}" srcset="{{ delimit $fallbackSet ", " }}"
+        sizes="(max-width: 480px) 50vw, 200px" alt="{{ $.Title }} image" loading="lazy" decoding="async"
         fetchpriority="low" />
     </picture>
+    {{ else }}
+    <img class="card-img" src="{{ $base.RelPermalink }}" alt="{{ $.Title }} image" loading="lazy" decoding="async"
+      fetchpriority="low" />
+    {{ end }}
     {{ else }}
     <div class="w-full h-40 p-4 flex items-center justify-center">
       {{ $t := .Title | default "?" }}

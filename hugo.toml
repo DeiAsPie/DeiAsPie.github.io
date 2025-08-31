@@ -23,6 +23,9 @@ term = ["HTML"]
 [params]
 description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
 author = "DeiAsPie"
+# Optional Google Fonts query (after css2?) e.g. family=Inter:wght@400;600;700&display=swap
+# googleFonts = "family=Inter:wght@400;600;700&display=swap"
+prefetch = ["/recommendations/", "/recommendations/courses/"]
 
 [minify]
 minifyOutput = true

@@ -1,0 +1,63 @@
+{{/*
+ Generates JSON-LD structured data:
+ 1. Article schema for regular recommendation/content pages
+ 2. Course schema for pages under recommendations/courses/
+ 3. BreadcrumbList for all pages (except home)
+
+ Fallbacks for name/description reuse the dynamic meta description logic.
+*/}}
+{{ $permalink := .Permalink }}
+{{ $siteTitle := .Site.Title | plainify }}
+{{/* Description fallback chain (reuse logic) */}}
+{{ $desc := "" }}
+{{ with .Params.description }}{{ $desc = . | plainify | htmlEscape }}{{ end }}
+{{ if and (eq $desc "") (.Params.summary) }}{{ $desc = (.Params.summary | plainify | htmlEscape) }}{{ end }}
+{{ if and (eq $desc "") (.Summary) }}{{ $desc = (.Summary | plainify | htmlEscape) }}{{ end }}
+{{ if and (eq $desc "") (.Site.Params.description) }}{{ $desc = (.Site.Params.description | plainify | htmlEscape) }}{{ end }}
+{{ if eq $desc "" }}{{ $desc = $siteTitle }}{{ end }}
+
+{{/* Breadcrumbs: Build from current section path */}}
+{{ $crumbs := slice (dict "name" "Home" "item" .Site.BaseURL) }}
+{{/* (Omitted parent section traversal since Go templates lack while; using path segments below) */}}
+{{/* Simpler approach: derive from RelPermalink segments */}}
+{{ $segments := (split (trim .RelPermalink "/") "/") }}
+{{ $pathAccum := "" }}
+{{ $page := . }}
+{{ range $i, $seg := $segments }}
+{{ if ne $seg "" }}
+{{ $pathAccum = printf "%s/%s" $pathAccum $seg }}
+{{ $url := printf "%s%s/" $page.Site.BaseURL (strings.TrimPrefix "/" $pathAccum) }}
+{{ if lt (add $i 1) (len $segments) }}
+{{ $crumbs = $crumbs | append (dict "name" ($seg | humanize | title) "item" $url) }}
+{{ else }}
+{{ $title := (or $page.Title ($seg | humanize | title)) }}
+{{ $crumbs = $crumbs | append (dict "name" $title "item" $permalink) }}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{/* BreadcrumbList JSON-LD */}}
+{{ $breadcrumbList := dict "@type" "BreadcrumbList" "itemListElement" (slice ) }}
+{{ $listItems := slice }}
+{{ range $index, $c := $crumbs }}
+{{ $position := add $index 1 }}
+{{ $listItems = $listItems | append (dict "@type" "ListItem" "position" $position "name" ($c.name) "item" ($c.item)) }}
+{{ end }}
+{{ $breadcrumbList = merge $breadcrumbList (dict "itemListElement" $listItems) }}
+
+{{/* Detect if this is likely a course page (path contains /recommendations/courses/) */}}
+{{ $isCourse := in .RelPermalink "/recommendations/courses/" }}
+
+{{/* Base Article schema */}}
+{{ $article := dict "@type" "Article" "headline" (.Title | default $siteTitle | plainify) "description" $desc "mainEntityOfPage" (dict "@type" "WebPage" "@id" $permalink) "author" (dict "@type" "Organization" "name" $siteTitle) "publisher" (dict "@type" "Organization" "name" $siteTitle) "url" $permalink }}
+{{ with .PublishDate }}{{ $article = merge $article (dict "datePublished" (.Format "2006-01-02")) }}{{ end }}
+{{ with .Lastmod }}{{ $article = merge $article (dict "dateModified" (.Format "2006-01-02")) }}{{ end }}
+
+{{ if $isCourse }}
+{{ $course := dict "@type" "Course" "name" (.Title | default $siteTitle | plainify) "description" $desc "provider" (dict "@type" "Organization" "name" $siteTitle "sameAs" .Site.BaseURL) }}
+{{ $graph := slice $article $course $breadcrumbList }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
+{{ else }}
+{{ $graph := slice $article $breadcrumbList }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
+{{ end }}

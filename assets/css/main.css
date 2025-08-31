@@ -57,3 +57,21 @@ img.card-img {
 .icon-btn {
   @apply inline-flex items-center justify-center rounded-md p-2 text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 backdrop-blur transition-colors;
 }
+
+/* Enhanced accessible focus styles */
+/* Use focus-visible to avoid double focus on mouse interactions. Provide strong contrast and consistent ring. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.icon-btn:focus-visible,
+.btn:focus-visible,
+.nav-link:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-sky-500 dark:ring-sky-400 ring-offset-white dark:ring-offset-slate-950 rounded-md;
+}
+
+/* Provide visible indication also for keyboard focus on skip link (already uses sr-only) */
+a[href="#main"]:focus-visible {
+  @apply ring-2 ring-offset-2 ring-fuchsia-500 dark:ring-fuchsia-400;
+}

@@ -21,10 +21,10 @@
     <div class="mt-3 flex flex-wrap gap-2">
       {{ range .Params.categories }}<a
         class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2 py-1 rounded"
-        href="{{ (printf " /categories/%s/" (urlize .) | relURL) }}">{{ . }}</a>{{ end }}
+  href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}
       {{ range .Params.tags }}<a
         class="text-xs bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-2 py-1 rounded border border-slate-200 dark:border-slate-800"
-        href="{{ (printf " /tags/%s/" (urlize .) | relURL) }}">#{{ . }}</a>{{ end }}
+  href="{{ (printf "/tags/%s/" (urlize .)) | relURL }}">#{{ . }}</a>{{ end }}
     </div>
   </header>
 
@@ -34,19 +34,41 @@
   <img class="w-full max-h-72 object-contain mb-6" src="{{ $img }}" alt="{{ $.Title }} image" loading="lazy"
     decoding="async" />
   {{ else }}
-  <img class="w-full max-h-72 object-contain mb-6" src="{{ $img | relURL }}" alt="{{ $.Title }} image" loading="lazy"
-    decoding="async" />
-  {{ end }}
+  {{ $clean := strings.TrimPrefix "/" $img }}
+  {{ $staticPath := printf "static/%s" $clean }}
+  {{ if (fileExists $staticPath) }}
+  <img class="w-full max-h-72 object-contain mb-6" src="{{ (printf "/%s" $clean) | relURL }}" alt="{{ $.Title }} image"
+    loading="lazy" decoding="async" />
   {{ else }}
+  {{/* If declared image missing, ignore and fall back to bundle resource */}}
+  {{ $img = "" }}
+  {{ end }}
+  {{ end }}
+  {{ end }}
+  {{ if not $img }}
   {{ $resources := .Resources.ByType "image" }}
-  {{ with first 1 $resources }}
-  {{ $r := index . 0 }}
-  {{ $webp := $r.Resize "800x webp q85" }}
-  {{ $fallback := $r.Resize "800x q85" }}
+  {{ with index $resources 0 }}
+  {{ $base := . }}
+  {{ if ne (lower $base.MediaType.SubType) "svg" }}
+  {{ $widths := slice 320 480 640 800 1024 }}
+  {{ $webpSet := slice }}
+  {{ $fallbackSet := slice }}
+  {{ range $w := $widths }}
+  {{ $webpVar := $base.Resize (printf "%dx webp q85" $w) }}
+  {{ $origVar := $base.Resize (printf "%dx q85" $w) }}
+  {{ $webpSet = $webpSet | append (printf "%s %dw" $webpVar.RelPermalink $w) }}
+  {{ $fallbackSet = $fallbackSet | append (printf "%s %dw" $origVar.RelPermalink $w) }}
+  {{ end }}
+  {{ $largest := $base.Resize "1024x q85" }}
   <picture>
-    <source srcset="{{ $webp.RelPermalink }}" type="image/webp">
-    <img class="w-full max-h-72 object-contain mb-6" src="{{ $fallback.RelPermalink }}" alt="{{ $.Title }} image" />
+  <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="(max-width: 900px) 100vw, 800px">
+  <img class="w-full max-h-72 object-contain mb-6" src="{{ $largest.RelPermalink }}" srcset="{{ delimit $fallbackSet ", " }}" sizes="(max-width: 900px) 100vw, 800px" alt="{{ $.Title }} image" loading="lazy" decoding="async"
+      fetchpriority="low" />
   </picture>
+  {{ else }}
+  <img class="w-full max-h-72 object-contain mb-6" src="{{ $base.RelPermalink }}" alt="{{ $.Title }} image"
+    loading="lazy" decoding="async" />
+  {{ end }}
   {{ end }}
   {{ end }}
 

@@ -22,7 +22,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
-<meta name="description" content="{{ .Site.Params.description }}" />
+{{/* Dynamic meta description fallback chain */}}
+{{ $desc := "" }}
+{{ with .Params.description }}{{ $desc = . | plainify | htmlEscape }}{{ end }}
+{{ if and (eq $desc "") (.Params.summary) }}{{ $desc = (.Params.summary | plainify | htmlEscape) }}{{ end }}
+{{ if and (eq $desc "") (.Summary) }}{{ $desc = (.Summary | plainify | htmlEscape) }}{{ end }}
+{{ if and (eq $desc "") (.Site.Params.description) }}{{ $desc = (.Site.Params.description | plainify | htmlEscape) }}{{ end }}
+{{ if eq $desc "" }}{{ $desc = (.Site.Title | plainify | htmlEscape) }}{{ end }}
+<meta name="description" content="{{ $desc }}" />
 <meta name="author" content="{{ .Site.Params.author }}" />
 <link rel="canonical" href="{{ .Permalink }}" />
 <link rel="icon" href="{{ " /favicon.svg" | relURL }}" type="image/svg+xml" />
@@ -34,7 +41,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ $absURL }}" />
 <meta property="og:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
-<meta property="og:description" content="{{ .Site.Params.description }}" />
+<meta property="og:description" content="{{ $desc }}" />
 {{/* Derive OG image: prefer front-matter image (abs/local), else first page resource image, else favicon */}}
 {{ $ogimg := "" }}
 {{ if .Params.image }}
@@ -55,8 +62,22 @@
 <meta property="og:image" content="{{ $ogimg }}" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
-<meta name="twitter:description" content="{{ .Site.Params.description }}" />
+<meta name="twitter:description" content="{{ $desc }}" />
 <meta name="twitter:image" content="{{ $ogimg }}" />
 <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="RSS" />
-<!-- Prefetch likely next pages to improve perceived navigation speed -->
+{{ partial "fonts.html" . }}
+{{ with .Site.Params.prefetch }}
+{{ $current := $.RelPermalink }}
+{{ range . }}
+{{ if ne . $current }}
+<link rel="prefetch" href="{{ . | relURL }}" as="document" />
+{{ end }}
+{{ end }}
+{{ end }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}">
+{{/* Structured data JSON-LD */}}
+{{ if and (not .IsHome) (not .IsNode) }}
+{{ partial "seo-jsonld.html" . }}
+{{ else if .IsPage }}
+{{ partial "seo-jsonld.html" . }}
+{{ end }}
