@@ -4,8 +4,12 @@
 <header
   class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800/60">
   <div class="py-3 flex items-center justify-between">
+    {{/* NOTE: Home link: ensure no leading space before slash ("/").
+      Regression guard suggestion: search for href values that have a leading space
+      before the slash (e.g. look for patterns like: href contains a space then /).
+      Avoid including the raw bad substring in source to keep the guard effective. */}}
     <a class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300"
-      href="{{ " /" | relURL }}">{{ .Site.Title }}</a>
+      href="{{ "/" | relURL }}">{{ .Site.Title }}</a>
     <div class="flex items-center gap-3">
       <nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
         {{ $current := . }}

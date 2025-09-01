@@ -97,10 +97,10 @@ Behavior:
 
 <picture>
     {{ if gt (len $webpSet) 0 }}
-    <source type="image/webp" srcset="{{ delimit $webpSet " , " }}" sizes="{{ $sizes }}">
+    <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="{{ $sizes }}">
     {{ end }}
     {{ if gt (len $origSet) 0 }}
-    <source srcset="{{ delimit $origSet " , " }}" sizes="{{ $sizes }}">
+    <source srcset="{{ delimit $origSet ", " }}" sizes="{{ $sizes }}">
     {{ end }}
     <img class="{{ $class }}" src="{{ $fallback.RelPermalink }}" alt="{{ $alt | htmlEscape }}"
         width="{{ $fallback.Width }}" height="{{ $fallback.Height }}" loading="{{ $loading }}" decoding="async"
