@@ -39,8 +39,8 @@
     {{ $w := $largest.Width }}
     {{ $h := $largest.Height }}
     <picture>
-  <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="(max-width: 480px) 50vw, 200px">
-  <img class="card-img" src="{{ $largest.RelPermalink }}" srcset="{{ delimit $fallbackSet ", " }}"
+      <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="(max-width: 480px) 50vw, 200px">
+      <img class="card-img" src="{{ $largest.RelPermalink }}" srcset="{{ delimit $fallbackSet ", " }}"
         sizes="(max-width: 480px) 50vw, 200px" width="{{ $w }}" height="{{ $h }}"
         alt="{{ with $.Params.image_alt }}{{ . }}{{ else }}{{ $.Title }} image{{ end }}" loading="lazy" decoding="async"
         fetchpriority="low" />
