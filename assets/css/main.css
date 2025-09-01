@@ -16,7 +16,7 @@
 
 /* Card component */
 .card {
-  @apply rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow;
+  @apply rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow overflow-hidden;
 }
 
 .card-body {
@@ -33,7 +33,8 @@
 
 /* Card images */
 img.card-img {
-  @apply w-full h-40 object-contain p-4;
+  /* Ensure padding doesn't increase the visual width and images are centered */
+  @apply box-border block w-full h-40 max-h-40 object-contain object-center p-4;
 }
 
 /* Buttons */

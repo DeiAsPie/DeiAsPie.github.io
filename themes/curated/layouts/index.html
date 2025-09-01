@@ -1,14 +1,13 @@
 {{ define "main" }}
 <section class="mb-8">
-  <div class="max-w-4xl mx-auto prose prose-lg dark:prose-invert">
-    {{ .Content }}
-  </div>
+  {{ with .Content }}
+  <div class="mt-4 prose prose-slate dark:prose-invert">{{ . }}</div>{{ end }}
 </section>
 
 <section class="mb-12">
   <div class="flex items-center justify-between mb-5">
     <h2 class="text-2xl font-semibold">Latest Privacy Tools</h2>
-  <a class="nav-link" href="{{ "/recommendations/" | relURL }}">View all →</a>
+    <a class="nav-link" href="{{ "/recommendations/" | relURL }}">View all →</a>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {{ $recs := (where .Site.RegularPages "Section" "recommendations") }}
@@ -27,7 +26,7 @@
   <div class="flex flex-wrap gap-3">
     {{ range $name, $term := .Site.Taxonomies.categories }}
     <a class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
-      href="{{ (printf " /categories/%s/" (urlize $name) | relURL) }}">{{ $name }} <span class="text-slate-500">({{ len
+      href="{{ (printf "/categories/%s/" (urlize $name) | relURL) }}">{{ $name }} <span class="text-slate-500">({{ len
         $term }})</span></a>
     {{ else }}
     <p class="text-slate-500">No categories yet.</p>
