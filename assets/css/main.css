@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure @apply can reference core utilities in Tailwind v4 */
+@reference "tailwindcss";
+
 /* Minimal base styles */
 :root {
   color-scheme: light dark;

@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Dependabot will propose stable updates; review devDependency PRs as needed
+    # (Do not auto-ignore devDependencies to ensure security fixes are surfaced)
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Keep only stable actions
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
