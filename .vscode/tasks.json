@@ -27,14 +27,6 @@
 			"args": [],
 			"isBackground": false,
 			"group": "build"
-		},
-		{
-			"label": "Build site (Hugo)",
-			"type": "shell",
-			"command": "npm run build",
-			"args": [],
-			"isBackground": false,
-			"group": "build"
 		}
 	]
 }
