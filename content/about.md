@@ -35,9 +35,17 @@ I believe in making privacy accessible. You don't need to be a security expert t
 
 ## Connect With Me
 
+<!-- Signal QR: copy the provided PNG to static/images/signal-qr.png -->
+<div class="mt-4">
+	<p><img src="/images/signal-qr.png" alt="Signal QR (DeiAsPie.101)" loading="lazy" style="max-width:12rem; height:auto; display:block; margin:0.5rem 0;"></p>
+	<p class="text-sm">Scan to add me on Signal (preferred).</p>
+</div>
+
+- **[Signal (preferred)](https://signal.me/#eu/19Yp0f7xGAZV1OSnvg3wxR-Es0HoI34qBLhRA5UjhgG2Gt4Tl01KFJxgfUt1U2YA)**
 - **[LBRY/Odysee Tech Blog 📜](https://open.lbry.com/@DeiAsPieBlog:f)** - Detailed guides and tutorials
 - **[LBRY/Odysee Tech Videos 🎬](https://open.lbry.com/@DeiAsPie:1)** - Video reviews and walkthroughs  
 - **[LBRY/Odysee Mind Space 🧠](https://open.lbry.com/@DeiAsPieMindSpace:7)** - Thoughts on digital freedom
 - **[GitHub 🐙](https://github.com/DeiAsPie)** - Open source contributions
+- **[LinkedIn](https://linkedin.com/in/DeiAsPie)** - Professional profile
 
 *I keep things honest and practical. If it's recommended here, I've used it and believe it's worth your time and trust.*
