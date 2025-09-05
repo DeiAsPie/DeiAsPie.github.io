@@ -43,13 +43,13 @@
   {{ if $img }}
   {{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
   <img class="w-full max-h-72 object-contain mb-6" src="{{ $img }}" alt="{{ $.Title }} image" loading="lazy"
-    decoding="async" sizes="(max-width: 900px) 100vw, 800px" />
+    decoding="async" />
   {{ else }}
   {{ $clean := strings.TrimPrefix "/" $img }}
   {{ $staticPath := printf "static/%s" $clean }}
   {{ if (fileExists $staticPath) }}
   <img class="w-full max-h-72 object-contain mb-6" src="{{ (printf "/%s" $clean) | relURL }}" alt="{{ $.Title }} image"
-    loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 800px" />
+    loading="lazy" decoding="async" />
   {{ else }}
   {{/* If declared image missing, ignore and fall back to bundle resource */}}
   {{ $img = "" }}

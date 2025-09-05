@@ -53,11 +53,23 @@
 {{ with .PublishDate }}{{ $article = merge $article (dict "datePublished" (.Format "2006-01-02")) }}{{ end }}
 {{ with .Lastmod }}{{ $article = merge $article (dict "dateModified" (.Format "2006-01-02")) }}{{ end }}
 
-{{ if $isCourse }}
-{{ $course := dict "@type" "Course" "name" (.Title | default $siteTitle | plainify) "description" $desc "provider" (dict "@type" "Organization" "name" $siteTitle "sameAs" .Site.BaseURL) }}
-{{ $graph := slice $article $course $breadcrumbList }}
-<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
+{{ if .IsNode }}
+	{{/* List/Section/Taxonomy page: emit ItemList + CollectionPage */}}
+	{{ $items := slice }}
+	{{ range .Pages }}
+		{{ $items = $items | append (dict "@type" "ListItem" "position" (len $items | add 1) "url" .Permalink "name" (.Title | plainify)) }}
+	{{ end }}
+	{{ $itemList := dict "@type" "ItemList" "itemListElement" $items "name" (.Title | default $siteTitle | plainify) "url" $permalink }}
+	{{ $collection := dict "@type" "CollectionPage" "name" (.Title | default $siteTitle | plainify) "description" $desc "url" $permalink }}
+	{{ $graph := slice $collection $itemList $breadcrumbList }}
+	<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
 {{ else }}
-{{ $graph := slice $article $breadcrumbList }}
-<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
+	{{ if $isCourse }}
+		{{ $course := dict "@type" "Course" "name" (.Title | default $siteTitle | plainify) "description" $desc "provider" (dict "@type" "Organization" "name" $siteTitle "sameAs" .Site.BaseURL) }}
+		{{ $graph := slice $article $course $breadcrumbList }}
+		<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
+	{{ else }}
+		{{ $graph := slice $article $breadcrumbList }}
+		<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}</script>
+	{{ end }}
 {{ end }}

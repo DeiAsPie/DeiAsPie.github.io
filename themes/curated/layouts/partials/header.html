@@ -19,7 +19,7 @@
           href="{{ .URL | relURL }}" {{ if $isActive }}aria-current="page" {{ end }}>{{ .Name }}</a>
         {{ end }}
       </nav>
-      <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" aria-pressed="false">
+  <button id="theme-toggle" class="icon-btn inline-flex" aria-label="Toggle theme" aria-pressed="false">
         <!-- Sun icon (shown in light) -->
         <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
           aria-hidden="true">
@@ -34,7 +34,7 @@
         </svg>
         <span class="sr-only">Theme</span>
       </button>
-      <button id="mobile-menu-toggle" class="icon-btn md:hidden" aria-label="Toggle menu" aria-controls="mobile-menu"
+  <button id="mobile-menu-toggle" class="icon-btn inline-flex md:hidden" aria-label="Toggle menu" aria-controls="mobile-menu"
         aria-expanded="false">
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
           aria-hidden="true">

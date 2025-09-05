@@ -4,44 +4,34 @@
 {{ $styles = $styles | minify | fingerprint }}
 {{ end }}
 <script>
-    // Set initial theme before paint to avoid FOUC
-    // Modes: 'auto' (default) | 'light' | 'dark'
+    // Set initial theme before paint to avoid FOUC (Light / Dark / Auto)
     (function () {
         try {
-            // Migrate legacy key if present
-            var legacy = localStorage.getItem('theme');
-            var mode = localStorage.getItem('themeMode');
-            if (!mode) {
-                if (legacy === 'light' || legacy === 'dark') {
-                    mode = legacy;
-                } else {
-                    mode = 'auto';
-                }
-                localStorage.setItem('themeMode', mode);
-                if (legacy) localStorage.removeItem('theme');
+            var pref = localStorage.getItem('theme'); // 'light' | 'dark' | 'auto' | null
+            if (!pref) {
+                // Default to dark if user hasn't chosen
+                pref = 'dark';
+                localStorage.setItem('theme', pref);
             }
-
-            var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-            function apply(mode) {
-                var isDark = mode === 'dark' || (mode === 'auto' && mql && mql.matches);
-                if (isDark) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-                document.documentElement.setAttribute('data-theme-mode', mode);
+            var mql = window.matchMedia('(prefers-color-scheme: dark)');
+            var effective = pref === 'auto' ? (mql.matches ? 'dark' : 'light') : pref;
+            if (effective === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
             }
-            apply(mode);
+            // Keep in sync if user set 'auto' and OS changes later
+            if (pref === 'auto') {
+                try {
+                    mql.addEventListener('change', function (e) {
+                        var eff = e.matches ? 'dark' : 'light';
+                        if (eff === 'dark') document.documentElement.classList.add('dark');
+                        else document.documentElement.classList.remove('dark');
+                    });
+                } catch (e) {}
+            }
         } catch (e) {
-            // Fallback to auto behavior if storage fails
-            try {
-                var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
-                if (mql && mql.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            } catch (e2) {}
+            document.documentElement.classList.add('dark');
         }
     })();
     </script>
