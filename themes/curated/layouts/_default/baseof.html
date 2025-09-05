@@ -28,20 +28,38 @@
                             console.log("initUI: found theme-toggle button");
                         } catch (e) {}
 
-                        function syncState() {
-                            var isDark = document.documentElement.classList.contains("dark");
-                            btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+                        var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+                        function getMode(){
+                            var mode = 'auto';
+                            try { mode = localStorage.getItem('themeMode') || 'auto'; } catch(e) {}
+                            return mode;
                         }
-                        syncState();
-                        btn.addEventListener("click", function () {
-                            try { console.log("theme-toggle: click - before", { htmlClass: document.documentElement.className, ariaPressed: btn.getAttribute("aria-pressed") }); } catch (e) {}
-                            var isDark = document.documentElement.classList.toggle("dark");
-                            try {
-                                localStorage.setItem("theme", isDark ? "dark" : "light");
-                            } catch (e) {}
-                            syncState();
-                            try { console.log("theme-toggle: click - after", { htmlClass: document.documentElement.className, ariaPressed: btn.getAttribute("aria-pressed") }); } catch (e) {}
-                        });
+                        function setMode(mode){
+                            try { localStorage.setItem('themeMode', mode); } catch(e) {}
+                            apply(mode);
+                        }
+                        function apply(mode){
+                            var isDark = mode === 'dark' || (mode === 'auto' && mql && mql.matches);
+                            document.documentElement.classList.toggle('dark', !!isDark);
+                            document.documentElement.setAttribute('data-theme-mode', mode);
+                            btn.title = 'Theme: ' + mode.charAt(0).toUpperCase() + mode.slice(1);
+                            btn.setAttribute('aria-label', btn.title);
+                            // For compatibility, reflect pressed only when explicitly dark
+                            btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+                        }
+                        function cycleMode(){
+                            var mode = getMode();
+                            var next = mode === 'auto' ? 'light' : (mode === 'light' ? 'dark' : 'auto');
+                            setMode(next);
+                            try { console.log('theme-toggle: mode ->', next); } catch(e) {}
+                        }
+                        if (mql && mql.addEventListener) {
+                            mql.addEventListener('change', function(){
+                                if (getMode() === 'auto') apply('auto');
+                            });
+                        }
+                        apply(getMode());
+                        btn.addEventListener('click', cycleMode);
                     } else {
                         try {
                             console.log("initUI: theme-toggle button not found");

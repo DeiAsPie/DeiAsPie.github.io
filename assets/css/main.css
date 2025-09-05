@@ -12,6 +12,14 @@
   color-scheme: light dark;
 }
 
+/* Prefer emoji-capable fonts so emoji keep native colors */
+html, body {
+  /* Place color-emoji fonts first so emoji render in native colors */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+    ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell,
+    Helvetica Neue, Arial, "Segoe UI Symbol", sans-serif;
+}
+
 .prose img {
   border-radius: 0.375rem;
 }
@@ -23,7 +31,7 @@
 }
 
 .prose h1 {
-  @apply text-3xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300;
+  @apply text-3xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white;
 }
 
 .prose h2 {
@@ -200,4 +208,9 @@ a[href="#main"]:focus-visible {
   .ui-ready .icon-btn {
     transition: background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms;
   }
+}
+
+/* Ensure hamburger stays hidden on desktop as a CSS fallback (JS also hides on resize) */
+@media (min-width: 768px) {
+  #mobile-menu-toggle { display: none !important; }
 }

@@ -5,23 +5,43 @@
 {{ end }}
 <script>
     // Set initial theme before paint to avoid FOUC
-    // Default is DARK unless explicitly set to light by the user.
+    // Modes: 'auto' (default) | 'light' | 'dark'
     (function () {
         try {
-            var ls = localStorage.getItem('theme');
-            if (!ls) {
-                // Seed default preference
-                localStorage.setItem('theme', 'dark');
-                ls = 'dark';
+            // Migrate legacy key if present
+            var legacy = localStorage.getItem('theme');
+            var mode = localStorage.getItem('themeMode');
+            if (!mode) {
+                if (legacy === 'light' || legacy === 'dark') {
+                    mode = legacy;
+                } else {
+                    mode = 'auto';
+                }
+                localStorage.setItem('themeMode', mode);
+                if (legacy) localStorage.removeItem('theme');
             }
-            if (ls === 'light') {
-                document.documentElement.classList.remove('dark');
-            } else {
-                document.documentElement.classList.add('dark');
+
+            var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+            function apply(mode) {
+                var isDark = mode === 'dark' || (mode === 'auto' && mql && mql.matches);
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                document.documentElement.setAttribute('data-theme-mode', mode);
             }
+            apply(mode);
         } catch (e) {
-            // If storage fails, still default to dark
-            document.documentElement.classList.add('dark');
+            // Fallback to auto behavior if storage fails
+            try {
+                var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+                if (mql && mql.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e2) {}
         }
     })();
     </script>
