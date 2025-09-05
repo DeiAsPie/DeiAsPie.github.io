@@ -7,9 +7,6 @@
 			"command": "npm run build",
 			"args": [],
 			"isBackground": false,
-			"problemMatcher": [
-				"$eslint-stylish"
-			],
 			"group": "build"
 		},
 		{
@@ -27,6 +24,15 @@
 			"args": [],
 			"isBackground": false,
 			"group": "build"
-		}
+		},
+		{
+			"label": "Build CSS (Tailwind v4)",
+			"type": "shell",
+			"command": "npm run build:css",
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "build"
+		},
 	]
 }

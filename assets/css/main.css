@@ -1,8 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind v4 CSS entrypoint */
+@import "tailwindcss";
 
-/* Ensure @apply can reference core utilities in Tailwind v4 */
+/* Use class-based dark mode: apply `dark:` utilities when `.dark` is on an ancestor */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Allow @apply to reference Tailwind utilities (Tailwind v4) */
 @reference "tailwindcss";
 
 /* Minimal base styles */
