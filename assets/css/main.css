@@ -16,6 +16,113 @@
   border-radius: 0.375rem;
 }
 
+/* Rich typography for content areas */
+.prose {
+  @apply max-w-none;
+  /* let layouts control width */
+}
+
+.prose h1 {
+  @apply text-3xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold mt-10 mb-4 text-slate-900 dark:text-white;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold mt-8 mb-3 text-slate-900 dark:text-white;
+}
+
+.prose p {
+  @apply leading-7 text-slate-700 dark:text-slate-300 mb-4;
+}
+
+.prose a {
+  @apply underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500 dark:hover:decoration-slate-400 transition-colors;
+}
+
+.prose strong {
+  @apply font-semibold text-slate-900 dark:text-slate-100;
+}
+
+.prose em {
+  @apply text-slate-800 dark:text-slate-200;
+}
+
+.prose blockquote {
+  @apply relative my-6 pl-4 border-l-4 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 italic;
+}
+
+.prose ul,
+.prose ol {
+  @apply my-4 pl-6 space-y-2;
+}
+
+.prose li::marker {
+  @apply text-slate-500 dark:text-slate-400;
+}
+
+.prose code {
+  @apply rounded px-1.5 py-0.5 text-sm bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200;
+}
+
+.prose pre {
+  @apply my-6 p-4 rounded-lg bg-slate-950/95 text-slate-100 overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.prose hr {
+  @apply my-8 border-slate-200 dark:border-slate-800;
+}
+
+.prose table {
+  @apply w-full text-left border-collapse my-6 overflow-hidden rounded-lg;
+}
+
+.prose thead {
+  @apply bg-slate-100 dark:bg-slate-900;
+}
+
+.prose th,
+.prose td {
+  @apply border border-slate-200 dark:border-slate-800 px-3 py-2 align-top;
+}
+
+.prose figcaption {
+  @apply text-sm text-slate-500 dark:text-slate-400 mt-2 text-center;
+}
+
+/* Anchored headings shouldn't hide under sticky header */
+.prose h1[id],
+.prose h2[id],
+.prose h3[id],
+.prose h4[id],
+.prose h5[id],
+.prose h6[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Table of contents styling */
+.toc {
+  @apply text-sm leading-6;
+}
+
+.toc ul {
+  @apply space-y-1 my-0 pl-4;
+}
+
+.toc > ul {
+  @apply pl-0;
+}
+
+.toc a {
+  @apply text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white underline-offset-4 hover:underline;
+}
+
 /* Card component */
 .card {
   @apply rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow overflow-hidden;
@@ -80,4 +187,17 @@ textarea:focus-visible,
 /* Provide visible indication also for keyboard focus on skip link (already uses sr-only) */
 a[href="#main"]:focus-visible {
   @apply ring-2 ring-offset-2 ring-fuchsia-500 dark:ring-fuchsia-400;
+}
+
+/* Theme transitions (enabled only after first paint to avoid FOUC) */
+@media (prefers-reduced-motion: no-preference) {
+
+  .ui-ready body,
+  .ui-ready .card,
+  .ui-ready .prose,
+  .ui-ready .nav-link,
+  .ui-ready .btn,
+  .ui-ready .icon-btn {
+    transition: background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms;
+  }
 }

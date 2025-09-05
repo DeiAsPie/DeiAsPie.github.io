@@ -78,6 +78,9 @@
                             console.log("initUI: mobile menu toggle or menu not found", { toggle: !!toggle, menu: !!menu });
                         } catch (e) {}
                     }
+
+                    // Mark UI ready to allow theme transition effects after first paint
+                    try { document.documentElement.classList.add("ui-ready"); } catch (e) {}
                 }
 
                 if (document.readyState === "loading") {

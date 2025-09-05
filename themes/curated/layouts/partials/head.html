@@ -5,18 +5,26 @@
 {{ end }}
 <script>
     // Set initial theme before paint to avoid FOUC
+    // Default is DARK unless explicitly set to light by the user.
     (function () {
         try {
             var ls = localStorage.getItem('theme');
+            if (!ls) {
+                // Seed default preference
+                localStorage.setItem('theme', 'dark');
+                ls = 'dark';
+            }
             if (ls === 'light') {
                 document.documentElement.classList.remove('dark');
             } else {
-                // Default to dark when not explicitly set to light
                 document.documentElement.classList.add('dark');
             }
-        } catch (e) { }
+        } catch (e) {
+            // If storage fails, still default to dark
+            document.documentElement.classList.add('dark');
+        }
     })();
-</script>
+    </script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>

@@ -28,6 +28,17 @@
     </div>
   </header>
 
+  {{/* Optional on-page Table of Contents for long articles */}}
+  {{ $tocEnabled := cond (isset .Params "toc") (.Params.toc) true }}
+  {{ if and $tocEnabled (ne .TableOfContents "") }}
+  <nav class="mb-8 card">
+    <div class="card-body">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">On this page</h2>
+      <div class="toc">{{ .TableOfContents }}</div>
+    </div>
+  </nav>
+  {{ end }}
+
   {{ $img := .Params.image }}
   {{ if $img }}
   {{ if or (hasPrefix $img "http://") (hasPrefix $img "https://") }}
