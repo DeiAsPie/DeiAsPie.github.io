@@ -54,10 +54,12 @@
 
 <!-- Open Graph / Twitter -->
 {{ $absURL := .Permalink }}
-<meta property="og:type" content="website" />
+{{/* Use more specific type for leaf pages to improve previews */}}
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
 <meta property="og:url" content="{{ $absURL }}" />
 <meta property="og:title" content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}" />
 <meta property="og:description" content="{{ $desc }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
 {{/* Derive OG image: prefer front-matter image (abs/local), else first page resource image, else favicon */}}
 {{ $ogimg := "" }}
 {{ if .Params.image }}

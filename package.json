@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "hugo server -D",
     "build:css": "npx @tailwindcss/cli -i ./assets/css/main.css -o ./assets/gen/tailwind.css --minify",
-    "build": "hugo"
+  "build": "hugo",
+  "build:prod": "npm run build:css && hugo --minify --gc",
+  "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\""
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.12",
