@@ -12,5 +12,6 @@ draft: false
 Write your recommendation here. Explain why you recommend it, key features, and who it’s for.
 
 Authoring tips:
+
 - Prefer page bundles: put an image in the same folder; it will be auto-detected.
 - If no summary is set, the first sentence of the content will be used.

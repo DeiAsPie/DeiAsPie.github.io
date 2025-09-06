@@ -201,13 +201,16 @@ a[href="#main"]:focus-visible {
 
 /* Theme transitions (enabled only after first paint to avoid FOUC) */
 @media (prefers-reduced-motion: no-preference) {
-
   .ui-ready body,
   .ui-ready .card,
   .ui-ready .prose,
   .ui-ready .nav-link,
   .ui-ready .btn,
   .ui-ready .icon-btn {
-    transition: background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms;
+    transition:
+      background-color 200ms,
+      color 200ms,
+      border-color 200ms,
+      box-shadow 200ms;
   }
 }

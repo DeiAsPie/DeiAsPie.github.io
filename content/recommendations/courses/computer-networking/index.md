@@ -11,4 +11,3 @@ aliases: ["/recommendations/computer-networking/"]
 ---
 
 Hands-on TCP/IP, sockets, reliable transport, and the Stanford networking stack project.
-

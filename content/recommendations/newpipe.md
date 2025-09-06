@@ -12,6 +12,7 @@ summary: "Open-source Android app for YouTube, SoundCloud, and other platforms w
 NewPipe is a free and open-source Android app that supports YouTube, SoundCloud, media.ccc.de, Bandcamp, and PeerTube.
 
 **Key Features:**
+
 - Subscription list and playlists stored locally on your Android device
 - No Google Services Framework required
 - Background playback

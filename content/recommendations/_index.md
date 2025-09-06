@@ -9,6 +9,7 @@ Welcome to the complete archive of privacy-focused tools and services I recommen
 ## Important Guidelines
 
 **In General:**
+
 - **Stay away from social media.** When really necessary, use a private messenger suggested below.
 - If you can't remove it later, then don't put it online.
 - **Avoid unauthorized access:**

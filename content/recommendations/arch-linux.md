@@ -12,6 +12,7 @@ summary: "A minimal, customizable Linux distribution for advanced users who want
 Arch Linux is an independently developed, x86-64 general purpose GNU/Linux distribution versatile enough to suit any role. Development focuses on simplicity, minimalism, and code elegance.
 
 **Key Features:**
+
 - Installed as a minimal base system, configured by the user
 - Ideal environment is assembled by installing only what is required or desired
 - GUI configuration utilities are not officially provided

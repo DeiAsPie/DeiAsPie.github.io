@@ -3,7 +3,14 @@ title: "LBRY/Odysee"
 date: 2025-08-13
 draft: false
 categories: ["Video Streaming", "Decentralized", "Content"]
-tags: ["video", "decentralized", "blockchain", "content-creation", "youtube-alternative"]
+tags:
+  [
+    "video",
+    "decentralized",
+    "blockchain",
+    "content-creation",
+    "youtube-alternative",
+  ]
 link: "https://lbry.com/get/"
 image: "/images/lbry.svg"
 summary: "Decentralized video sharing platform built on blockchain technology."
@@ -12,6 +19,7 @@ summary: "Decentralized video sharing platform built on blockchain technology."
 LBRY is a client for LBRY network. LBRY is a decentralized video sharing network. It uses two of the most powerful censorship-resistant technologies (a BitTorrent-like network to store the video content and a blockchain to store the indexes for those videos).
 
 **Key Features:**
+
 - Decentralized and censorship-resistant
 - Content creators own their data
 - Direct creator-to-viewer payments

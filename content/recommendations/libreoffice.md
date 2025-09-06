@@ -12,6 +12,7 @@ summary: "Complete free and open-source office suite - the best offline alternat
 LibreOffice is a free and open-source office productivity software suite, a project of The Document Foundation. It's the default Office suite installed on almost all Linux distros out of the box.
 
 **Key Features:**
+
 - **Highly Recommended** for privacy and functionality
 - Supports almost all document formats from Microsoft Office
 - Completely offline - no tracking or data collection

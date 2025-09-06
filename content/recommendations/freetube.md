@@ -12,6 +12,7 @@ summary: "Privacy-focused desktop YouTube client with ad blocking and SponsorBlo
 FreeTube, a no-cost and open-source desktop tool designed for YouTube, stores your subscription roster and playlists directly on your device while in use.
 
 **Key Features:**
+
 - No YouTube ads by default
 - Subscription list stored locally on your device
 - SponsorBlock integration to skip sponsored segments

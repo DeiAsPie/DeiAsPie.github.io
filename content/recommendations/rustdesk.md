@@ -12,6 +12,7 @@ summary: "Open-source remote desktop software - the privacy-friendly TeamViewer 
 RustDesk is a remote desktop software; the open source TeamViewer alternative, works out of the box, no configuration required.
 
 **Key Features:**
+
 - Full control of your data with no security concerns
 - Works out of the box with no configuration
 - Use public rendezvous/relay server or self-host your own

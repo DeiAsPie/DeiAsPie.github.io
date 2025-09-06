@@ -1,55 +1,33 @@
 {{ define "main" }}
 <section>
-    <h1 class="text-3xl font-bold mb-6">{{ .Title }}</h1>
-    <div class="prose prose-slate dark:prose-invert max-w-none mb-8">{{ .Content }}</div>
+  <h1 class="text-3xl font-bold mb-6">{{ .Title }}</h1>
+  <div class="prose prose-slate dark:prose-invert max-w-none mb-8">
+    {{ .Content }}
+  </div>
 
-    {{/* Collect areas from pages */}}
-    {{ $pages := .Pages }}
-    {{ $areas := slice }}
-    {{ range $pages }}
-    {{ with .Params.area }}
-    {{ $areas = $areas | append . }}
-    {{ else }}
-    {{ $areas = $areas | append "Other" }}
-    {{ end }}
-    {{ end }}
-    {{ $areas = $areas | uniq }}
-
-    {{/* Define a preferred order similar to legacy */}}
-    {{ $order := slice "Computer Science" "Programming" "Web Development" "Systems" "Security" "Data" "Economics" "Finance" "Other" }}
-    {{ $sortedAreas := slice }}
-    {{ range $order }}
-    {{ if in $areas . }}
-    {{ $sortedAreas = $sortedAreas | append . }}
-    {{ end }}
-    {{ end }}
-    {{ range $areas }}
-    {{ if not (in $sortedAreas .) }}
-    {{ $sortedAreas = $sortedAreas | append . }}
-    {{ end }}
-    {{ end }}
-
-    {{ if eq (len $sortedAreas) 0 }}
-    <p class="text-slate-600 dark:text-slate-300">No areas defined yet. All courses:</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {{ range sort .Pages "Title" }}
-        {{ partial "card.html" . }}
-        {{ end }}
-    </div>
-    {{ else }}
-    {{ range $sortedAreas }}
-    {{ $area := . }}
-    <h2 class="text-2xl font-semibold mt-10 mb-4">{{ $area }}</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {{ $group := where $pages "Params.area" $area }}
-        {{ if eq (len $group) 0 }}
-        {{ $group = where $pages "Params.area" nil }}
-        {{ end }}
-        {{ range sort $group "Params.weight" "asc" }}
-        {{ partial "card.html" . }}
-        {{ end }}
-    </div>
-    {{ end }}
-    {{ end }}
+  {{/* Collect areas from pages */}} {{ $pages := .Pages }} {{ $areas := slice
+  }} {{ range $pages }} {{ with .Params.area }} {{ $areas = $areas | append . }}
+  {{ else }} {{ $areas = $areas | append "Other" }} {{ end }} {{ end }} {{
+  $areas = $areas | uniq }} {{/* Define a preferred order similar to legacy */}}
+  {{ $order := slice "Computer Science" "Programming" "Web Development"
+  "Systems" "Security" "Data" "Economics" "Finance" "Other" }} {{ $sortedAreas
+  := slice }} {{ range $order }} {{ if in $areas . }} {{ $sortedAreas =
+  $sortedAreas | append . }} {{ end }} {{ end }} {{ range $areas }} {{ if not
+  (in $sortedAreas .) }} {{ $sortedAreas = $sortedAreas | append . }} {{ end }}
+  {{ end }} {{ if eq (len $sortedAreas) 0 }}
+  <p class="text-slate-600 dark:text-slate-300">
+    No areas defined yet. All courses:
+  </p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {{ range sort .Pages "Title" }} {{ partial "card.html" . }} {{ end }}
+  </div>
+  {{ else }} {{ range $sortedAreas }} {{ $area := . }}
+  <h2 class="text-2xl font-semibold mt-10 mb-4">{{ $area }}</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {{ $group := where $pages "Params.area" $area }} {{ if eq (len $group) 0 }}
+    {{ $group = where $pages "Params.area" nil }} {{ end }} {{ range sort $group
+    "Params.weight" "asc" }} {{ partial "card.html" . }} {{ end }}
+  </div>
+  {{ end }} {{ end }}
 </section>
 {{ end }}

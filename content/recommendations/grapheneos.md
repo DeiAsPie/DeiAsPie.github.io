@@ -13,4 +13,4 @@ GrapheneOS is the best choice when it comes to privacy and security. GrapheneOS 
 
 **Requirements:** Google Pixel device (latest models recommended)
 
-*If you can't get a pixel then avoid using ROMs that require you to keep the bootloader unlocked and stick to your stock ROM*.
+_If you can't get a pixel then avoid using ROMs that require you to keep the bootloader unlocked and stick to your stock ROM_.

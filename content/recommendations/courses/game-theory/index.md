@@ -12,4 +12,3 @@ aliases: ["/recommendations/game-theory-with-ben-polak/"]
 ---
 
 A foundational series from Yale University that demystifies strategic interaction and rational choice. Great for CS, economics, and decision-making.
-

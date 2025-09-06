@@ -12,6 +12,7 @@ summary: "Privacy-focused VPN with anonymous account creation and cryptocurrency
 Mullvad is a fast and inexpensive VPN with a serious focus on transparency and security. They have been in operation since 2009. Mullvad is based in Sweden.
 
 **Key Features:**
+
 - **Highly Recommended** for privacy
 - Fixed pricing: €5/month for everyone
 - No personal information required for account creation

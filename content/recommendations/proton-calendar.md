@@ -12,6 +12,7 @@ summary: "Encrypted calendar service with automatic end-to-end encryption of all
 Proton Calendar, an encrypted calendar service, is accessible to Proton users through web or mobile applications.
 
 **Key Features:**
+
 - Automatic end-to-end encryption of all data
 - Sharing capabilities with other Proton users
 - Import/export options for migrating from other services

@@ -12,6 +12,7 @@ summary: "End-to-end encrypted cloud storage by the makers of Proton Mail."
 Proton Drive is an end-to-end encrypted general file storage service by the popular encrypted email provider Proton Mail.
 
 **Key Features:**
+
 - End-to-end encryption for all files
 - Integration with other Proton services
 - Based in Switzerland with strong privacy laws

@@ -12,8 +12,9 @@ summary: "Open-source online office suite with zero-knowledge encryption."
 CryptPad provides an open-source, full-fledged office suite with all the tools necessary for productive collaboration.
 
 **Applications Include:**
+
 - Rich Text documents
-- Spreadsheets  
+- Spreadsheets
 - Code/Markdown editor
 - Kanban boards
 - Slides/Presentations
@@ -21,6 +22,7 @@ CryptPad provides an open-source, full-fledged office suite with all the tools n
 - Polls
 
 **Key Features:**
+
 - Zero-knowledge encryption - even the server can't read your documents
 - Real-time collaboration with color-coded authors
 - Chat, contacts, and comment systems

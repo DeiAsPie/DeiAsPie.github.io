@@ -12,6 +12,7 @@ summary: "A user-friendly Linux distribution perfect for beginners migrating fro
 Fedora is an operating system developed as a community project and sponsored by Red Hat (a subsidiary of IBM). It prefers Flatpak as a dominant packaging style. It follows a semi-rolling release cycle. Each Fedora release is supported for one year, with a new version released every 6 months.
 
 **Key Features:**
+
 - Very up to date both in terms of applications and the Linux kernel itself
 - Excellent for beginners transitioning from Windows or macOS
 - Strong focus on free and open-source software

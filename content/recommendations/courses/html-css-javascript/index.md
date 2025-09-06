@@ -11,4 +11,3 @@ aliases: ["/recommendations/html-css-and-javascript/"]
 ---
 
 A practical intro to front-end basics with responsive design and DOM scripting.
-

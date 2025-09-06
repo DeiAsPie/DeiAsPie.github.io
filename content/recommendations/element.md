@@ -12,6 +12,7 @@ summary: "Decentralized messaging on the Matrix network - no phone number requir
 Element is the best client for the Matrix network. The Matrix open standard is an open-source audited standard for secure, decentralized, real-time communication.
 
 **Key Features:**
+
 - Doesn't require phone number or even email address in most cases
 - Most other services can be bridged to it, giving you a single place to get and send all your messages
 - Fully decentralized - no single point of failure

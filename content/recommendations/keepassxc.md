@@ -12,6 +12,7 @@ summary: "Offline password manager with complete control over your data."
 KeePass is a free open source password manager. Passwords can be stored in an encrypted database on your device, which can be unlocked with one master key.
 
 **Key Features:**
+
 - Completely offline - you control your data
 - Strong encryption with AES-256
 - Can also be used for 2FA/TOTP codes

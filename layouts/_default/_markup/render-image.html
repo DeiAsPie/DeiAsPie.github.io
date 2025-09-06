@@ -1,18 +1,22 @@
-{{/* Render hook for Markdown images. Route through responsive-image partial when possible. */}}
-{{- $src := .Destination -}}
-{{- $alt := .Text -}}
-{{- $title := .Title -}}
-{{- $page := .Page -}}
-{{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
-<img src="{{ $src }}" alt="{{ $alt | htmlEscape }}"{{ with $title }} title="{{ . | htmlEscape }}"{{ end }} loading="lazy" decoding="async" />
-{{- else -}}
-{{ partial "responsive-image.html" (dict
-  "Page" $page
-  "Src" $src
-  "Alt" (or $alt $title)
-  "Class" "w-full"
-  "Widths" (slice 320 480 640 800 1024)
-  "Sizes" "(max-width: 800px) 100vw, 800px"
-  "FetchPriority" "auto"
-) }}
-{{- end -}}
+{{/* Render hook for Markdown images. Route through responsive-image partial
+when possible. */}} {{- $src := .Destination -}} {{- $alt := .Text -}} {{-
+$title := .Title -}} {{- $page := .Page -}} {{- if or (hasPrefix $src "http://")
+(hasPrefix $src "https://") -}}
+<img
+  src="{{ $src }}"
+  alt="{{ $alt | htmlEscape }}"
+  {{
+  with
+  $title
+  }}
+  title="{{ . | htmlEscape }}"
+  {{
+  end
+  }}
+  loading="lazy"
+  decoding="async"
+/>
+{{- else -}} {{ partial "responsive-image.html" (dict "Page" $page "Src" $src
+"Alt" (or $alt $title) "Class" "w-full" "Widths" (slice 320 480 640 800 1024)
+"Sizes" "(max-width: 800px) 100vw, 800px" "FetchPriority" "auto" ) }} {{- end
+-}}

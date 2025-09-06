@@ -1,6 +1,6 @@
 /**** Tailwind config for Hugo theme 'curated' ****/
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./content/**/*.{html,md}",
     "./layouts/**/*.html",

@@ -12,6 +12,7 @@ summary: "Self-hosted cloud platform with file storage, office suite, and collab
 Nextcloud is a suite of free and open-source client-server software for creating your own file hosting services on a private server you control or using others who do. It also comes with end-to-end encryption (E2EE).
 
 **Key Features:**
+
 - Complete self-hosted cloud solution
 - File storage and synchronization
 - Web office suite integration

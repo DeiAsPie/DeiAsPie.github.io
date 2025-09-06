@@ -46,9 +46,9 @@ link: "https://example.com"
 Key paths used by the site:
 
 - `content/` — Markdown content
-	- `content/recommendations/` — All recommendations
-	- `content/recommendations/courses/` — Courses hub. Each course is a page with an `area` for grouping
-	- `content/about/` — About page
+  - `content/recommendations/` — All recommendations
+  - `content/recommendations/courses/` — Courses hub. Each course is a page with an `area` for grouping
+  - `content/about/` — About page
 - `themes/curated/` — Theme templates and partials
 - `assets/css/main.css` — Tailwind entry and small component styles
 - `static/` — Images and static assets served as-is
@@ -60,12 +60,13 @@ Key paths used by the site:
 
 Responsive optimization (added):
 
-* Partial `responsive-image.html` auto-generates multiple widths (WebP + original) and emits `<picture>` with `srcset` & `sizes`.
-* Pages default widths: `320,480,640,800,1024`; cards: `200,320,400`.
-* Remote URLs & SVG images bypass processing.
-* Fallback letter tile is shown when no image exists.
+- Partial `responsive-image.html` auto-generates multiple widths (WebP + original) and emits `<picture>` with `srcset` & `sizes`.
+- Pages default widths: `320,480,640,800,1024`; cards: `200,320,400`.
+- Remote URLs & SVG images bypass processing.
+- Fallback letter tile is shown when no image exists.
 
 Manual usage (normally not required):
+
 ```go-html-template
 {{ partial "responsive-image.html" (dict
 	"Page" .
@@ -89,10 +90,11 @@ googleFonts = "family=Inter:wght@400;600;700&display=swap"
 ```
 
 The `fonts.html` partial:
-* Adds `preconnect` hints
-* Preloads the stylesheet + media swap (`media="print"` → onload set to `all`)
-* Ensures `display=swap`
-* Provides `<noscript>` fallback
+
+- Adds `preconnect` hints
+- Preloads the stylesheet + media swap (`media="print"` → onload set to `all`)
+- Ensures `display=swap`
+- Provides `<noscript>` fallback
 
 Remove the param to revert to system fonts only.
 
@@ -120,8 +122,9 @@ Each course is now a page bundle: `content/recommendations/courses/<slug>/index.
 title: "Introduction to Algorithms"
 categories: ["Courses"]
 tags: ["course"]
-area: "Computer Science"
- # Image optional; prefer placing `introToAlgo.png` in the same folder as `index.md` and omit `image:`
+area:
+  "Computer Science"
+  # Image optional; prefer placing `introToAlgo.png` in the same folder as `index.md` and omit `image:`
 summary: "MIT 6.006 lecture series."
 ```
 
@@ -167,6 +170,7 @@ Do not commit build artifacts. Git ignores:
 ## SEO Enhancements
 
 ### Dynamic Meta Descriptions
+
 `head.html` now derives the `<meta name="description">`, Open Graph, and Twitter description using this fallback chain:
 
 1. `params.description` (page front matter)
@@ -178,40 +182,48 @@ Do not commit build artifacts. Git ignores:
 Provide a concise `description` in front matter for best control. Leave blank to let Hugo synthesize one.
 
 ### Structured Data (JSON-LD)
+
 Added partial: `seo-jsonld.html` (auto-included for pages) emitting a Schema.org graph with:
 
-* `Article` (every page) – `headline`, `description`, `author`/`publisher` as site title, publish/modified dates if present.
-* `Course` (pages under `/recommendations/courses/`) – `name`, `description`, `provider`.
-* `BreadcrumbList` – Home → section segments → current page.
+- `Article` (every page) – `headline`, `description`, `author`/`publisher` as site title, publish/modified dates if present.
+- `Course` (pages under `/recommendations/courses/`) – `name`, `description`, `provider`.
+- `BreadcrumbList` – Home → section segments → current page.
 
 Extending: add additional types (e.g. `SoftwareApplication`) by updating the partial with conditional detection logic.
 
 ### Custom 404 Page
+
 `layouts/404.html` supplies a minimalist not-found page with helpful links (Home, Recommendations, Courses) and `noindex` to keep it out of search results.
 
 ### Open Graph Images
+
 OG image selection order:
+
 1. Front matter `image` (absolute or relative)
 2. First page bundle image resource
 3. Fallback: `/favicon.svg`
 
 ### Future SEO Ideas
-* Add `lastReviewed` for frequently updated guides.
-* Add `SoftwareApplication` schema for tool-specific recommendation pages (fields: name, operatingSystem, applicationCategory, offers).
-* Generate XML `news` or `courses` specific feeds if needed.
-* Add `sameAs` social profile links via site params.
+
+- Add `lastReviewed` for frequently updated guides.
+- Add `SoftwareApplication` schema for tool-specific recommendation pages (fields: name, operatingSystem, applicationCategory, offers).
+- Generate XML `news` or `courses` specific feeds if needed.
+- Add `sameAs` social profile links via site params.
 
 ## Accessibility (A11y)
 
 ### Enhanced Focus Styles
+
 Keyboard and assistive tech users benefit from clear focus indicators. The stylesheet adds a consistent `focus-visible` ring (`ring-2` + offset) across links, buttons, form inputs, nav items, and icon buttons. This avoids overriding the default outline for mouse users while offering strong contrast in both light and dark themes.
 
 Skip link (`#main`) receives a distinctive fuchsia ring for fast orientation when tabbing from the top of the page.
 
 ### Navigation Landmarks & Current Page
+
 Main and mobile navigation `<nav>` elements include `aria-label`. Active menu links now get `aria-current="page"` for screen reader announcement of the current location.
 
 ### Further A11y Ideas
-* Add `lang` attribute explicitly via a site param if multilingual variants are added.
-* Offer reduced motion preference (respect `prefers-reduced-motion`) for hover/transition-heavy elements.
-* Provide high-contrast toggle if expanding beyond current palette.
+
+- Add `lang` attribute explicitly via a site param if multilingual variants are added.
+- Offer reduced motion preference (respect `prefers-reduced-motion`) for hover/transition-heavy elements.
+- Provide high-contrast toggle if expanding beyond current palette.

@@ -1,10 +1,11 @@
 ---
-applyTo: '**'
+applyTo: "**"
 ---
 
 # Project Memory: DeiAsPie.github.io
 
 ## Project Overview
+
 - **Type**: Hugo static site generator with Tailwind CSS
 - **Purpose**: Privacy-focused tool and service recommendations site
 - **Domain**: https://deiaspie.github.io/
@@ -12,6 +13,7 @@ applyTo: '**'
 - **Focus**: Digital privacy, security, and escaping surveillance capitalism
 
 ## Technical Stack
+
 - **Static Site Generator**: Hugo Extended v0.149.0
 - **CSS Framework**: Tailwind CSS v4.1.12
 - **Node.js**: v22 (for build tools)
@@ -19,6 +21,7 @@ applyTo: '**'
 - **Package Manager**: npm
 
 ## Project Structure
+
 ```
 DeiAsPie.github.io/
 ├── .github/workflows/     # CI/CD automation
@@ -37,6 +40,7 @@ DeiAsPie.github.io/
 ```
 
 ## Key Features
+
 1. **Content Model**: Page bundles with minimal front matter
 2. **Image Optimization**: Responsive images with WebP conversion
 3. **SEO**: JSON-LD structured data, Open Graph, meta descriptions
@@ -45,6 +49,7 @@ DeiAsPie.github.io/
 6. **Dark Mode**: Default with localStorage persistence
 
 ## Content Categories
+
 - Privacy tools (browsers, VPNs, email, messaging)
 - Security applications (password managers, authentication)
 - Open source alternatives (office suites, operating systems)
@@ -52,6 +57,7 @@ DeiAsPie.github.io/
 - Digital sovereignty resources
 
 ## Build & Deployment Process
+
 1. **Local Development**: `hugo server -D`
 2. **CSS Build**: `npm run build:css` (Tailwind compilation)
 3. **Production Build**: `hugo --minify --gc`
@@ -62,6 +68,7 @@ DeiAsPie.github.io/
    - Deploys to GitHub Pages
 
 ## Key Configuration
+
 - **Base URL**: https://deiaspie.github.io/
 - **Title**: "DeiAsPie - Privacy & Security Recommendations"
 - **Theme**: curated (custom)
@@ -69,6 +76,7 @@ DeiAsPie.github.io/
 - **Prefetch**: /recommendations/, /recommendations/courses/
 
 ## Content Guidelines
+
 - Use page bundles (folder + index.md + images)
 - Minimal front matter (title, link required)
 - Auto-generated summaries from first sentence
@@ -76,6 +84,7 @@ DeiAsPie.github.io/
 - Tags and categories for organization
 
 ## Navigation Structure
+
 1. Home (/)
 2. All Recommendations (/recommendations/)
 3. Courses (/recommendations/courses/)
@@ -84,6 +93,7 @@ DeiAsPie.github.io/
 6. About (/about/)
 
 ## User Persona: DeiAsPie
+
 - Privacy advocate and educator
 - Creates content about digital sovereignty
 - Active on LBRY/Odysee platform
@@ -91,6 +101,7 @@ DeiAsPie.github.io/
 - Focuses on practical privacy solutions for all skill levels
 
 ## Development Notes
+
 - Hugo Extended required for image processing
 - Tailwind CSS v4+ with CLI compilation
 - Custom theme with responsive design

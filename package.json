@@ -5,15 +5,18 @@
   "scripts": {
     "dev": "hugo server -D",
     "build:css": "npx @tailwindcss/cli -i ./assets/css/main.css -o ./assets/gen/tailwind.css --minify",
-  "build": "hugo",
-  "build:prod": "npm run build:css && hugo --minify --gc",
-  "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\""
+    "build": "hugo",
+    "build:prod": "npm run build:css && hugo --minify --gc",
+    "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\"",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindcss/typography": "^0.5.16",
     "postcss": "^8.5.6",
+    "prettier": "^3.3.3",
+    "prettier-plugin-go-template": "^0.0.15",
     "tailwindcss": "^4.1.12"
   }
 }

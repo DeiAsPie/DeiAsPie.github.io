@@ -12,6 +12,7 @@ summary: "Privacy-focused DNS service operated by a Swiss non-profit foundation.
 Quad9 is a free service that replaces your default ISP or enterprise Domain Name Server (DNS) configuration. They have a strict Zero-logging policy offering DNS over HTTPS (DoH) and DNS over TLS (DoT), with QNAME minimization.
 
 **Key Features:**
+
 - **Only global public resolver operated not-for-profit, in the public benefit**
 - Headquartered in Zurich, Switzerland
 - Subject to Swiss privacy law (protection extends worldwide)

@@ -12,6 +12,7 @@ summary: "Audited VPN service with cryptocurrency support and open-source client
 IVPN is a VPN service offered by Privatus Limited based in Gibraltar. Privatus Limited has been independently audited by cure53 and has undergone a no-logging audit and a comprehensive pentest report.
 
 **Key Features:**
+
 - Accept Bitcoin, Monero, and Cash as payment methods
 - All clients are open source
 - Independently audited for security and no-logs policy

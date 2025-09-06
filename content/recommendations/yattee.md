@@ -12,6 +12,7 @@ summary: "Privacy-focused YouTube client for iOS, tvOS, and macOS."
 Yattee is a privacy-focused video player for iOS, tvOS, and macOS that is both free and open-source, tailored for YouTube.
 
 **Key Features:**
+
 - Subscription list stored locally on your device
 - No tracking or data collection
 - Works on iPhone, iPad, Apple TV, and Mac

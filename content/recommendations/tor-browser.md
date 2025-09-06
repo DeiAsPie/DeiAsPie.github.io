@@ -12,6 +12,7 @@ summary: "The ultimate privacy browser for anonymous web browsing through the To
 Tor Browser is the choice if you need anonymity. This browser provides you with access to the Tor Bridges and Tor Network, along with extensions that can be automatically configured to fit its three security levels - **Standard, Safer and Safest**.
 
 **Key Features:**
+
 - Routes traffic through the Tor network for anonymity
 - Blocks trackers and ads by default
 - Three security levels for different threat models

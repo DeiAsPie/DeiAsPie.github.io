@@ -12,6 +12,7 @@ summary: "Independent search engine by Brave with its own index and privacy focu
 Brave Search is an independently indexed search engine by Brave that is optimized against Google. The company is based in the USA.
 
 **Key Features:**
+
 - Independent search index (not relying on Google or Bing)
 - Default search engine in Brave Browser
 - No personal information tracking

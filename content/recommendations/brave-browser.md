@@ -12,6 +12,7 @@ summary: "Chromium-based browser with built-in ad/tracker blocking and privacy f
 Brave Browser has some of the best privacy defaults and includes a built-in content blocker. Brave is built upon the Chromium web browser project, so it should feel familiar and have minimal website compatibility issues.
 
 **Key Features:**
+
 - Blocks ads and trackers by default
 - Built on Chromium for compatibility
 - Brave Shields for enhanced privacy protection

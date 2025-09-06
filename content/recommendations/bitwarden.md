@@ -12,6 +12,7 @@ summary: "Easy-to-use cloud password manager with optional self-hosting."
 Bitwarden is among the easiest and safest solutions to store all of your logins and passwords while conveniently keeping them synced between all of your devices.
 
 **Key Features:**
+
 - Easy synchronization across all devices
 - Free tier includes unlimited passwords and basic features
 - Open-source and regularly audited

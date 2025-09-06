@@ -1,19 +1,18 @@
-{{- $q := .Site.Params.googleFonts -}}
-{{- if $q }}
-{{- $query := $q | trim -}}
-{{- if not (findRE `(^|&)display=` $query) -}}
-{{- if gt (len $query) 0 -}}
-{{- $query = printf "%s&display=swap" $query -}}
-{{- else -}}
-{{- $query = "display=swap" -}}
-{{- end -}}
-{{- end -}}
-{{- $cssURL := printf "https://fonts.googleapis.com/css2?%s" $query -}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="{{ $cssURL }}">
-<link rel="stylesheet" href="{{ $cssURL }}" media="print" onload="this.media='all'">
+{{- $q := .Site.Params.googleFonts -}} {{- if $q }} {{- $query := $q | trim -}}
+{{- if not (findRE `(^|&)display=` $query) -}} {{- if gt (len $query) 0 -}} {{-
+$query = printf "%s&display=swap" $query -}} {{- else -}} {{- $query =
+"display=swap" -}} {{- end -}} {{- end -}} {{- $cssURL := printf
+"https://fonts.googleapis.com/css2?%s" $query -}}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="{{ $cssURL }}" />
+<link
+  rel="stylesheet"
+  href="{{ $cssURL }}"
+  media="print"
+  onload="this.media='all'"
+/>
 <noscript>
-    <link rel="stylesheet" href="{{ $cssURL }}">
+  <link rel="stylesheet" href="{{ $cssURL }}" />
 </noscript>
 {{- end -}}

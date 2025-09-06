@@ -1,12 +1,12 @@
 ---
 title: MIT 14.01 Principles of Microeconomics, Fall 2018
-date: '2024-04-08'
+date: "2024-04-08"
 draft: false
 categories:
-- Finance
+  - Finance
 tags:
-- economics
-- course
+  - economics
+  - course
 link: https://ocw.mit.edu/14-01F18
 image: https://i.ytimg.com/vi/_OkTw766oCs/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLABeHR2U_J3D4YsSULFrtnPz_4q5g
 summary: This introductory undergraduate course covers the fundamentals of microeconomics.

@@ -12,4 +12,3 @@ aliases: ["/recommendations/advanced-algorithms/"]
 ---
 
 Deep dive into streaming algorithms, dimensionality reduction, and more. For those comfortable with algorithmic fundamentals.
-

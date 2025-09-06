@@ -1,8 +1,21 @@
-{{/* Render hook for Markdown links. Add rel security attrs for external links; keep internal links clean. */}}
-{{- $u := .Destination | safeURL -}}
-{{- $isAbs := or (hasPrefix $u "http://") (hasPrefix $u "https://") -}}
-{{- if $isAbs -}}
-<a href="{{ $u }}" rel="noopener noreferrer"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{/* Render hook for Markdown links. Add rel security attrs for external links;
+keep internal links clean. */}} {{- $u := .Destination | safeURL -}} {{- $isAbs
+:= or (hasPrefix $u "http://") (hasPrefix $u "https://") -}} {{- if $isAbs -}}
+<a
+  href="{{ $u }}"
+  rel="noopener noreferrer"
+  {{
+  with
+  .Title
+  }}
+  title="{{ . }}"
+  {{
+  end
+  }}
+  >{{ .Text | safeHTML }}</a
+>
 {{- else -}}
-<a href="{{ $u | relURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+<a href="{{ $u | relURL }}" {{ with .Title }} title="{{ . }}" {{ end }}
+  >{{ .Text | safeHTML }}</a
+>
 {{- end -}}

@@ -11,4 +11,3 @@ aliases: ["/recommendations/microeconomics/"]
 ---
 
 Supply-demand, elasticity, consumer theory, and market structures explained clearly by MIT.
-

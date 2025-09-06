@@ -12,7 +12,8 @@ summary: "The gold standard for private messaging with military-grade encryption
 Signal is a mobile app developed by Signal Messenger LLC. Supported by **a 501c3 nonprofit organization**. The app provides instant messaging, as well as voice, and video calling. All communications are end-to-end encrypted unless you choose to send as SMS.
 
 **Key Features:**
-- Protocol is the gold standard for encryption 
+
+- Protocol is the gold standard for encryption
 - Has been independently audited
 - Now supports User Names for communications without exchanging phone numbers
 - Requires phone number but easy to begin with

@@ -12,6 +12,7 @@ summary: "Open-source note-taking app with end-to-end encryption and Markdown su
 Joplin is a free, open-source, and fully-featured note-taking and to-do application which can handle a large number of markdown notes organized into notebooks and tags.
 
 **Key Features:**
+
 - End-to-end encryption for all notes
 - Markdown support with live preview
 - Synchronization through Nextcloud, Dropbox, and more

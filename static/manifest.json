@@ -1,0 +1,16 @@
+{
+  "name": "DeiAsPie - Privacy & Security Recommendations",
+  "short_name": "DeiAsPie",
+  "description": "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
