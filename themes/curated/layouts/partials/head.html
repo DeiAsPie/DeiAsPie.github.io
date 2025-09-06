@@ -84,13 +84,15 @@
 <meta name="twitter:image" content="{{ $ogimg }}" />
 <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}index.xml" title="RSS" />
 {{ partial "fonts.html" . }}
-{{ with .Site.Params.prefetch }}
-{{ $current := $.RelPermalink }}
-{{ range . }}
-{{ if ne . $current }}
-<link rel="prefetch" href="{{ . | relURL }}" as="document" />
-{{ end }}
-{{ end }}
+{{ if .IsHome }}
+    {{ with .Site.Params.prefetch }}
+        {{ $current := $.RelPermalink }}
+        {{ range . }}
+            {{ if ne . $current }}
+                <link rel="prefetch" href="{{ . | relURL }}" as="document" />
+            {{ end }}
+        {{ end }}
+    {{ end }}
 {{ end }}
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}">
 {{/* Structured data JSON-LD */}}

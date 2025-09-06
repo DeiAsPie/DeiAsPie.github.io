@@ -15,6 +15,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    // Tailwind v4: Register plugins in CSS via `@plugin` for best results.
   ],
 };

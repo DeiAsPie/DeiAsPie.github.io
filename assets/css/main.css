@@ -1,5 +1,13 @@
 /* Tailwind v4 CSS entrypoint */
+@config "../../tailwind.config.js";
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Tell Tailwind where to scan for class usage (v4) */
+@source "./content/**/*.{html,md}";
+@source "./layouts/**/*.html";
+@source "./themes/curated/layouts/**/*.html";
+@source "./assets/js/**/*.js";
 
 /* Use class-based dark mode: apply `dark:` utilities when `.dark` is on an ancestor */
 @custom-variant dark (&:where(.dark, .dark *));

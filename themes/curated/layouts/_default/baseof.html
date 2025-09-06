@@ -16,6 +16,10 @@
             // Initialize UI (theme toggle + mobile menu) in a robust way.
             // Add minimal console diagnostics so we can see whether the init runs in production.
             (function () {
+                var __DEV__ = "{{ if hugo.IsServer }}true{{ else }}false{{ end }}" === 'true';
+                if (!__DEV__) {
+                    try { console.log = function(){}; } catch (e) {}
+                }
                 function initUI() {
                     try {
                         console.log("initUI: running", { readyState: document.readyState });
@@ -24,9 +28,7 @@
                     // Theme toggle: cycle Light → Dark → Auto; icons switch via CSS (dark: classes)
                     var btn = document.getElementById("theme-toggle");
                     if (btn) {
-                        try {
-                            console.log("initUI: found theme-toggle button");
-                        } catch (e) {}
+                        try { console.log("initUI: found theme-toggle button"); } catch (e) {}
 
                         function getPref() {
                             try { return localStorage.getItem("theme") || "dark"; } catch (e) { return "dark"; }
@@ -71,18 +73,14 @@
                             try { console.log("theme-toggle: click - after", { htmlClass: document.documentElement.className, ariaPressed: btn.getAttribute("aria-pressed") }); } catch (e) {}
                         });
                     } else {
-                        try {
-                            console.log("initUI: theme-toggle button not found");
-                        } catch (e) {}
+                        try { console.log("initUI: theme-toggle button not found"); } catch (e) {}
                     }
 
                     // Mobile menu toggle
                     var toggle = document.getElementById("mobile-menu-toggle");
                     var menu = document.getElementById("mobile-menu");
                     if (toggle && menu) {
-                        try {
-                            console.log("initUI: found mobile menu toggle and menu");
-                        } catch (e) {}
+                        try { console.log("initUI: found mobile menu toggle and menu"); } catch (e) {}
 
                         function getFocusable(container){
                             return container.querySelectorAll('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
@@ -128,9 +126,7 @@
                         window.addEventListener("resize", handleResize);
                         handleResize(); // Call once on load
                     } else {
-                        try {
-                            console.log("initUI: mobile menu toggle or menu not found", { toggle: !!toggle, menu: !!menu });
-                        } catch (e) {}
+                        try { console.log("initUI: mobile menu toggle or menu not found", { toggle: !!toggle, menu: !!menu }); } catch (e) {}
                     }
 
                     // Mark UI ready to allow theme transition effects after first paint
