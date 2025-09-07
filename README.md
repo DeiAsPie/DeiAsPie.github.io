@@ -227,3 +227,47 @@ Main and mobile navigation `<nav>` elements include `aria-label`. Active menu li
 - Add `lang` attribute explicitly via a site param if multilingual variants are added.
 - Offer reduced motion preference (respect `prefers-reduced-motion`) for hover/transition-heavy elements.
 - Provide high-contrast toggle if expanding beyond current palette.
+
+## Continuous Integration (CI)
+
+- Builds Tailwind CSS and the site, runs Python tests (pytest), and enforces a CSS size budget (current size +15%).
+- Runs Lighthouse audits and Axe (axe-core CLI) on key pages.
+- Blocking thresholds (owner-selected): Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90. Artifacts are uploaded to `ci/lighthouse/` and `ci/pa11y/`.
+
+### Run audits locally
+
+```fish
+# serve production-like site in one terminal
+hugo server -D &
+
+# Lighthouse (writes to ci/lighthouse)
+npx -y @lhci/cli autorun --config=ci/lighthouserc.json
+
+# Axe (serious/critical only in CI)
+npx -y @axe-core/cli http://localhost:1313/
+```
+
+## CSP rollout
+
+Goldmark is configured with `unsafe = true` (raw HTML allowed). We mitigate via a meta CSP in report-only mode first:
+
+```
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint">
+```
+
+To enforce later, progressively remove `'unsafe-inline'` by moving inline scripts/styles to external files and relaxing directives for required external services (fonts, analytics) as needed.
+
+## Images and LCP preloading
+
+- `layouts/partials/responsive-image.html` generates AVIF/WebP with width/height, lazy by default.
+- Set `Preload=true` for hero images to emit `<link rel="preload" as="image">` and consider `FetchPriority` = `high`.
+
+## Badges & Versions
+
+Add the CI badge after the workflow is on default branch:
+
+```
+![CI](https://github.com/<user>/<repo>/actions/workflows/ci.yml/badge.svg)
+```
+
+This project prefers latest stable tool versions (Node LTS, Hugo extended latest, GitHub Actions latest major). CI pins major ranges only.

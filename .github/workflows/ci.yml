@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test-audit:
+    name: Build, test, and audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        node-version: [22.x]
+        python-version: ["3.11"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install Node dependencies
+        shell: bash
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build CSS (Tailwind)
+        run: npm run build:css
+
+      - name: Compute CSS size and set budget (current * 1.15)
+        id: csssize
+        run: |
+          node scripts/check_css_size.js --print --bytes > css-size.txt
+          SIZE_BYTES=$(cat css-size.txt)
+          # Compute KiB to 1 decimal and budget (15% headroom)
+          node -e "const s=parseInt(process.env.SIZE,10); const kib=(s/1024); const bud= kib*1.15; console.log(kib.toFixed(1)); console.error(bud.toFixed(1));" SIZE=$SIZE_BYTES 1> css-size-kib.txt 2> css-budget-kib.txt
+          echo "size_kib=$(cat css-size-kib.txt)" >> "$GITHUB_OUTPUT"
+          echo "budget_kib=$(cat css-budget-kib.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Enforce CSS size budget
+        env:
+          CSS_BUDGET_KIB: ${{ steps.csssize.outputs.budget_kib }}
+        run: node scripts/check_css_size.js
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install pytest
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      - name: Build site (production)
+        run: hugo --minify --gc
+
+      - name: Start static server
+        run: npx -y http-server ./public -p 8080 &
+
+      - name: Wait for server
+        run: |
+          for i in {1..10}; do
+            if curl -sSf http://localhost:8080 >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          echo "Server did not start in time" >&2
+          exit 1
+
+      - name: Run Lighthouse audits (blocking)
+        env:
+          LH_URLS: http://localhost:8080/,http://localhost:8080/about/,http://localhost:8080/recommendations/
+          LH_MIN_PERF: "90"
+          LH_MIN_A11Y: "90"
+          LH_MIN_SEO: "90"
+          LH_MIN_BP: "90"
+        run: node scripts/run_lighthouse.mjs
+
+      - name: Run Axe (axe-core) accessibility checks (serious/critical)
+        env:
+          AXE_URLS: http://localhost:8080/,http://localhost:8080/about/,http://localhost:8080/recommendations/
+        run: node scripts/run_axe.mjs
+
+      - name: Upload build artifact (public)
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-public
+          path: public/
+
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: audits
+          path: |
+            ci/lighthouse/*.html
+            ci/lighthouse/*.json
+            ci/axe/*.json

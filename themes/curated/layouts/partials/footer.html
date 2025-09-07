@@ -1,9 +1,17 @@
-<footer class="py-10 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-500">
+<footer
+  class="py-10 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-300"
+>
   <div class="flex items-center justify-between py-4">
     <p>© {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
     <div class="flex items-center gap-4">
       <a class="nav-link" href="{{ .Site.BaseURL }}index.xml">RSS</a>
-      <a class="nav-link" href="https://github.com/{{ .Site.Params.github | default "DeiAsPie" }}" target="_blank" rel="noopener">GitHub</a>
+      <a
+        class="nav-link"
+        href='https://github.com/{{ .Site.Params.github | default "DeiAsPie" }}'
+        target="_blank"
+        rel="noopener"
+        >GitHub</a
+      >
     </div>
   </div>
 </footer>

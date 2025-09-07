@@ -1,55 +1,123 @@
-<a href="#main"
-  class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-slate-900 text-white dark:bg-white dark:text-slate-900 rounded px-3 py-1">Skip
-  to content</a>
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-slate-900 text-white dark:bg-white dark:text-slate-900 rounded px-3 py-1"
+  >Skip to content</a
+>
 <header
-  class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800/60">
+  class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800/60"
+>
   <div class="py-3 flex items-center justify-between">
-    {{/* NOTE: Home link: ensure no leading space before slash ("/").
-      Regression guard suggestion: search for href values that have a leading space
-      before the slash (e.g. look for patterns like: href contains a space then /).
-      Avoid including the raw bad substring in source to keep the guard effective. */}}
-    <a class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300"
-      href="{{ "/" | relURL }}">{{ .Site.Title }}</a>
+    {{/* NOTE: Home link: ensure no leading space before slash ("/"). Regression
+    guard suggestion: search for href values that have a leading space before
+    the slash (e.g. look for patterns like: href contains a space then /). Avoid
+    including the raw bad substring in source to keep the guard effective. */}}
+    <a
+      class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300"
+      href='{{ "/" | relURL }}'
+      >{{ .Site.Title }}</a
+    >
     <div class="flex items-center gap-3">
-      <nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
-        {{ $current := . }}
-        {{ range .Site.Menus.main }}
-        {{ $isActive := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq .URL $current.RelPermalink) }}
-        <a class="nav-link {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
-          href="{{ .URL | relURL }}" {{ if $isActive }}aria-current="page" {{ end }}>{{ .Name }}</a>
+      <nav
+        class="hidden md:flex items-center gap-6"
+        aria-label="Main navigation"
+      >
+        {{ $current := . }} {{ range .Site.Menus.main }} {{ $isActive := or
+        ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq
+        .URL $current.RelPermalink) }}
+        <a
+          class="nav-link {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
+          href="{{ .URL | relURL }}"
+          {{
+          if
+          $isActive
+          }}aria-current="page"
+          {{
+          end
+          }}
+          >{{ .Name }}</a
+        >
         {{ end }}
       </nav>
-  <button id="theme-toggle" class="icon-btn inline-flex" aria-label="Toggle theme" aria-pressed="false">
+      <button
+        id="theme-toggle"
+        class="icon-btn inline-flex"
+        aria-label="Toggle theme"
+        aria-pressed="false"
+      >
         <!-- Sun icon (shown in light) -->
-        <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 3v2m0 14v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+        <svg
+          class="h-5 w-5 dark:hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 3v2m0 14v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+          />
           <circle cx="12" cy="12" r="4" />
         </svg>
         <!-- Moon icon (shown in dark) -->
-        <svg class="h-5 w-5 hidden dark:inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        <svg
+          class="h-5 w-5 hidden dark:inline"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+          />
         </svg>
         <span class="sr-only">Theme</span>
       </button>
-  <button id="mobile-menu-toggle" class="icon-btn inline-flex md:hidden" aria-label="Toggle menu" aria-controls="mobile-menu"
-        aria-expanded="false">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M3 12h18M3 18h18" />
+      <button
+        id="mobile-menu-toggle"
+        class="icon-btn inline-flex md:hidden"
+        aria-label="Toggle menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 6h18M3 12h18M3 18h18"
+          />
         </svg>
       </button>
     </div>
   </div>
   <div id="mobile-menu" class="md:hidden hidden pb-3">
     <nav class="flex flex-col gap-2" aria-label="Mobile navigation">
-      {{ $current := . }}
-      {{ range .Site.Menus.main }}
-      {{ $isActive := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq .URL $current.RelPermalink) }}
-      <a class="nav-link px-2 py-1 rounded {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
-        href="{{ .URL | relURL }}" {{ if $isActive }}aria-current="page" {{ end }}>{{ .Name }}</a>
+      {{ $current := . }} {{ range .Site.Menus.main }} {{ $isActive := or
+      ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq
+      .URL $current.RelPermalink) }}
+      <a
+        class="nav-link px-2 py-1 rounded {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
+        href="{{ .URL | relURL }}"
+        {{
+        if
+        $isActive
+        }}aria-current="page"
+        {{
+        end
+        }}
+        >{{ .Name }}</a
+      >
       {{ end }}
     </nav>
   </div>

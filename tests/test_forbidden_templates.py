@@ -7,6 +7,9 @@ FORBIDDEN = [
     'href="{{ " /',
     'printf " /%s"',
     '" , "',
+    'onclick=',
+    'onload=',
+    'onerror=',
 ]
 
 INCLUDE_DIRS = [ROOT / "themes", ROOT / "layouts"]

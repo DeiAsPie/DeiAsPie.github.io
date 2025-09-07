@@ -9,11 +9,11 @@
       class="block px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
       href="{{ .Page.RelPermalink }}"
       >{{ .Page.LinkTitle }}
-      <span class="text-slate-500">({{ .Count }})</span></a
+  <span class="text-slate-600 dark:text-slate-300">({{ .Count }})</span></a
     >
   </li>
   {{ else }}
-  <li class="text-slate-500">No terms yet.</li>
+  <li class="text-slate-600 dark:text-slate-300">No terms yet.</li>
   {{ end }}
 </ul>
 {{ end }}

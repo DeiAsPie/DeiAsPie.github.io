@@ -6,12 +6,16 @@ $query = printf "%s&display=swap" $query -}} {{- else -}} {{- $query =
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="style" href="{{ $cssURL }}" />
-<link
-  rel="stylesheet"
-  href="{{ $cssURL }}"
-  media="print"
-  onload="this.media='all'"
-/>
+<script>
+  (function () {
+    try {
+      var l = document.createElement("link");
+      l.rel = "stylesheet";
+      l.href = "{{ $cssURL }}";
+      document.head.appendChild(l);
+    } catch (e) {}
+  })();
+</script>
 <noscript>
   <link rel="stylesheet" href="{{ $cssURL }}" />
 </noscript>

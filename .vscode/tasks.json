@@ -29,7 +29,7 @@
       "label": "Build CSS (Tailwind v4)",
       "type": "shell",
       "command": "npm run build:css",
-      "problemMatcher": ["$eslint-stylish"],
+      "isBackground": false,
       "group": "build"
     }
   ]

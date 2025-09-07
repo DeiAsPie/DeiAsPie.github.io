@@ -1,13 +1,11 @@
-{{/* Use prebuilt Tailwind CSS from assets/gen (built with class-based dark
-variant) */}} {{ $styles := resources.Get "gen/tailwind.css" }} {{ if not
+{{/* Copied from theme's head.html and extended: switch CSP to report-only
+rollout */}} {{ $styles := resources.Get "gen/tailwind.css" }} {{ if not
 hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }}
 <script>
-  // Set initial theme before paint to avoid FOUC (Light / Dark / Auto)
   (function () {
     try {
-      var pref = localStorage.getItem("theme"); // 'light' | 'dark' | 'auto' | null
+      var pref = localStorage.getItem("theme");
       if (!pref) {
-        // Default to dark if user hasn't chosen
         pref = "dark";
         localStorage.setItem("theme", pref);
       }
@@ -18,7 +16,6 @@ hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }}
       } else {
         document.documentElement.classList.remove("dark");
       }
-      // Keep in sync if user set 'auto' and OS changes later
       if (pref === "auto") {
         try {
           mql.addEventListener("change", function (e) {
@@ -33,21 +30,22 @@ hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }}
     }
   })();
 </script>
+{{/* Report-Only CSP to audit first; keep allowances for inline for now */}}
 <meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; report-to csp-endpoint; report-uri /csp-report-endpoint"
 />
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
-{{/* Dynamic meta description fallback chain */}} {{ $desc := "" }} {{ with
-.Params.description }}{{ $desc = . | plainify | htmlEscape }}{{ end }} {{ if and
-(eq $desc "") (.Params.summary) }}{{ $desc = (.Params.summary | plainify |
-htmlEscape) }}{{ end }} {{ if and (eq $desc "") (.Summary) }}{{ $desc =
-(.Summary | plainify | htmlEscape) }}{{ end }} {{ if and (eq $desc "")
-(.Site.Params.description) }}{{ $desc = (.Site.Params.description | plainify |
-htmlEscape) }}{{ end }} {{ if eq $desc "" }}{{ $desc = (.Site.Title | plainify |
-htmlEscape) }}{{ end }}
+{{ $desc := "" }} {{ with .Params.description }}{{ $desc = . | plainify |
+htmlEscape }}{{ end }} {{ if and (eq $desc "") (.Params.summary) }}{{ $desc =
+(.Params.summary | plainify | htmlEscape) }}{{ end }} {{ if and (eq $desc "")
+(.Summary) }}{{ $desc = (.Summary | plainify | htmlEscape) }}{{ end }} {{ if and
+(eq $desc "") (.Site.Params.description) }}{{ $desc = (.Site.Params.description
+| plainify | htmlEscape) }}{{ end }} {{ if eq $desc "" }}{{ $desc = (.Site.Title
+| plainify | htmlEscape) }}{{ end }}
 <meta name="description" content="{{ $desc }}" />
 <meta name="author" content="{{ .Site.Params.author }}" />
 <link rel="canonical" href="{{ .Permalink }}" />
@@ -55,9 +53,7 @@ htmlEscape) }}{{ end }}
 <link rel="apple-touch-icon" href='{{ "/favicon.svg" | relURL }}' />
 <meta name="theme-color" content="#0f172a" />
 
-<!-- Open Graph / Twitter -->
-{{ $absURL := .Permalink }} {{/* Use more specific type for leaf pages to
-improve previews */}}
+{{ $absURL := .Permalink }}
 <meta
   property="og:type"
   content="{{ if .IsPage }}article{{ else }}website{{ end }}"
@@ -69,13 +65,12 @@ improve previews */}}
 />
 <meta property="og:description" content="{{ $desc }}" />
 <meta property="og:site_name" content="{{ .Site.Title }}" />
-{{/* Derive OG image: prefer front-matter image (abs/local), else first page
-resource image, else favicon */}} {{ $ogimg := "" }} {{ if .Params.image }} {{
-if or (hasPrefix .Params.image "http://") (hasPrefix .Params.image "https://")
-}} {{ $ogimg = .Params.image }} {{ else }} {{ $ogimg = (.Params.image | absURL)
-}} {{ end }} {{ else }} {{ $res := .Resources.ByType "image" }} {{ with first 1
-$res }} {{ $first := index . 0 }} {{ $ogimg = ($first.Permalink) }} {{ else }}
-{{ $ogimg = ("/favicon.svg" | absURL) }} {{ end }} {{ end }}
+{{ $ogimg := "" }} {{ if .Params.image }} {{ if or (hasPrefix .Params.image
+"http://") (hasPrefix .Params.image "https://") }} {{ $ogimg = .Params.image }}
+{{ else }} {{ $ogimg = (.Params.image | absURL) }} {{ end }} {{ else }} {{ $res
+:= .Resources.ByType "image" }} {{ with first 1 $res }} {{ $first := index . 0
+}} {{ $ogimg = ($first.Permalink) }} {{ else }} {{ $ogimg = ("/favicon.svg" |
+absURL) }} {{ end }} {{ end }}
 <meta property="og:image" content="{{ $ogimg }}" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta
@@ -100,6 +95,5 @@ $res }} {{ $first := index . 0 }} {{ $ogimg = ($first.Permalink) }} {{ else }}
   href="{{ $styles.RelPermalink }}"
   integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}"
 />
-{{/* Structured data JSON-LD */}} {{ if and (not .IsHome) (not .IsNode) }} {{
-partial "seo-jsonld.html" . }} {{ else if .IsPage }} {{ partial
-"seo-jsonld.html" . }} {{ end }}
+{{ if and (not .IsHome) (not .IsNode) }} {{ partial "seo-jsonld.html" . }} {{
+else if .IsPage }} {{ partial "seo-jsonld.html" . }} {{ end }}
