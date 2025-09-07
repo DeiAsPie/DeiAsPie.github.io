@@ -61,21 +61,14 @@
   />
   {{ else }} {{/* If declared image missing, ignore and fall back to bundle
   resource */}} {{ $img = "" }} {{ end }} {{ end }} {{ end }} {{ if not $img }}
-  {{ $resources := .Resources.ByType "image" }}
-  {{ with index $resources 0 }}
-  {{ $base := . }}
-  {{ if ne (lower $base.MediaType.SubType) "svg" }}
-  {{ $widths := slice 320 480 640 800 1024 }}
-  {{ $webpSet := slice }}
-  {{ $fallbackSet := slice }}
-  {{/* prettier-ignore-start */}}
-  {{ range $w := $widths }}
-  {{ $webpVar := $base.Resize (printf "%dx webp q85" $w) }}
-  {{ $origVar := $base.Resize (printf "%dx q85" $w) }}
-  {{ $webpSet = $webpSet | append (printf "%s %dw" $webpVar.RelPermalink $w) }}
-  {{ $fallbackSet = $fallbackSet | append (printf "%s %dw" $origVar.RelPermalink $w) }}
-  {{ end }}
-  {{/* prettier-ignore-end */}}
+  {{ $resources := .Resources.ByType "image" }} {{ with index $resources 0 }} {{
+  $base := . }} {{ if ne (lower $base.MediaType.SubType) "svg" }} {{ $widths :=
+  slice 320 480 640 800 1024 }} {{ $webpSet := slice }} {{ $fallbackSet := slice
+  }} {{/* prettier-ignore-start */}} {{ range $w := $widths }} {{ $webpVar :=
+  $base.Resize (printf "%dx webp q85" $w) }} {{ $origVar := $base.Resize (printf
+  "%dx q85" $w) }} {{ $webpSet = $webpSet | append (printf "%s %dw"
+  $webpVar.RelPermalink $w) }} {{ $fallbackSet = $fallbackSet | append (printf
+  "%s %dw" $origVar.RelPermalink $w) }} {{ end }} {{/* prettier-ignore-end */}}
   {{ $largest := $base.Resize "1024x q85" }}
   <picture>
     <source

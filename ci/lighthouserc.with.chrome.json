@@ -9,9 +9,7 @@
       ],
       "settings": {
         "chromePath": "/home/user/.cache/ms-playwright/chromium-1187/chrome-linux/chrome",
-        "chromeFlags": [
-          "--headless=new"
-        ]
+        "chromeFlags": ["--headless=new"]
       }
     },
     "assert": {

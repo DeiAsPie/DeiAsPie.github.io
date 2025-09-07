@@ -23,10 +23,10 @@ for (const url of urls) {
   const out = `ci/axe/${safe}.json`;
   try {
     // Run axe and always exit 0; we’ll enforce severity in post-processing
-    execSync(
-      `npx -y @axe-core/cli ${url} --chromedriver-path= --save ${out}`,
-      { stdio: "inherit", shell: "/usr/bin/bash" },
-    );
+    execSync(`npx -y @axe-core/cli ${url} --chromedriver-path= --save ${out}`, {
+      stdio: "inherit",
+      shell: "/usr/bin/bash",
+    });
     // Post-process JSON to count impacts
     const data = JSON.parse(fs.readFileSync(out, "utf8"));
     const issues = (data.violations || []).filter((v) =>

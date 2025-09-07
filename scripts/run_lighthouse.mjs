@@ -14,14 +14,27 @@ fs.mkdirSync("ci/lighthouse", { recursive: true });
 
 function findPlaywrightChromium() {
   try {
-    const base = path.join(process.cwd(), "node_modules", "playwright", ".local-browsers");
+    const base = path.join(
+      process.cwd(),
+      "node_modules",
+      "playwright",
+      ".local-browsers",
+    );
     if (!fs.existsSync(base)) return null;
     const entries = fs.readdirSync(base, { withFileTypes: true });
     for (const e of entries) {
       if (!e.isDirectory() || !e.name.startsWith("chromium-")) continue;
       const candLinux = path.join(base, e.name, "chrome-linux", "chrome");
       if (fs.existsSync(candLinux)) return candLinux;
-      const candMac = path.join(base, e.name, "chrome-mac", "Chromium.app", "Contents", "MacOS", "Chromium");
+      const candMac = path.join(
+        base,
+        e.name,
+        "chrome-mac",
+        "Chromium.app",
+        "Contents",
+        "MacOS",
+        "Chromium",
+      );
       if (fs.existsSync(candMac)) return candMac;
       const candWin = path.join(base, e.name, "chrome-win", "chrome.exe");
       if (fs.existsSync(candWin)) return candWin;
@@ -51,13 +64,18 @@ function ensureChromiumAvailable() {
     // Look into Playwright cache: ~/.cache/ms-playwright/chromium-*/chrome-linux/chrome
     try {
       const home = process.env.HOME || process.env.USERPROFILE || ".";
-      const cacheBase = process.env.PLAYWRIGHT_BROWSERS_PATH || path.join(home, ".cache", "ms-playwright");
+      const cacheBase =
+        process.env.PLAYWRIGHT_BROWSERS_PATH ||
+        path.join(home, ".cache", "ms-playwright");
       if (fs.existsSync(cacheBase)) {
         const entries = fs.readdirSync(cacheBase, { withFileTypes: true });
         for (const e of entries) {
           if (!e.isDirectory() || !e.name.startsWith("chromium-")) continue;
           const p = path.join(cacheBase, e.name, "chrome-linux", "chrome");
-          if (fs.existsSync(p)) { chromePath = p; break; }
+          if (fs.existsSync(p)) {
+            chromePath = p;
+            break;
+          }
         }
       }
     } catch {}
@@ -71,12 +89,19 @@ function ensureChromiumAvailable() {
       "/usr/bin/chromium-browser",
     ];
     for (const c of candidates) {
-      try { if (fs.existsSync(c)) { chromePath = c; break; } } catch {}
+      try {
+        if (fs.existsSync(c)) {
+          chromePath = c;
+          break;
+        }
+      } catch {}
     }
   }
   if (!chromePath) {
     console.error("Chrome not found and Playwright Chromium not available.");
-    console.error("Please install Google Chrome/Chromium or run: npx -y playwright install chromium");
+    console.error(
+      "Please install Google Chrome/Chromium or run: npx -y playwright install chromium",
+    );
     process.exit(1);
   }
   return chromePath;
@@ -89,7 +114,9 @@ if (!chromePath) {
     const home = process.env.HOME || process.env.USERPROFILE || ".";
     const p = path.join(home, ".cache", "ms-playwright");
     if (fs.existsSync(p)) {
-      const entries = fs.readdirSync(p).filter((n) => n.startsWith("chromium-"));
+      const entries = fs
+        .readdirSync(p)
+        .filter((n) => n.startsWith("chromium-"));
       entries.sort();
       const last = entries[entries.length - 1];
       const bin = path.join(p, last, "chrome-linux", "chrome");
@@ -120,7 +147,10 @@ if (chromePath) {
     cfg.ci.collect.settings.chromePath = chromePath;
     cfg.ci.collect.settings.chromeFlags = ["--headless=new"]; // modern headless
     fs.mkdirSync("ci", { recursive: true });
-    fs.writeFileSync("ci/lighthouserc.with.chrome.json", JSON.stringify(cfg, null, 2));
+    fs.writeFileSync(
+      "ci/lighthouserc.with.chrome.json",
+      JSON.stringify(cfg, null, 2),
+    );
     cfgPath = "ci/lighthouserc.with.chrome.json";
   } catch (e) {
     // fallback to original cfgPath
@@ -128,8 +158,14 @@ if (chromePath) {
 }
 
 try {
-  execSync(`npx -y @lhci/cli collect --config=${cfgPath}`, { stdio: "inherit", env });
-  execSync(`npx -y @lhci/cli assert --config=${cfgPath}`, { stdio: "inherit", env });
+  execSync(`npx -y @lhci/cli collect --config=${cfgPath}`, {
+    stdio: "inherit",
+    env,
+  });
+  execSync(`npx -y @lhci/cli assert --config=${cfgPath}`, {
+    stdio: "inherit",
+    env,
+  });
 } catch (e) {
   console.error("Lighthouse CI failed");
   process.exit(1);
