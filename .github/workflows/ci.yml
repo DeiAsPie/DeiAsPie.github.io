@@ -39,10 +39,8 @@ jobs:
       - name: Compute CSS size and set budget (current * 1.15)
         id: csssize
         run: |
-          node scripts/check_css_size.js --print --bytes > css-size.txt
-          SIZE_BYTES=$(cat css-size.txt)
-          # Compute KiB to 1 decimal and budget (15% headroom)
-          node -e "const s=parseInt(process.env.SIZE,10); const kib=(s/1024); const bud= kib*1.15; console.log(kib.toFixed(1)); console.error(bud.toFixed(1));" SIZE=$SIZE_BYTES 1> css-size-kib.txt 2> css-budget-kib.txt
+          # Compute CSS KiB and a 15% headroom budget directly with Node
+          node -e "const fs=require('fs'); const b=fs.statSync('./assets/gen/tailwind.css').size; const kib=b/1024; const bud=kib*1.15; console.log(kib.toFixed(1)); console.error(bud.toFixed(1));" 1> css-size-kib.txt 2> css-budget-kib.txt
           echo "size_kib=$(cat css-size-kib.txt)" >> "$GITHUB_OUTPUT"
           echo "budget_kib=$(cat css-budget-kib.txt)" >> "$GITHUB_OUTPUT"
 
