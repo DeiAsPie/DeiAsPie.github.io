@@ -92,6 +92,9 @@ jobs:
           LH_MIN_BP: "90"
         run: node scripts/run_lighthouse.mjs
 
+      - name: Install Playwright Chromium (for Axe)
+        run: npx -y playwright install chromium
+
       - name: Run Axe (axe-core) accessibility checks (serious/critical)
         env:
           AXE_URLS: http://localhost:8080/,http://localhost:8080/about/,http://localhost:8080/recommendations/

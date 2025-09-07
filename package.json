@@ -9,9 +9,12 @@
     "build:prod": "npm run build:css && hugo --minify --gc",
     "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\"",
     "format": "prettier --write .",
-    "test": "pytest -q"
+    "test": "pytest -q",
+    "axe": "AXE_URLS='http://localhost:8080/' node scripts/run_axe.mjs"
   },
   "devDependencies": {
+    "axe-core": "^4.10.3",
+    "playwright": "^1.47.2",
     "@tailwindcss/cli": "^4.1.13",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/typography": "^0.5.16",
