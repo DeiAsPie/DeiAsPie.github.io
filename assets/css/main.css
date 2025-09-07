@@ -214,3 +214,15 @@ a[href="#main"]:focus-visible {
       box-shadow 200ms;
   }
 }
+
+/* Ensure explicit font-size for headings inside semantic sectioning elements
+   to avoid Lighthouse deprecated-API warnings when browsers change UA
+   defaults. Use Tailwind utilities so visual scale stays consistent. */
+@layer components {
+  article h1,
+  section h1,
+  nav h1,
+  aside h1 {
+    @apply text-3xl md:text-4xl;
+  }
+}

@@ -33,7 +33,7 @@ hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }}
 {{/* Report-Only CSP to audit first; keep allowances for inline for now */}}
 <meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; report-to csp-endpoint; report-uri /csp-report-endpoint"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; report-to csp-endpoint"
 />
 
 <meta charset="utf-8" />
