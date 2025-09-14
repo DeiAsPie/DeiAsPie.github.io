@@ -37,7 +37,7 @@ try {
     const safe = url.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "");
     const out = `ci/axe/${safe}.json`;
 
-    const context = await browser.newContext();
+    const context = await browser.newContext({ bypassCSP: true });
     const page = await context.newPage();
     try {
       await page.goto(url, { waitUntil: "networkidle" });
