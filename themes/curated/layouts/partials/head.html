@@ -1,12 +1,6 @@
 {{/* Use prebuilt Tailwind CSS from assets/gen (built with class-based dark
-variant) */}} {{ $styles := resources.Get "gen/tailwind.css" }} {{ if not
-hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }} {{
-$initTheme := resources.Get "js/init-theme.js" }}{{ if not hugo.IsServer }}{{
-$initTheme = $initTheme | minify | fingerprint }}{{ end }}
-<script
-  src="{{ $initTheme.RelPermalink }}"
-  integrity="{{ with $initTheme.Data.Integrity }}{{ . }}{{ end }}"
-></script>
+variant) */}} {{ partial "style" (dict "path" "gen/tailwind.css") }} {{ partial
+"script" (dict "path" "js/init-theme.js") }}
 <meta
   http-equiv="Content-Security-Policy"
   content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none';"
@@ -68,12 +62,6 @@ $res }} {{ $first := index . 0 }} {{ $ogimg = ($first.Permalink) }} {{ else }}
 {{ partial "fonts.html" . }} {{ if .IsHome }} {{ with .Site.Params.prefetch }}
 {{ $current := $.RelPermalink }} {{ range . }} {{ if ne . $current }}
 <link rel="prefetch" href="{{ . | relURL }}" as="document" />
-{{ end }} {{ end }} {{ end }} {{ end }}
-<link
-  rel="stylesheet"
-  href="{{ $styles.RelPermalink }}"
-  integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}"
-/>
-{{/* Structured data JSON-LD */}} {{ if and (not .IsHome) (not .IsNode) }} {{
-partial "seo-jsonld.html" . }} {{ else if .IsPage }} {{ partial
-"seo-jsonld.html" . }} {{ end }}
+{{ end }} {{ end }} {{ end }} {{ end }} {{/* Structured data JSON-LD */}} {{ if
+and (not .IsHome) (not .IsNode) }} {{ partial "seo-jsonld.html" . }} {{ else if
+.IsPage }} {{ partial "seo-jsonld.html" . }} {{ end }}

@@ -17,26 +17,8 @@
       <main id="main" class="py-10">{{ block "main" . }}{{ end }}</main>
       {{ partial "footer.html" . }}
     </div>
-    {{ $sw := resources.Get "js/sw-register.js" }}{{ if not hugo.IsServer }}{{
-    $sw = $sw | minify | fingerprint }}{{ end }}
-    <script
-      defer
-      src="{{ $sw.RelPermalink }}"
-      integrity="{{ with $sw.Data.Integrity }}{{ . }}{{ end }}"
-    ></script>
-    {{ $ui := resources.Get "js/init-ui.js" }}{{ if not hugo.IsServer }}{{ $ui =
-    $ui | minify | fingerprint }}{{ end }}
-    <script
-      defer
-      src="{{ $ui.RelPermalink }}"
-      integrity="{{ with $ui.Data.Integrity }}{{ . }}{{ end }}"
-    ></script>
-    {{ $prefetch := resources.Get "js/prefetch-nav.js" }}{{ if not hugo.IsServer
-    }}{{ $prefetch = $prefetch | minify | fingerprint }}{{ end }}
-    <script
-      defer
-      src="{{ $prefetch.RelPermalink }}"
-      integrity="{{ with $prefetch.Data.Integrity }}{{ . }}{{ end }}"
-    ></script>
+    {{ partial "script" (dict "path" "js/sw-register.js" "defer" true) }} {{
+    partial "script" (dict "path" "js/init-ui.js" "defer" true) }} {{ partial
+    "script" (dict "path" "js/prefetch-nav.js" "defer" true) }}
   </body>
 </html>

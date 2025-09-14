@@ -1,13 +1,7 @@
 {{/* Copied from theme's head.html and extended: switch CSP to report-only
-rollout */}} {{ $styles := resources.Get "gen/tailwind.css" }} {{ if not
-hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }} {{
-$initTheme := resources.Get "js/init-theme.js" }}{{ if not hugo.IsServer }}{{
-$initTheme = $initTheme | minify | fingerprint }}{{ end }}
-<script
-  src="{{ $initTheme.RelPermalink }}"
-  integrity="{{ with $initTheme.Data.Integrity }}{{ . }}{{ end }}"
-></script>
-{{/* Report-Only CSP to audit first; keep allowances for inline for now */}}
+rollout */}} {{ partial "style" (dict "path" "gen/tailwind.css") }} {{ partial
+"script" (dict "path" "js/init-theme.js") }} {{/* Report-Only CSP to audit
+first; keep allowances for inline for now */}}
 <meta
   http-equiv="Content-Security-Policy"
   content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; frame-ancestors 'none'; report-to csp-endpoint"
@@ -66,11 +60,6 @@ absURL) }} {{ end }} {{ end }}
 {{ partial "fonts.html" . }} {{ if .IsHome }} {{ with .Site.Params.prefetch }}
 {{ $current := $.RelPermalink }} {{ range . }} {{ if ne . $current }}
 <link rel="prefetch" href="{{ . | relURL }}" as="document" />
-{{ end }} {{ end }} {{ end }} {{ end }}
-<link
-  rel="stylesheet"
-  href="{{ $styles.RelPermalink }}"
-  integrity="{{ with $styles.Data.Integrity }}{{ . }}{{ end }}"
-/>
-{{ if and (not .IsHome) (not .IsNode) }} {{ partial "seo-jsonld.html" . }} {{
-else if .IsPage }} {{ partial "seo-jsonld.html" . }} {{ end }}
+{{ end }} {{ end }} {{ end }} {{ end }} {{ if and (not .IsHome) (not .IsNode) }}
+{{ partial "seo-jsonld.html" . }} {{ else if .IsPage }} {{ partial
+"seo-jsonld.html" . }} {{ end }}

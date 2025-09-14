@@ -1,0 +1,10 @@
+{{/* Partial: style.html - Renders a stylesheet link for a Hugo resource. Usage:
+{{ partial "style" (dict "path" "gen/tailwind.css") }} */}} {{ $path := .path }}
+{{ if not $path }} {{ errorf "partial 'style' requires a 'path' parameter" }} {{
+end }} {{ $res := resources.Get $path }} {{ if not hugo.IsServer }} {{ $res =
+$res | minify | fingerprint }} {{ end }}
+<link
+  rel="stylesheet"
+  href="{{ $res.RelPermalink }}"
+  integrity="{{ with $res.Data.Integrity }}{{ . }}{{ end }}"
+/>
