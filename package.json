@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "hugo server -D",
+    "dev": "hugo server --disableFastRender",
     "build:css": "npx @tailwindcss/cli -i ./assets/css/main.css -o ./assets/gen/tailwind.css --minify",
     "build": "hugo",
     "build:prod": "npm run build:css && hugo --minify --gc",

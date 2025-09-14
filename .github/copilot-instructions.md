@@ -14,170 +14,42 @@ This is a Hugo static site generator project focused on privacy/security tool re
 
 ### Essential Commands
 
-```bash
-# Development server (includes drafts)
-hugo server -D
+## AI Coding Guidelines — concise
 
-# Build Tailwind CSS (required before Hugo build)
-npm run build:css
+This Hugo-based static site (theme: `themes/curated/`) curates privacy/security recommendations. Keep edits minimal and follow existing content patterns and page-bundle structure.
 
-# Production build (CSS + Hugo with minification)
-npm run build:prod
+- Architecture highlights:
+  - Content = page bundles under `content/recommendations/` (e.g. `content/recommendations/tool/index.md` + images). Prefer bundles over single `.md` files.
+  - Tailwind v4 pipeline: source `assets/css/main.css` -> generated `assets/gen/tailwind.css` (built via `npm run build:css`).
+  - Hugo config: see `hugo.toml` (Goldmark `unsafe = true`, pagination `pagerSize = 12`, taxonomies `categories`/`tags`).
 
-# Run tests
-npm test  # Runs pytest on tests/
-```
+- Key developer workflows (explicit commands):
+  - Start dev server (drafts): `npm run dev` (runs `hugo server -D`).
+  - Build CSS: `npm run build:css` (required before local Hugo builds in many cases).
+  - Full prod build: `npm run build:prod` (runs CSS build then `hugo --minify --gc`).
+  - Run tests: `npm test` (executes `pytest -q` against `tests/`).
+  - Run Axe accessibility scan: `npm run axe` (expects a local server; see `scripts/run_axe.mjs`).
 
-### CSS Pipeline
+- Project conventions (do not change without coordinating):
+  - Use page bundles for any new recommendation or course page. Example: add `content/recommendations/my-tool/index.md` plus assets in the same folder.
+  - Omit `image` front matter to let the site auto-detect the first image in the bundle.
+  - Omit `summary` to auto-extract the first sentence.
+  - Course pages must include `area` front matter for grouping (e.g. `area: "Computer Science"`).
+  - Prefer Tailwind utilities over raw CSS; use `assets/css/main.css` only for component classes.
 
-- **Tailwind v4**: Uses `@tailwindcss/cli` with custom config
-- **Output**: `assets/gen/tailwind.css` (gitignored)
-- **Size Budget**: Enforced via `scripts/check_css_size.js`
-- **Content Scanning**: Configured for `content/`, `layouts/`, `themes/`
+- Template safety & tests:
+  - `tests/test_forbidden_templates.py` enforces forbidden patterns (inline event handlers, unsafe URL formatting). Follow its patterns when editing templates in `layouts/` or `themes/curated/`.
 
-### Testing & Quality
+- Useful file references (examples):
+  - Project config: `hugo.toml` (pagination, goldmark settings).
+  - Tailwind entry: `assets/css/main.css` and generated `assets/gen/tailwind.css`.
+  - Build/test scripts: `package.json` (scripts: `dev`, `build:css`, `build:prod`, `test`, `axe`).
+  - CI and audits: `ci/` (Lighthouse/axe configs) and `scripts/` (audit helpers).
 
-- **Python Tests**: `pytest` on `tests/` directory
-- **Accessibility**: Axe-core CLI audits via `scripts/run_axe.mjs`
-- **Performance**: Lighthouse CI with 90+ score requirements
-- **Template Security**: `tests/test_forbidden_templates.py` prevents unsafe patterns
+- Small, safe PR guidance:
+  - Run `npm run build:css` and `npm run dev` to smoke-test changes.
+  - Run `npm test` before opening a PR.
+  - Avoid changing global templates or `hugo.toml` without discussion; these affect CI and site behavior.
 
-## Content Model Patterns
-
-### Recommendations
-
-```yaml
----
-title: "Tool Name"
-link: "https://example.com"
-categories: ["Category"]
-tags: ["tag1", "tag2"]
+If anything here is unclear or you want expansion (examples, tests, CI rules), tell me which section to expand and I'll iterate.
 summary: "Brief description" # Optional: auto-extracted if omitted
----
-Content here...
-```
-
-### Courses
-
-```yaml
----
-title: "Course Name"
-categories: ["Courses"]
-tags: ["course"]
-area: "Computer Science" # Required for grouping
----
-Course description...
-```
-
-## Hugo Configuration Patterns
-
-### Key Settings (`hugo.toml`)
-
-- `unsafe = true` in Goldmark renderer (raw HTML allowed)
-- CSP in report-only mode during rollout
-- Taxonomy: `categories` and `tags`
-- Pagination: 12 items per page
-- Minification enabled
-
-### Template Structure
-
-- **Theme**: `themes/curated/` (custom layouts)
-- **Partials**: `layouts/partials/` for reusable components
-- **Responsive Images**: `responsive-image.html` partial handles WebP generation
-- **SEO**: Dynamic meta descriptions, JSON-LD structured data
-
-## Deployment & CI
-
-### GitHub Actions
-
-- Builds with Hugo Extended v0.148.2
-- Deploys to `gh-pages` branch
-- Runs Lighthouse, Axe, and CSS size checks
-- Blocking thresholds: Performance/Accessibility/SEO/Best Practices ≥90
-
-### Local Audit Commands
-
-```bash
-# Lighthouse audit (requires running server)
-npx @lhci/cli autorun --config=ci/lighthouserc.json
-
-# Axe accessibility scan
-npx @axe-core/cli http://localhost:1313/
-```
-
-## Security & Performance
-
-### CSP Strategy
-
-Currently report-only mode. Planned progression:
-
-1. Move inline scripts/styles to external files
-2. Remove `'unsafe-inline'` allowances
-3. Relax directives for required external services
-
-### Image Optimization
-
-- **Responsive Images**: Auto-generates multiple widths (WebP + original)
-- **Lazy Loading**: Default behavior
-- **Preloading**: Set `Preload=true` for hero images
-
-### PWA Features
-
-- Service worker in `static/sw.js`
-- Web app manifest in `static/manifest.json`
-- Pagefind search integration
-
-## Code Quality Standards
-
-### Template Security
-
-Forbidden patterns (enforced by tests):
-
-- `href="{{ " /` (unsafe URL construction)
-- `printf " /%s"` (unsafe string formatting)
-- `onclick=`, `onload=`, `onerror=` (inline event handlers)
-
-### CSS Organization
-
-- **Tailwind First**: Use utility classes over custom CSS
-- **Component Classes**: Define in `assets/css/main.css` when needed
-- **Dark Mode**: Use `dark:` prefix for theme variants
-
-### Content Guidelines
-
-- **Privacy-Focused**: All recommendations emphasize user sovereignty
-- **Platform Priorities**: Mobile-first security approach
-- **Critical Rules**: Social media avoidance, strong passwords, encryption
-
-## File Structure Reference
-
-```
-content/
-├── _index.md                 # Homepage
-├── about/                    # About section
-├── recommendations/          # Main content
-│   ├── _index.md            # Recommendations index
-│   ├── tool/                # Page bundle example
-│   │   ├── index.md
-│   │   └── logo.png
-│   └── courses/             # Course recommendations
-│       └── course-slug/
-│           ├── index.md
-│           └── image.png
-
-layouts/partials/             # Reusable components
-assets/css/main.css          # Tailwind entry + custom styles
-themes/curated/              # Custom Hugo theme
-scripts/                     # Build/test utilities
-ci/                          # Audit configurations
-```
-
-## Common Gotchas
-
-- **Always run `npm run build:css`** before Hugo builds
-- **Use page bundles** for new recommendations (not single .md files)
-- **Omit `image` field** to auto-detect bundle images
-- **Test with `hugo server -D`** to see draft content
-- **Check CSS size budget** after style changes
-- **Run audits locally** before pushing changes</content>
-  <parameter name="filePath">/home/user/Downloads/personal/DeiAsPie.github.io/.github/copilot-instructions.md
