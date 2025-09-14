@@ -13,7 +13,7 @@ In an era where surveillance capitalism dominates and our personal data is treat
 
 Privacy isn't about having something to hide - it's about having something to protect. Your thoughts, your relationships, your personal growth, and your right to be yourself without constant monitoring and manipulation.
 
-As Edward Snowden said: _"Arguing that you don't care about the right to privacy because you have nothing to hide, is no different than saying you don't care about free speech because you have nothing to say."_
+As Edward Snowden said: _Arguing that you don't care about the right to privacy because you have nothing to hide, is no different than saying you don't care about free speech because you have nothing to say._
 
 ## What I Recommend
 
