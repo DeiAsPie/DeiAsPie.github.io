@@ -13,6 +13,7 @@ This is a Hugo static site generator project focused on privacy/security tool re
 ## Build & Development Workflow
 
 ### Essential Commands
+
 ```bash
 # Development server (includes drafts)
 hugo server -D
@@ -28,12 +29,14 @@ npm test  # Runs pytest on tests/
 ```
 
 ### CSS Pipeline
+
 - **Tailwind v4**: Uses `@tailwindcss/cli` with custom config
 - **Output**: `assets/gen/tailwind.css` (gitignored)
 - **Size Budget**: Enforced via `scripts/check_css_size.js`
 - **Content Scanning**: Configured for `content/`, `layouts/`, `themes/`
 
 ### Testing & Quality
+
 - **Python Tests**: `pytest` on `tests/` directory
 - **Accessibility**: Axe-core CLI audits via `scripts/run_axe.mjs`
 - **Performance**: Lighthouse CI with 90+ score requirements
@@ -42,33 +45,34 @@ npm test  # Runs pytest on tests/
 ## Content Model Patterns
 
 ### Recommendations
+
 ```yaml
 ---
 title: "Tool Name"
 link: "https://example.com"
 categories: ["Category"]
 tags: ["tag1", "tag2"]
-summary: "Brief description"  # Optional: auto-extracted if omitted
+summary: "Brief description" # Optional: auto-extracted if omitted
 ---
-
 Content here...
 ```
 
 ### Courses
+
 ```yaml
 ---
 title: "Course Name"
 categories: ["Courses"]
 tags: ["course"]
-area: "Computer Science"  # Required for grouping
+area: "Computer Science" # Required for grouping
 ---
-
 Course description...
 ```
 
 ## Hugo Configuration Patterns
 
 ### Key Settings (`hugo.toml`)
+
 - `unsafe = true` in Goldmark renderer (raw HTML allowed)
 - CSP in report-only mode during rollout
 - Taxonomy: `categories` and `tags`
@@ -76,6 +80,7 @@ Course description...
 - Minification enabled
 
 ### Template Structure
+
 - **Theme**: `themes/curated/` (custom layouts)
 - **Partials**: `layouts/partials/` for reusable components
 - **Responsive Images**: `responsive-image.html` partial handles WebP generation
@@ -84,12 +89,14 @@ Course description...
 ## Deployment & CI
 
 ### GitHub Actions
+
 - Builds with Hugo Extended v0.148.2
 - Deploys to `gh-pages` branch
 - Runs Lighthouse, Axe, and CSS size checks
 - Blocking thresholds: Performance/Accessibility/SEO/Best Practices ≥90
 
 ### Local Audit Commands
+
 ```bash
 # Lighthouse audit (requires running server)
 npx @lhci/cli autorun --config=ci/lighthouserc.json
@@ -101,17 +108,21 @@ npx @axe-core/cli http://localhost:1313/
 ## Security & Performance
 
 ### CSP Strategy
+
 Currently report-only mode. Planned progression:
+
 1. Move inline scripts/styles to external files
 2. Remove `'unsafe-inline'` allowances
 3. Relax directives for required external services
 
 ### Image Optimization
+
 - **Responsive Images**: Auto-generates multiple widths (WebP + original)
 - **Lazy Loading**: Default behavior
 - **Preloading**: Set `Preload=true` for hero images
 
 ### PWA Features
+
 - Service worker in `static/sw.js`
 - Web app manifest in `static/manifest.json`
 - Pagefind search integration
@@ -119,17 +130,21 @@ Currently report-only mode. Planned progression:
 ## Code Quality Standards
 
 ### Template Security
+
 Forbidden patterns (enforced by tests):
+
 - `href="{{ " /` (unsafe URL construction)
 - `printf " /%s"` (unsafe string formatting)
 - `onclick=`, `onload=`, `onerror=` (inline event handlers)
 
 ### CSS Organization
+
 - **Tailwind First**: Use utility classes over custom CSS
 - **Component Classes**: Define in `assets/css/main.css` when needed
 - **Dark Mode**: Use `dark:` prefix for theme variants
 
 ### Content Guidelines
+
 - **Privacy-Focused**: All recommendations emphasize user sovereignty
 - **Platform Priorities**: Mobile-first security approach
 - **Critical Rules**: Social media avoidance, strong passwords, encryption
@@ -165,4 +180,4 @@ ci/                          # Audit configurations
 - **Test with `hugo server -D`** to see draft content
 - **Check CSS size budget** after style changes
 - **Run audits locally** before pushing changes</content>
-<parameter name="filePath">/home/user/Downloads/personal/DeiAsPie.github.io/.github/copilot-instructions.md
+  <parameter name="filePath">/home/user/Downloads/personal/DeiAsPie.github.io/.github/copilot-instructions.md

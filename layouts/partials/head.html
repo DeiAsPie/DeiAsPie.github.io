@@ -1,39 +1,16 @@
 {{/* Copied from theme's head.html and extended: switch CSP to report-only
 rollout */}} {{ $styles := resources.Get "gen/tailwind.css" }} {{ if not
-hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }}
-<script>
-  (function () {
-    try {
-      var pref = localStorage.getItem("theme");
-      if (!pref) {
-        pref = "dark";
-        localStorage.setItem("theme", pref);
-      }
-      var mql = window.matchMedia("(prefers-color-scheme: dark)");
-      var effective = pref === "auto" ? (mql.matches ? "dark" : "light") : pref;
-      if (effective === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-      if (pref === "auto") {
-        try {
-          mql.addEventListener("change", function (e) {
-            var eff = e.matches ? "dark" : "light";
-            if (eff === "dark") document.documentElement.classList.add("dark");
-            else document.documentElement.classList.remove("dark");
-          });
-        } catch (e) {}
-      }
-    } catch (e) {
-      document.documentElement.classList.add("dark");
-    }
-  })();
-</script>
+hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }} {{
+$initTheme := resources.Get "js/init-theme.js" }}{{ if not hugo.IsServer }}{{
+$initTheme = $initTheme | minify | fingerprint }}{{ end }}
+<script
+  src="{{ $initTheme.RelPermalink }}"
+  integrity="{{ with $initTheme.Data.Integrity }}{{ . }}{{ end }}"
+></script>
 {{/* Report-Only CSP to audit first; keep allowances for inline for now */}}
 <meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; report-to csp-endpoint"
+  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; frame-ancestors 'none'; report-to csp-endpoint"
 />
 
 <meta charset="utf-8" />

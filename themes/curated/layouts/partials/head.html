@@ -1,41 +1,15 @@
 {{/* Use prebuilt Tailwind CSS from assets/gen (built with class-based dark
 variant) */}} {{ $styles := resources.Get "gen/tailwind.css" }} {{ if not
-hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }}
-<script>
-  // Set initial theme before paint to avoid FOUC (Light / Dark / Auto)
-  (function () {
-    try {
-      var pref = localStorage.getItem("theme"); // 'light' | 'dark' | 'auto' | null
-      if (!pref) {
-        // Default to dark if user hasn't chosen
-        pref = "dark";
-        localStorage.setItem("theme", pref);
-      }
-      var mql = window.matchMedia("(prefers-color-scheme: dark)");
-      var effective = pref === "auto" ? (mql.matches ? "dark" : "light") : pref;
-      if (effective === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-      // Keep in sync if user set 'auto' and OS changes later
-      if (pref === "auto") {
-        try {
-          mql.addEventListener("change", function (e) {
-            var eff = e.matches ? "dark" : "light";
-            if (eff === "dark") document.documentElement.classList.add("dark");
-            else document.documentElement.classList.remove("dark");
-          });
-        } catch (e) {}
-      }
-    } catch (e) {
-      document.documentElement.classList.add("dark");
-    }
-  })();
-</script>
+hugo.IsServer }} {{ $styles = $styles | minify | fingerprint }} {{ end }} {{
+$initTheme := resources.Get "js/init-theme.js" }}{{ if not hugo.IsServer }}{{
+$initTheme = $initTheme | minify | fingerprint }}{{ end }}
+<script
+  src="{{ $initTheme.RelPermalink }}"
+  integrity="{{ with $initTheme.Data.Integrity }}{{ . }}{{ end }}"
+></script>
 <meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self';"
+  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none';"
 />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -1,0 +1,18 @@
+{{- /* Partial: script.html Renders a script tag for a Hugo resource with
+optional `defer`. Usage: {{ partial "script" (dict "path" "js/init-ui.js"
+"defer" true) }} */ -}} {{- $path := .path -}} {{- if not $path -}} {{- errorf
+"partial 'script' requires a 'path' parameter" -}} {{- end -}} {{- $defer :=
+default false .defer -}} {{- $res := resources.Get $path -}} {{- if not
+hugo.IsServer -}} {{- $res = $res | minify | fingerprint -}} {{- end -}} {{- if
+$defer -}}
+<script
+  defer
+  src="{{ $res.RelPermalink }}"
+  integrity="{{ with $res.Data.Integrity }}{{ . }}{{ end }}"
+></script>
+{{- else -}}
+<script
+  src="{{ $res.RelPermalink }}"
+  integrity="{{ with $res.Data.Integrity }}{{ . }}{{ end }}"
+></script>
+{{- end -}}

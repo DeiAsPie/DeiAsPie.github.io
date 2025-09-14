@@ -5,18 +5,5 @@ $query = printf "%s&display=swap" $query -}} {{- else -}} {{- $query =
 "https://fonts.googleapis.com/css2?%s" $query -}}
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="style" href="{{ $cssURL }}" />
-<script>
-  (function () {
-    try {
-      var l = document.createElement("link");
-      l.rel = "stylesheet";
-      l.href = "{{ $cssURL }}";
-      document.head.appendChild(l);
-    } catch (e) {}
-  })();
-</script>
-<noscript>
-  <link rel="stylesheet" href="{{ $cssURL }}" />
-</noscript>
+<link rel="stylesheet" href="{{ $cssURL }}" />
 {{- end -}}
