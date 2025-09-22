@@ -15,7 +15,7 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.13",
     "@tailwindcss/postcss": "^4.1.13",
-    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/typography": "^0.5.18",
     "axe-core": "^4.10.3",
     "eslint": "^9.35.0",
     "playwright": "^1.47.2",
