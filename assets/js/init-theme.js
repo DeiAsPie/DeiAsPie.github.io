@@ -2,7 +2,7 @@
   try {
     var pref = localStorage.getItem("theme"); // 'light' | 'dark' | 'auto' | null
     if (!pref) {
-      pref = "dark";
+      pref = "auto";
       localStorage.setItem("theme", pref);
     }
     var mql = window.matchMedia("(prefers-color-scheme: dark)");

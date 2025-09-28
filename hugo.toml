@@ -4,6 +4,8 @@ languageCode = "en-us"
 theme = "curated"
 summaryLength = 24
 enableRobotsTXT = true
+cleanDestinationDir = true
+canonifyURLs = true
 
 [markup]
   [markup.goldmark]

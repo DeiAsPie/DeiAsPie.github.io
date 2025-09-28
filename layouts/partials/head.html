@@ -1,11 +1,11 @@
-{{/* Copied from theme's head.html and extended: switch CSP to report-only
-rollout */}} {{ partial "style" (dict "path" "gen/tailwind.css") }} {{ partial
-"script" (dict "path" "js/init-theme.js") }} {{/* Report-Only CSP to audit
-first; keep allowances for inline for now */}}
-<meta
-  http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https:; frame-ancestors 'none'; report-to csp-endpoint"
-/>
+{{/* Copied from theme's head.html and extended: hardened CSP rollout */}} {{
+partial "style" (dict "path" "gen/tailwind.css") }} {{ partial "script"
+(dict "path" "js/init-theme.js") }} {{ $styleSources := "'self'" }} {{
+$fontSources := "'self'" }} {{ if .Site.Params.googleFonts }} {{ $styleSources
+= printf "%s %s" $styleSources "https://fonts.googleapis.com" }} {{
+$fontSources = printf "%s %s" $fontSources "https://fonts.gstatic.com" }} {{
+end }} {{ $csp := printf "default-src 'self'; script-src 'self'; style-src %s; img-src 'self' data: https:; font-src %s; connect-src 'self'; frame-ancestors 'none'; report-to csp-endpoint" $styleSources $fontSources }}
+<meta http-equiv="Content-Security-Policy" content="{{ $csp }}" />
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
