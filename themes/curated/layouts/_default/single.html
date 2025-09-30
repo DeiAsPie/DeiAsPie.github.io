@@ -41,61 +41,18 @@
       <div class="toc">{{ .TableOfContents }}</div>
     </div>
   </nav>
-  {{ end }} {{ $img := .Params.image }} {{ if $img }} {{ if or (hasPrefix $img
-  "http://") (hasPrefix $img "https://") }}
-  <img
-    class="w-full max-h-72 object-contain mb-6"
-    src="{{ $img }}"
-    alt="{{ $.Title }} image"
-    loading="lazy"
-    decoding="async"
-  />
-  {{ else }} {{ $clean := strings.TrimPrefix "/" $img }} {{ $staticPath :=
-  printf "static/%s" $clean }} {{ if (fileExists $staticPath) }}
-  <img
-    class="w-full max-h-72 object-contain mb-6"
-    src='{{ (printf "/%s" $clean) | relURL }}'
-    alt="{{ $.Title }} image"
-    loading="lazy"
-    decoding="async"
-  />
-  {{ else }} {{/* If declared image missing, ignore and fall back to bundle
-  resource */}} {{ $img = "" }} {{ end }} {{ end }} {{ end }} {{ if not $img }}
-  {{ $resources := .Resources.ByType "image" }} {{ with index $resources 0 }} {{
-  $base := . }} {{ if ne (lower $base.MediaType.SubType) "svg" }} {{ $widths :=
-  slice 320 480 640 800 1024 }} {{ $webpSet := slice }} {{ $fallbackSet := slice
-  }} {{/* prettier-ignore-start */}} {{ range $w := $widths }} {{ $webpVar :=
-  $base.Resize (printf "%dx webp q85" $w) }} {{ $origVar := $base.Resize (printf
-  "%dx q85" $w) }} {{ $webpSet = $webpSet | append (printf "%s %dw"
-  $webpVar.RelPermalink $w) }} {{ $fallbackSet = $fallbackSet | append (printf
-  "%s %dw" $origVar.RelPermalink $w) }} {{ end }} {{/* prettier-ignore-end */}}
-  {{ $largest := $base.Resize "1024x q85" }}
-  <picture>
-    <source
-      type="image/webp"
-      srcset='{{ delimit $webpSet ", " }}'
-      sizes="(max-width: 900px) 100vw, 800px"
-    />
-    <img
-      class="w-full max-h-72 object-contain mb-6"
-      src="{{ $largest.RelPermalink }}"
-      srcset='{{ delimit $fallbackSet ", " }}'
-      sizes="(max-width: 900px) 100vw, 800px"
-      alt="{{ $.Title }} image"
-      loading="lazy"
-      decoding="async"
-      fetchpriority="low"
-    />
-  </picture>
-  {{ else }}
-  <img
-    class="w-full max-h-72 object-contain mb-6"
-    src="{{ $base.RelPermalink }}"
-    alt="{{ $.Title }} image"
-    loading="lazy"
-    decoding="async"
-  />
-  {{ end }} {{ end }} {{ end }}
+  {{ end }}
+
+  {{ partial "responsive-image.html" (dict
+    "Page" .
+    "Src" .Params.image
+    "Alt" (printf "%s image" .Title)
+    "Class" "w-full max-h-72 object-contain mb-6"
+    "Sizes" "(max-width: 900px) 100vw, 800px"
+    "Widths" (slice 320 480 640 800 1024)
+    "FetchPriority" "low"
+    "Loading" "lazy"
+  ) }}
 
   <div class="prose prose-slate dark:prose-invert max-w-none">
     {{ .Content }}

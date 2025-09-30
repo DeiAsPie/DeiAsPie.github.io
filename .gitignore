@@ -1,4 +1,4 @@
-# Hugo build outputs
+# Hugo build outputs (repo root)
 /public/
 /resources/
 /.hugo_build.lock
@@ -7,50 +7,49 @@
 /assets/gen/
 /assets/gen/tailwind.css
 
-# Audit artifacts
+# Audit artifacts & reports
 /.lighthouseci/
 /ci/lighthouse/
 /ci/axe/
 
 # Node
 /node_modules/
-/npm-debug.log*
-/yarn-debug.log*
-/yarn-error.log*
-/pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
 *.log
 
 # Python
 **/__pycache__/
-/*.py[cod]
-/.pytest_cache/
-/.mypy_cache/
-/.venv/
-/venv/
-/env/
+*.py[cod]
+.pytest_cache/
+*~cache/
+*~coverage/
 
 # Packaging / build artifacts
 /dist/
 /build/
-/*.egg-info/
-/*.whl
-/.coverage
-/coverage/
+*.egg-info/
+*.whl
 
-# Environment files (sensitive)
-.env
-.env.*
-.env.*.local
+# Environment / secrets
+*~env*/
 
-# OS / editors / IDEs
+# IDEs / editors / OS files
 .DS_Store
 Thumbs.db
 .idea/
-/.vscode/
-/*.iml
+.vscode/
+*.iml
 *.swp
-.serena/
 
-# Misc temp files
+# Misc / temp / backups
 *.tmp
-*~
+*.bak
+*.backup
+
+# Project-specific tool state
+.serena/

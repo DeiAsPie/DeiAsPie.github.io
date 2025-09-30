@@ -201,6 +201,7 @@ a[href="#main"]:focus-visible {
 
 /* Theme transitions (enabled only after first paint to avoid FOUC) */
 @media (prefers-reduced-motion: no-preference) {
+
   .ui-ready body,
   .ui-ready .card,
   .ui-ready .prose,
@@ -220,6 +221,7 @@ a[href="#main"]:focus-visible {
    defaults. Use Tailwind utilities so visual scale stays consistent. */
 
 @layer components {
+
   /* Base scales that match the existing `.prose` scale so visuals stay consistent */
   article h1,
   section h1,
@@ -253,12 +255,14 @@ nav h1,
 aside h1 {
   font-size: clamp(1.5rem, 2.5vw, 2.25rem);
 }
+
 article h2,
 section h2,
 nav h2,
 aside h2 {
   font-size: clamp(1.25rem, 2vw, 1.75rem);
 }
+
 article h3,
 section h3,
 nav h3,

@@ -1,98 +1,15 @@
 <article class="card">
   <a href="{{ .RelPermalink }}" class="block">
-    {{ $img := .Params.image }} {{ if $img }} {{ if or (hasPrefix $img
-    "http://") (hasPrefix $img "https://") }}
-    <img
-      class="card-img"
-      src="{{ $img }}"
-      alt="{{ with $.Params.image_alt }}{{ . }}{{ else }}{{ $.Title }} logo{{ end }}"
-      loading="lazy"
-      decoding="async"
-      fetchpriority="low"
-    />
-    {{ else }} {{/* Normalize potential leading slash and test existence in
-    /static */}} {{ $clean := strings.TrimPrefix "/" $img }} {{ $staticPath :=
-    printf "static/%s" $clean }} {{ if (fileExists $staticPath) }}
-    <img
-      class="card-img"
-      src='{{ (printf "%s" $clean) | relURL }}'
-      alt="{{ with $.Params.image_alt }}{{ . }}{{ else }}{{ $.Title }} logo{{ end }}"
-      loading="lazy"
-      decoding="async"
-      fetchpriority="low"
-    />
-    {{ else }} {{/* Fallback to bundle resources if provided image missing */}}
-    {{ $img = "" }} {{ end }} {{ end }} {{ end }} {{ if not $img }} {{
-    $resources := .Resources.ByType "image" }} {{ with index $resources 0 }} {{
-    $base := . }} {{ if ne (lower $base.MediaType.SubType) "svg" }} {{ $widths
-    := slice 200 320 400 }} {{ $webpSet := slice }} {{ $fallbackSet := slice }}
-    {{ range $w := $widths }} {{ $webpVar := $base.Resize (printf "%dx webp q80"
-    $w) }} {{ $origVar := $base.Resize (printf "%dx q80" $w) }} {{ $webpSet =
-    $webpSet | append (printf "%s %dw" $webpVar.RelPermalink $w) }} {{
-    $fallbackSet = $fallbackSet | append (printf "%s %dw" $origVar.RelPermalink
-    $w) }} {{ end }} {{ $largest := $base.Resize "400x q80" }} {{/* Capture
-    intrinsic size for CLS reduction */}} {{ $w := $largest.Width }} {{ $h :=
-    $largest.Height }}
-    <picture>
-      <source
-        type="image/webp"
-        srcset='{{ delimit $webpSet ", " }}'
-        sizes="(max-width: 480px) 50vw, 200px"
-      />
-      <img
-        class="card-img"
-        src="{{ $largest.RelPermalink }}"
-        srcset='{{ delimit $fallbackSet ", " }}'
-        sizes="(max-width: 480px) 50vw, 200px"
-        width="{{ $w }}"
-        height="{{ $h }}"
-        alt="{{ with $.Params.image_alt }}{{ . }}{{ else }}{{ $.Title }} image{{ end }}"
-        loading="lazy"
-        decoding="async"
-        fetchpriority="low"
-      />
-    </picture>
-    {{ else }}
-    <img
-      class="card-img"
-      src="{{ $base.RelPermalink }}"
-      alt="{{ with $.Params.image_alt }}{{ . }}{{ else }}{{ $.Title }} image{{ end }}"
-      loading="lazy"
-      decoding="async"
-      fetchpriority="low"
-    />
-    {{ end }} {{ else }}
-    <div class="w-full h-40 p-4 flex items-center justify-center">
-      {{ $t := .Title | default "?" }} {{ $ch := "?" }} {{ if gt (len $t) 0 }}
-      {{ $ch = (slicestr $t 0 1) }} {{ end }}
-      <svg
-        class="w-full h-full rounded-md"
-        viewBox="0 0 400 160"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-label="{{ $t }}"
-      >
-        <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stop-color="#0f172a" />
-            <stop offset="100%" stop-color="#334155" />
-          </linearGradient>
-        </defs>
-        <rect width="400" height="160" fill="url(#g)" rx="12" />
-        <text
-          x="50%"
-          y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          fill="#e2e8f0"
-          font-size="72"
-          font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans"
-        >
-          {{ $ch }}
-        </text>
-      </svg>
-    </div>
-    {{ end }} {{ end }}
+    {{- partial "responsive-image.html" (dict
+      "Page" .
+      "Src" .Params.image
+      "Alt" (default (printf "%s logo" .Title) .Params.image_alt)
+      "Class" "card-img"
+      "Loading" "lazy"
+      "FetchPriority" "low"
+      "Widths" (slice 200 320 400)
+      "Sizes" "(max-width: 480px) 50vw, 200px"
+    ) -}}
     <div class="card-body">
       <h3 class="card-title">{{ .Title }}</h3>
       {{ if .Params.summary }}
