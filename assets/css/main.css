@@ -15,9 +15,71 @@
 /* Allow @apply to reference Tailwind utilities (Tailwind v4) */
 @reference "tailwindcss";
 
-/* Minimal base styles */
+/* Design tokens - CSS custom properties for maintainability */
 :root {
   color-scheme: light dark;
+
+  /* Core semantic colors */
+  --color-text-primary: theme(colors.slate.900);
+  --color-text-secondary: theme(colors.slate.700);
+  --color-text-tertiary: theme(colors.slate.500);
+  --color-text-accent: theme(colors.slate.800);
+
+  --color-bg-primary: theme(colors.white);
+  --color-bg-secondary: theme(colors.slate.100);
+  --color-bg-tertiary: theme(colors.slate.50);
+
+  --color-border-primary: theme(colors.slate.200);
+  --color-border-secondary: theme(colors.slate.300);
+
+  --color-interactive-primary: theme(colors.slate.900);
+  --color-interactive-hover: theme(colors.slate.700);
+
+  /* Focus ring system */
+  --color-focus-ring: theme(colors.sky.500);
+  --color-focus-ring-offset: theme(colors.white);
+  --color-focus-ring-special: theme(colors.fuchsia.500);
+
+  /* Spacing tokens */
+  --space-xs: theme(spacing.1);
+  --space-sm: theme(spacing.2);
+  --space-md: theme(spacing.4);
+  --space-lg: theme(spacing.6);
+  --space-xl: theme(spacing.8);
+  --space-2xl: theme(spacing.10);
+
+  /* Border radius tokens */
+  --radius-sm: theme(borderRadius.md);
+  --radius-md: theme(borderRadius.lg);
+  --radius-lg: theme(borderRadius.xl);
+  --radius-xl: theme(borderRadius.2xl);
+
+  /* Shadow tokens */
+  --shadow-sm: theme(boxShadow.sm);
+  --shadow-md: theme(boxShadow.DEFAULT);
+  --shadow-lg: theme(boxShadow.lg);
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-text-primary: theme(colors.white);
+  --color-text-secondary: theme(colors.slate.300);
+  --color-text-tertiary: theme(colors.slate.400);
+  --color-text-accent: theme(colors.slate.200);
+
+  --color-bg-primary: theme(colors.slate.900);
+  --color-bg-secondary: theme(colors.slate.800);
+  --color-bg-tertiary: theme(colors.slate.950);
+
+  --color-border-primary: theme(colors.slate.800);
+  --color-border-secondary: theme(colors.slate.700);
+
+  --color-interactive-primary: theme(colors.slate.200);
+  --color-interactive-hover: theme(colors.white);
+
+  --color-focus-ring: theme(colors.sky.400);
+  --color-focus-ring-offset: theme(colors.slate.950);
+  --color-focus-ring-special: theme(colors.fuchsia.400);
 }
 
 .prose img {
@@ -32,15 +94,18 @@
 
 .prose h1 {
   /* Remove gradient/text-transparent so native emoji keep their color */
-  @apply text-3xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white;
+  @apply text-3xl font-bold tracking-tight mb-4;
+  color: var(--color-text-primary);
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold mt-10 mb-4 text-slate-900 dark:text-white;
+  @apply text-2xl font-semibold mt-10 mb-4;
+  color: var(--color-text-primary);
 }
 
 .prose h3 {
-  @apply text-xl font-semibold mt-8 mb-3 text-slate-900 dark:text-white;
+  @apply text-xl font-semibold mt-8 mb-3;
+  color: var(--color-text-primary);
 }
 
 .prose p {
@@ -191,12 +256,16 @@ textarea:focus-visible,
 .icon-btn:focus-visible,
 .btn:focus-visible,
 .nav-link:focus-visible {
-  @apply outline-none ring-2 ring-offset-2 ring-sky-500 dark:ring-sky-400 ring-offset-white dark:ring-offset-slate-950 rounded-md;
+  @apply outline-none ring-2 ring-offset-2 rounded-md;
+  --tw-ring-color: var(--color-focus-ring);
+  --tw-ring-offset-color: var(--color-focus-ring-offset);
 }
 
 /* Provide visible indication also for keyboard focus on skip link (already uses sr-only) */
 a[href="#main"]:focus-visible {
-  @apply ring-2 ring-offset-2 ring-fuchsia-500 dark:ring-fuchsia-400;
+  @apply ring-2 ring-offset-2;
+  --tw-ring-color: var(--color-focus-ring-special);
+  --tw-ring-offset-color: var(--color-focus-ring-offset);
 }
 
 /* Theme transitions (enabled only after first paint to avoid FOUC) */

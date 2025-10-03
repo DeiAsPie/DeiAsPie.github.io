@@ -49,6 +49,17 @@ jobs:
           CSS_BUDGET_KIB: ${{ steps.csssize.outputs.budget_kib }}
         run: node scripts/check_css_size.js
 
+      - name: Check image quality budgets
+        env:
+          IMAGE_BUDGET_KIB: "400"
+        run: npm run size:images:check
+
+      - name: Lint content quality
+        run: npm run lint:content
+
+      - name: Lint JavaScript
+        run: npm run lint
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -100,6 +111,12 @@ jobs:
           AXE_URLS: http://localhost:8080/,http://localhost:8080/about/,http://localhost:8080/recommendations/
         run: node scripts/run_axe.mjs
 
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
+      - name: Run Playwright smoke tests
+        run: npm run test:smoke
+
       - name: Upload build artifact (public)
         uses: actions/upload-artifact@v4
         with:
@@ -114,3 +131,5 @@ jobs:
             ci/lighthouse/*.html
             ci/lighthouse/*.json
             ci/axe/*.json
+            playwright-report/
+            test-results/

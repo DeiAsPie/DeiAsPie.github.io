@@ -54,5 +54,4 @@ Thumbs.db
 # Project-specific tool state
 .serena/
 playwright-report/
-.gitignore
 test-results/
