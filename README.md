@@ -6,9 +6,18 @@ A minimalist, fast personal site for sharing recommendations for tools, services
 
 Dark mode is the default. Use the Theme toggle in the header to switch; your choice is remembered in localStorage.
 
+## ✨ Features
+
+- **🚀 Performance**: AVIF/WebP images, lazy loading, service worker caching, prefetching
+- **♿ Accessibility**: WCAG 2.2 compliant, ARIA best practices, keyboard navigation, screen reader optimized
+- **🔒 Security**: Content Security Policy, Subresource Integrity, secure Hugo configuration
+- **🎨 Modern Stack**: Hugo + Tailwind CSS v4, responsive design, dark mode support
+- **📦 PWA Ready**: Service worker, offline support, installable
+- **🧪 Well-tested**: Playwright E2E, Axe accessibility audits, Lighthouse performance checks
+
 ## Local development
 
-Prereqs: Hugo Extended and Node.js 20+
+Prereqs: Hugo Extended v0.151.0+ and Node.js 20+
 
 ```fish
 # install deps

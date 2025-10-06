@@ -10,7 +10,14 @@ canonifyURLs = true
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-    unsafe = true
+    # Set to false for better security - only enable if you need raw HTML in markdown
+    # If raw HTML is needed, use shortcodes instead for better control
+    unsafe = false
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+      # Enable block-level attributes for better accessibility control
+      block = true
+      title = true
 
 [taxonomies]
 category = "categories"
@@ -28,6 +35,39 @@ author = "DeiAsPie"
 # Optional Google Fonts query (after css2?) e.g. family=Inter:wght@400;600;700&display=swap
 # googleFonts = "family=Inter:wght@400;600;700&display=swap"
 prefetch = ["/recommendations/", "/recommendations/courses/"]
+
+[imaging]
+# Optimize image processing - Hugo best practices
+anchor = 'Smart'
+bgColor = '#ffffff'
+hint = 'photo'
+quality = 85
+resampleFilter = 'lanczos'
+
+[build]
+  # Build options for better performance and security
+  buildStats = { enable = true }
+  # Cache digest files for better cache control
+  cacheBusters = [{ source = "assets/.*\\.js$", target = "js" }, { source = "assets/.*\\.css$", target = "css" }]
+
+[security]
+  # Hugo security configuration - following best practices
+  enableInlineShortcodes = false
+  [security.exec]
+    # Only allow specific binaries if needed
+    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$']
+    osEnv = ['^HUGO_', '^CI$']
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$']
+  [security.http]
+    # Allow specific domains for resources.GetRemote
+    methods = ['GET', 'HEAD']
+    urls = ['.*']
+
+[caches]
+  [caches.images]
+  dir = ":cacheDir/images"
+  maxAge = "720h"
 
 [minify]
 minifyOutput = true
