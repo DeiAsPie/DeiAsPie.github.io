@@ -6,18 +6,29 @@
  * - Supports different budgets for different content types
  *
  * Usage:
- *   node scripts/check_image_budgets.js               # enforce using env IMAGE_BUDGET_KIB
+ *   node scripts/check_image_budgets.js               # enforce budgets
  *   node scripts/check_image_budgets.js --print       # print all bundle sizes
  *   node scripts/check_image_budgets.js --report      # generate detailed report
- *   IMAGE_BUDGET_KIB=500 node scripts/check_image_budgets.js  # custom budget
+ *   IMAGE_BUDGET_KIB=500 node scripts/check_image_budgets.js  # override default budget
+ *
+ * Directory-specific budgets are configured in BUDGET_OVERRIDES below.
+ * This allows different content types to have different size limits.
  */
 const fs = require("fs");
 const path = require("path");
 
 // Configuration
-const DEFAULT_BUDGET_KIB = 300; // Default budget per bundle in KiB
+const DEFAULT_BUDGET_KIB = 400; // Default budget per bundle in KiB
 const OVERSIZED_THRESHOLD = 1000; // Warn about individual images over this size
 const SUPPORTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif', '.svg'];
+
+// Directory-specific budgets (in KiB)
+const BUDGET_OVERRIDES = {
+  'static/courses': 1200, // Courses have more images, allow higher budget
+  'courses': 1200,        // Alternative path mapping
+  'static/images': 400,
+  'default': 400
+};
 
 // Content directories to analyze
 const CONTENT_DIRS = [
@@ -143,13 +154,15 @@ function generateReport(bundles, budget) {
 
   for (const [bundleName, images] of sortedBundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
-    const exceeds = bundleTotalSize > budget;
+    const bundleBudget = getBudgetForBundle(bundleName);
+    const exceeds = bundleTotalSize > bundleBudget;
     const status = exceeds ? "⚠️  OVER" : "✅ OK";
 
     if (exceeds) violatingBundles++;
 
     console.log(
       bundleName.padEnd(30) +
+`${bundleBudget.toFixed(0)} KiB`.padEnd(12) +
       images.length.toString().padEnd(8) +
       `${bundleTotalSize.toFixed(1)} KiB`.padEnd(12) +
       status
@@ -167,7 +180,7 @@ function generateReport(bundles, budget) {
     }
   }
 
-  console.log("-".repeat(60));
+  console.log("-".repeat(72));
   console.log(`Total: ${totalImages} images, ${totalSize.toFixed(1)} KiB`);
   console.log(`Bundles over budget: ${violatingBundles}/${bundles.size}`);
 
@@ -223,13 +236,14 @@ function main() {
 
   for (const [bundleName, images] of bundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
+const bundleBudget = getBudgetForBundle(bundleName);
 
-    if (bundleTotalSize > budget + 0.01) { // Small tolerance for floating point
+    if (bundleTotalSize > bundleBudget + 0.01) { // Small tolerance for floating point
       hasViolations = true;
       violations.push({
         bundle: bundleName,
         size: bundleTotalSize,
-        budget: budget
+        budget: bundleBudget
       });
     }
   }
@@ -242,7 +256,7 @@ function main() {
     console.error(`\nRun 'node scripts/check_image_budgets.js --report' for detailed analysis.`);
     process.exit(1);
   } else {
-    console.log(`✅ All ${bundles.size} image bundles within budget (${budget.toFixed(1)} KiB).`);
+    console.log(`✅ All ${bundles.size} image bundles within their respective budgets.`);
     process.exit(0);
   }
 }

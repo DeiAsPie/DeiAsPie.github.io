@@ -26,8 +26,16 @@ pnpm-debug.log*
 **/__pycache__/
 *.py[cod]
 .pytest_cache/
-*~cache/
-*~coverage/
+.mypy_cache/
+.ruff_cache/
+.cache/
+pip-wheel-metadata/
+__pypackages__/
+
+# Coverage
+.coverage
+coverage/
+htmlcov/
 
 # Packaging / build artifacts
 /dist/
@@ -36,7 +44,12 @@ pnpm-debug.log*
 *.whl
 
 # Environment / secrets
-*~env*/
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
 
 # IDEs / editors / OS files
 .DS_Store
