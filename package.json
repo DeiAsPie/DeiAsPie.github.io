@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.13",
+    "@tailwindcss/cli": "^4.1.14",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/typography": "^0.5.19",
     "axe-core": "^4.10.3",
