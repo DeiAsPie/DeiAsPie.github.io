@@ -130,14 +130,35 @@ function groupImagesByBundle(images) {
 }
 
 /**
+ * Get budget for a specific bundle
+ * @param {string} bundleName
+ * @returns {number}
+ */
+function getBudgetForBundle(bundleName) {
+  // Check for exact match first
+  if (BUDGET_OVERRIDES[bundleName]) {
+    return BUDGET_OVERRIDES[bundleName];
+  }
+
+  // Check for partial match
+  for (const [key, value] of Object.entries(BUDGET_OVERRIDES)) {
+    if (bundleName.includes(key) || key.includes(bundleName)) {
+      return value;
+    }
+  }
+
+  return BUDGET_OVERRIDES['default'] || DEFAULT_BUDGET_KIB;
+}
+
+/**
  * Generate detailed report
  * @param {Map} bundles
- * @param {number} budget
+ * @param {number} defaultBudget
  */
-function generateReport(bundles, budget) {
-  console.log(`\n📊 Image Budget Report (Budget: ${budget.toFixed(1)} KiB per bundle)\n`);
-  console.log("Bundle".padEnd(30) + "Images".padEnd(8) + "Total".padEnd(12) + "Status");
-  console.log("-".repeat(60));
+function generateReport(bundles, defaultBudget) {
+  console.log(`\n📊 Image Budget Report\n`);
+  console.log("Bundle".padEnd(30) + "Budget".padEnd(12) + "Images".padEnd(8) + "Total".padEnd(12) + "Status");
+  console.log("-".repeat(72));
 
   let totalImages = 0;
   let totalSize = 0;
@@ -162,7 +183,7 @@ function generateReport(bundles, budget) {
 
     console.log(
       bundleName.padEnd(30) +
-`${bundleBudget.toFixed(0)} KiB`.padEnd(12) +
+      `${bundleBudget.toFixed(0)} KiB`.padEnd(12) +
       images.length.toString().padEnd(8) +
       `${bundleTotalSize.toFixed(1)} KiB`.padEnd(12) +
       status
@@ -236,7 +257,7 @@ function main() {
 
   for (const [bundleName, images] of bundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
-const bundleBudget = getBudgetForBundle(bundleName);
+    const bundleBudget = getBudgetForBundle(bundleName);
 
     if (bundleTotalSize > bundleBudget + 0.01) { // Small tolerance for floating point
       hasViolations = true;

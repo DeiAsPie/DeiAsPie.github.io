@@ -64,6 +64,11 @@ Thumbs.db
 *.bak
 *.backup
 
+# Project work-in-progress files
+WIP.md
+NOTES.md
+TODO.md
+
 # Project-specific tool state
 .serena/
 playwright-report/

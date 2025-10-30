@@ -144,86 +144,52 @@
    * @param {HTMLElement} menu
    */
   function setupMobileMenu(toggle, menu) {
-    try {
-      console.log("initUI: found mobile menu toggle and menu");
-    } catch (e) {}
+    var isOpen = false;
+    var focusTrapCleanup = null;
 
-    /**
-     * @param {HTMLElement} container
-     */
-    /**
-     * @param {HTMLElement} container
-     * @returns {NodeListOf<HTMLElement>}
-     */
-    function getFocusable(container) {
-      return /** @type {NodeListOf<HTMLElement>} */ (
-        container.querySelectorAll(
-          'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        )
-      );
-    }
+    function open() {
+      isOpen = true;
+      menu.classList.remove("hidden");
+      toggle.setAttribute("aria-expanded", "true");
+      menu.setAttribute("aria-hidden", "false");
 
-    /**
-     * @param {KeyboardEvent} event
-     */
-    function trapFocus(event) {
-      /** @type {HTMLElement[]} */
-      var focusable = Array.from(getFocusable(menu));
-      if (!focusable.length) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
-      if (event.key === "Tab") {
-        if (event.shiftKey && document.activeElement === first) {
-          last.focus();
-          event.preventDefault();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          first.focus();
-          event.preventDefault();
-        }
-      } else if (event.key === "Escape") {
-        menu.classList.add("hidden");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.focus();
-      }
-    }
-
-    toggle.addEventListener("click", function () {
-      try {
-        console.log("mobile-toggle: click - before", {
-          menuClass: menu.className,
-          ariaExpanded: toggle.getAttribute("aria-expanded"),
-        });
-      } catch (e) {}
-      var isHidden = menu.classList.toggle("hidden");
-      toggle.setAttribute("aria-expanded", isHidden ? "false" : "true");
-      if (!isHidden) {
-        var focusTargets = Array.from(getFocusable(menu));
-        if (focusTargets.length) {
-          focusTargets[0].focus();
-        }
-        document.addEventListener("keydown", trapFocus);
+      // Import and setup focus trap
+      if (typeof createFocusTrap === 'function') {
+        focusTrapCleanup = createFocusTrap(menu);
       } else {
-        document.removeEventListener("keydown", trapFocus);
+        // Fallback: just focus first link
+        const firstLink = menu.querySelector('a');
+        if (firstLink instanceof HTMLElement) {
+          firstLink.focus();
+        }
       }
-      try {
-        console.log("mobile-toggle: click - after", {
-          menuClass: menu.className,
-          ariaExpanded: toggle.getAttribute("aria-expanded"),
-        });
-      } catch (e) {}
-    });
 
-    function handleResize() {
-      if (window.innerWidth >= 768) {
-        menu.classList.add("hidden");
-        toggle.setAttribute("aria-expanded", "false");
-        document.removeEventListener("keydown", trapFocus);
+      // Announce to screen readers
+      if (typeof announceToScreenReader === 'function') {
+        announceToScreenReader('Menu opened');
       }
     }
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
-  }
+    function close() {
+      isOpen = false;
+      menu.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-hidden", "true");
+
+      // Cleanup focus trap
+      if (focusTrapCleanup) {
+        focusTrapCleanup();
+        focusTrapCleanup = null;
+      }
+
+      // Return focus to toggle button
+      toggle.focus();
+
+      // Announce to screen readers
+      if (typeof announceToScreenReader === 'function') {
+        announceToScreenReader('Menu closed');
+      }
+    }
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initUI);
