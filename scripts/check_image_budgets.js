@@ -286,4 +286,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { findImagesInDirectory, groupImagesByBundle, getFileSizeKib };
+module.exports = { findImagesInDirectory, groupImagesByBundle, getFileSizeKib, getBudgetForBundle };
