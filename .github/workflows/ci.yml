@@ -114,6 +114,16 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium
 
+      - name: Kill http-server before Playwright tests
+        run: |
+          # Kill any processes using port 8080 to avoid conflicts
+          if command -v lsof &> /dev/null; then
+            lsof -ti :8080 | xargs -r kill -9 2>/dev/null || true
+          else
+            fuser -k 8080/tcp 2>/dev/null || true
+          fi
+          sleep 1
+
       - name: Run Playwright smoke tests
         run: npm run test:smoke
 
