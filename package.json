@@ -2,7 +2,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@tailwindcss/cli": "^4.1.13",
+    "@tailwindcss/cli": "^4.1.16",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/typography": "^0.5.19",
     "axe-core": "^4.10.3",
