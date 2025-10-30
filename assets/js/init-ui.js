@@ -191,6 +191,30 @@
       }
     }
 
+    // Attach event listeners
+    toggle.addEventListener("click", function () {
+      if (isOpen) {
+        close();
+      } else {
+        open();
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", function (event) {
+      if (isOpen && !menu.contains(event.target) && !toggle.contains(event.target)) {
+        close();
+      }
+    });
+
+    // Close menu on Escape key
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && isOpen) {
+        close();
+      }
+    });
+  }
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initUI);
   } else {
