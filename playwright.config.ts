@@ -76,7 +76,7 @@ export default defineConfig({
   webServer: {
     command: 'hugo server --port 8080 --bind 0.0.0.0 --disableFastRender',
     port: 8080,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120000,
   },
 });
