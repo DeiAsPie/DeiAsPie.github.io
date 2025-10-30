@@ -1,5 +1,6 @@
 ---
 title: "DeiAsPie - Privacy & Security Recommendations"
+date: 2024-01-01
 ---
 
 # Hey there, I'm DeiAsPie 👋

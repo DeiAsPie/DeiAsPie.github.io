@@ -1,6 +1,7 @@
 ---
 title: "About"
 url: "/about/"
+date: 2024-01-01
 ---
 
 Hi, I'm DeiAsPie. This is my corner of the web where I share privacy-focused tools, services, and knowledge that can help you reclaim your digital sovereignty.

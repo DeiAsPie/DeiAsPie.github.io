@@ -1,5 +1,6 @@
 ---
 title: "Privacy & Security Recommendations"
+date: 2024-01-01
 ---
 
 # Your Digital Shield Arsenal 🔰

@@ -275,6 +275,10 @@ function checkInternalLinks(content, filePath) {
  * @returns {boolean}
  */
 function isInternalLink(url) {
+  // Skip Hugo template variables
+  if (url.includes('{{') || url.includes('}}')) {
+    return false;
+  }
   return !url.startsWith('http') && !url.startsWith('mailto:') && !url.startsWith('#');
 }
 
