@@ -74,9 +74,9 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'hugo server --port 8080 --bind 0.0.0.0 --disableFastRender',
+    command: 'pkill -f "hugo server" 2>/dev/null || true; hugo server --port 8080 --bind 0.0.0.0 --disableFastRender',
     port: 8080,
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 120000,
   },
 });
