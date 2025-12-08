@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="128" height="128" version="1.1" viewBox="0 0 33.867 33.867" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
  <defs>
-  <linearGradient id="linearGradient15297-1" x1="110.97" x2="110.97" y1="976.3" y2="992.38" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient10292-1-5"/>
   <linearGradient id="linearGradient10292-1-5">
    <stop stop-color="#666" offset="0"/>
    <stop stop-color="#333" offset="1"/>
