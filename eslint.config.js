@@ -1,4 +1,7 @@
+import pluginSecurity from "eslint-plugin-security";
+
 export default [
+  pluginSecurity.configs.recommended,
   {
     files: ["**/*.js", "**/*.mjs"],
     languageOptions: {
@@ -20,8 +23,6 @@ export default [
         event: "readonly",
       },
     },
-    rules: {
-      // Add custom rules
-    },
+    rules: {},
   },
 ];

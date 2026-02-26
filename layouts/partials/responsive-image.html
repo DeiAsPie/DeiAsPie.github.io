@@ -12,6 +12,8 @@
   {{- $class := .Class | default "" -}}
   {{- $fetchPriority := .FetchPriority | default "auto" -}}
   {{- $loading := .Loading | default "lazy" -}}
+  {{- $width := .Width | default 0 -}}
+  {{- $height := .Height | default 0 -}}
 
   {{- $isRemote := false -}}
   {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
@@ -27,6 +29,8 @@
     class="{{ $class }}"
     src="{{ $final | relURL }}"
     alt="{{ $alt | htmlEscape }}"
+    {{- if gt $width 0 }} width="{{ $width }}"{{ end }}
+    {{- if gt $height 0 }} height="{{ $height }}"{{ end }}
     loading="{{ $loading }}"
     decoding="async"
     fetchpriority="{{ $fetchPriority }}"
@@ -45,6 +49,8 @@
   {{- $loading := .Loading | default "lazy" -}}
   {{- $preload := .Preload | default false -}}
   {{- $widths := .Widths | default (slice 320 480 640 800 1024) -}}
+  {{- $paramWidth := .Width | default 0 -}}
+  {{- $paramHeight := .Height | default 0 -}}
 
 {{- $isBundle := and (ne $p.BundleType "") (ne $p.BundleType nil) -}}
 {{- if not $isBundle -}}
@@ -64,6 +70,8 @@
     class="{{ $class }}"
     src="{{ $res.RelPermalink }}"
     alt="{{ $alt | htmlEscape }}"
+    {{- if gt $paramWidth 0 }} width="{{ $paramWidth }}"{{ end }}
+    {{- if gt $paramHeight 0 }} height="{{ $paramHeight }}"{{ end }}
     loading="{{ $loading }}"
     decoding="async"
     fetchpriority="{{ $fetchPriority }}"

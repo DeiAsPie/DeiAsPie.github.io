@@ -80,7 +80,7 @@ jobs:
           extended: true
 
       - name: Build site (production)
-        run: hugo --minify --gc
+        run: npm run build
 
       - name: Start static server
         run: npx -y http-server ./public -p 8080 &
