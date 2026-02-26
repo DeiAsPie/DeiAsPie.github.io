@@ -17,8 +17,10 @@
       <main id="main" class="py-10">{{ block "main" . }}{{ end }}</main>
       {{ partial "footer.html" . }}
     </div>
-    {{ partial "script" (dict "path" "js/sw-register.js" "defer" true) }} {{
-    partial "script" (dict "path" "js/init-ui.js" "defer" true) }} {{ partial
-    "script" (dict "path" "js/prefetch-nav.js" "defer" true) }}
+    <!-- Load order: a11y-utils.js MUST precede init-ui.js (provides window.SiteA11y) -->
+    {{ partial "script" (dict "path" "js/sw-register.js" "defer" true) }}
+    {{ partial "script" (dict "path" "js/a11y-utils.js" "defer" true) }}
+    {{ partial "script" (dict "path" "js/init-ui.js" "defer" true) }}
+    {{ partial "script" (dict "path" "js/prefetch-nav.js" "defer" true) }}
   </body>
 </html>

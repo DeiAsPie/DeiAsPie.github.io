@@ -6,7 +6,6 @@
 /* Tell Tailwind where to scan for class usage (v4) */
 @source "./content/**/*.{html,md}";
 @source "./layouts/**/*.html";
-@source "./themes/curated/layouts/**/*.html";
 @source "./assets/js/**/*.js";
 
 /* Use class-based dark mode: apply `dark:` utilities when `.dark` is on an ancestor */
@@ -287,37 +286,8 @@ a[href="#main"]:focus-visible {
 
 /* Ensure explicit font-size for headings inside semantic sectioning elements
    to avoid Lighthouse deprecated-API warnings when browsers change UA
-   defaults. Use Tailwind utilities so visual scale stays consistent. */
-
-@layer components {
-
-  /* Base scales that match the existing `.prose` scale so visuals stay consistent */
-  article h1,
-  section h1,
-  nav h1,
-  aside h1 {
-    @apply text-3xl md:text-4xl;
-  }
-
-  article h2,
-  section h2,
-  nav h2,
-  aside h2 {
-    @apply text-2xl md:text-3xl;
-  }
-
-  article h3,
-  section h3,
-  nav h3,
-  aside h3 {
-    @apply text-xl md:text-2xl;
-  }
-}
-
-/* Fallback explicit font-size declarations using clamp() so UA defaults are overridden
-   even if Tailwind utilities are not available to the final CSS parser. This also
-   ensures Lighthouse sees a concrete font-size property on headings inside semantic
-   sectioning elements. */
+   defaults. Uses clamp() so UA defaults are overridden and Lighthouse sees a
+   concrete font-size property. */
 article h1,
 section h1,
 nav h1,
