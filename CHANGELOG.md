@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/deaispie-v2.0.1...deaispie-v2.0.2) (2026-02-26)
+
+
+### Bug Fixes
+
+* dx and ci hardening — hooks, build alignment, playwright, eslint security, images ([3b4b7a0](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/3b4b7a0b0c58ebe69dfb886a8114848f7b502615))
+
 ## [2.0.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/deaispie-v2.0.0...deaispie-v2.0.1) (2026-02-26)
 
 
