@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/deaispie-v2.0.0...deaispie-v2.0.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* remove outdated resource links from README.md ([5b5d30a](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/5b5d30a17d3645cddaaa2c9d71015f723a709b83))
+
 ## [2.0.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/deaispie-v1.0.0...deaispie-v2.0.0) (2026-02-26)
 
 
