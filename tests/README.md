@@ -224,5 +224,3 @@ test.describe('Feature Name', () => {
 - [Playwright Documentation](https://playwright.dev)
 - [Playwright Best Practices](https://playwright.dev/docs/best-practices)
 - [Writing Accessible Selectors](https://playwright.dev/docs/locators#locate-by-role)
-- [Test Resolution Summary](../docs/E2E_TEST_RESOLUTION.md)
-- [Improvements Summary](../docs/IMPROVEMENTS_SUMMARY.md)
