@@ -1,16 +1,8 @@
 (function () {
   function initUI() {
-    try {
-      console.log("initUI: running", { readyState: document.readyState });
-    } catch (e) {}
-
     var themeToggle = document.getElementById("theme-toggle");
     if (themeToggle instanceof HTMLButtonElement) {
       setupThemeToggle(themeToggle);
-    } else {
-      try {
-        console.log("initUI: theme-toggle button not found");
-      } catch (e) {}
     }
 
     var mobileToggle = document.getElementById("mobile-menu-toggle");
@@ -20,28 +12,15 @@
       mobileMenu instanceof HTMLElement
     ) {
       setupMobileMenu(mobileToggle, mobileMenu);
-    } else {
-      try {
-        console.log("initUI: mobile menu toggle or menu not found", {
-          toggle: mobileToggle instanceof HTMLButtonElement,
-          menu: mobileMenu instanceof HTMLElement,
-        });
-      } catch (e) {}
     }
 
-    try {
-      document.documentElement.classList.add("ui-ready");
-    } catch (e) {}
+    document.documentElement.classList.add("ui-ready");
   }
 
   /**
    * @param {HTMLButtonElement} btn
    */
   function setupThemeToggle(btn) {
-    try {
-      console.log("initUI: found theme-toggle button");
-    } catch (e) {}
-
     /**
      * @returns {"light"|"dark"|"auto"}
      */
@@ -103,39 +82,25 @@
       btn.setAttribute("aria-label", labelText);
     }
 
-    try {
-      var mql = window.matchMedia("(prefers-color-scheme: dark)");
-      mql.addEventListener("change", function () {
-        if (getPref() === "auto") {
-          applyEffectiveTheme("auto");
-          syncState();
-        }
-      });
-    } catch (e) {}
+    var mql = window.matchMedia("(prefers-color-scheme: dark)");
+    mql.addEventListener("change", function () {
+      if (getPref() === "auto") {
+        applyEffectiveTheme("auto");
+        syncState();
+      }
+    });
 
     syncState();
 
     btn.addEventListener("click", function () {
-      try {
-        console.log("theme-toggle: click - before", {
-          htmlClass: document.documentElement.className,
-          ariaPressed: btn.getAttribute("aria-pressed"),
-        });
-      } catch (e) {}
-  var order = /** @type {const} */ (["light", "dark", "auto"]);
+      var order = /** @type {const} */ (["light", "dark", "auto"]);
       var cur = getPref();
       var idx = order.indexOf(cur);
       if (idx === -1) idx = 0;
-  var next = order[(idx + 1) % order.length];
+      var next = order[(idx + 1) % order.length];
       setPref(next);
       applyEffectiveTheme(next);
       syncState();
-      try {
-        console.log("theme-toggle: click - after", {
-          htmlClass: document.documentElement.className,
-          ariaPressed: btn.getAttribute("aria-pressed"),
-        });
-      } catch (e) {}
     });
   }
 
@@ -153,20 +118,17 @@
       toggle.setAttribute("aria-expanded", "true");
       menu.setAttribute("aria-hidden", "false");
 
-      // Import and setup focus trap
-      if (typeof createFocusTrap === 'function') {
-        focusTrapCleanup = createFocusTrap(menu);
+      // Setup focus trap via SiteA11y namespace
+      if (window.SiteA11y) {
+        focusTrapCleanup = window.SiteA11y.createFocusTrap(menu);
+        window.SiteA11y.announceToScreenReader('Menu opened');
       } else {
+        console.warn('SiteA11y not loaded — a11y features disabled');
         // Fallback: just focus first link
-        const firstLink = menu.querySelector('a');
+        var firstLink = menu.querySelector('a');
         if (firstLink instanceof HTMLElement) {
           firstLink.focus();
         }
-      }
-
-      // Announce to screen readers
-      if (typeof announceToScreenReader === 'function') {
-        announceToScreenReader('Menu opened');
       }
     }
 
@@ -186,8 +148,8 @@
       toggle.focus();
 
       // Announce to screen readers
-      if (typeof announceToScreenReader === 'function') {
-        announceToScreenReader('Menu closed');
+      if (window.SiteA11y) {
+        window.SiteA11y.announceToScreenReader('Menu closed');
       }
     }
 

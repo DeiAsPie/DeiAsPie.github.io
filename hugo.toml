@@ -1,7 +1,6 @@
 baseURL = "https://deiaspie.github.io/"
 title = "DeiAsPie - Privacy & Security Recommendations"
 languageCode = "en-us"
-theme = "curated"
 summaryLength = 24
 enableRobotsTXT = true
 cleanDestinationDir = true
