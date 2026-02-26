@@ -71,7 +71,6 @@
   {{- return -}}
 {{- end -}}
 
-{{- $avifSet := slice -}}
 {{- $webpSet := slice -}}
 {{- $origSet := slice -}}
 {{- $maxWidth := 0 -}}
@@ -79,10 +78,8 @@
 {{- range $widths -}}
   {{- $w := . -}}
   {{- if ge $res.Width $w -}}
-    {{- $avif := $res.Resize (printf "%dx avif q60" $w) -}}
     {{- $webp := $res.Resize (printf "%dx webp q80" $w) -}}
     {{- $orig := $res.Resize (printf "%dx q80" $w) -}}
-    {{- $avifSet = $avifSet | append (printf "%s %dw" $avif.RelPermalink $w) -}}
     {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $w) -}}
     {{- $origSet = $origSet | append (printf "%s %dw" $orig.RelPermalink $w) -}}
     {{- if gt $w $maxWidth }}{{ $maxWidth = $w }}{{ end -}}
@@ -95,13 +92,6 @@
 {{- end -}}
 
 <picture>
-  {{- if gt (len $avifSet) 0 }}
-  <source
-    type="image/avif"
-    srcset='{{ delimit $avifSet "," }}'
-    sizes="{{ $sizes }}"
-  />
-  {{- end }}
   {{- if gt (len $webpSet) 0 }}
   <source
     type="image/webp"
@@ -129,7 +119,7 @@
     rel="preload"
     as="image"
     href="{{ $fallback.RelPermalink }}"
-    imagesrcset='{{ if gt (len $avifSet) 0 }}{{ delimit $avifSet "," }}{{ end }}'
+    imagesrcset='{{ if gt (len $webpSet) 0 }}{{ delimit $webpSet "," }}{{ end }}'
     imagesizes="{{ $sizes }}"
   />
   {{- end -}}
