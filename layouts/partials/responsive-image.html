@@ -99,6 +99,14 @@
   {{- $fallback = $res.Resize (printf "%dx q80" $maxWidth) -}}
 {{- end -}}
 
+{{- /* Generate LQIP placeholder */ -}}
+{{- $lqip := $res.Resize "20x webp q20 blur 20" -}}
+{{- $lqipBase64 := $lqip.Content | base64Encode -}}
+
+<span
+  class="lqip-wrap"
+  style="{{ printf "background-image: url(data:image/webp;base64,%s);" $lqipBase64 | safeCSS }}"
+>
 <picture>
   {{- if gt (len $webpSet) 0 }}
   <source
@@ -111,7 +119,7 @@
   <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
   {{- end }}
   <img
-    class="{{ $class }}"
+    class="{{ $class }} lqip-img"
     src="{{ $fallback.RelPermalink }}"
     alt="{{ $alt | htmlEscape }}"
     width="{{ $fallback.Width }}"
@@ -121,6 +129,7 @@
     fetchpriority="{{ $fetchPriority }}"
   />
 </picture>
+</span>
 
   {{- if $preload }}
   <link

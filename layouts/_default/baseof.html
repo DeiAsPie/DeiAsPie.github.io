@@ -2,6 +2,7 @@
 <html lang="en" class="h-full">
   <head>
     {{ partial "head.html" . }}
+    {{ block "head_extra" . }}{{ end }}
   </head>
 
   <body

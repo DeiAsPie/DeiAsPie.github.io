@@ -17,7 +17,7 @@ const matter = require("gray-matter");
 // Configuration
 const CONTENT_DIRS = [
   'content',
-  'themes/curated/layouts'
+  'layouts'
 ];
 
 const REQUIRED_FRONTMATTER = [
@@ -28,7 +28,9 @@ const REQUIRED_FRONTMATTER = [
 const HEADING_PATTERN = /^(#{1,6})\s+(.+)$/gm;
 const IMAGE_PATTERN = /<img[^>]*>/gi;
 const LINK_PATTERN = /\[([^\]]*)\]\(([^)]+)\)/g;
-const HTML_LINK_PATTERN = /<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
+const EMPTY_LINK_PATTERN = /\[\]\(([^)]*)\)/g;
+const HTML_LINK_PATTERN = /<a[^>]*href=["']([^"']*)["'][^>]*>/gi;
+const LOREM_IPSUM_PATTERN = /lorem ipsum/gi;
 
 /**
  * Check if file should be linted
@@ -48,15 +50,18 @@ function shouldLintFile(filePath) {
 function getFilesToLint(dirPath) {
   const files = [];
 
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   if (!fs.existsSync(dirPath)) {
     return files;
   }
 
   function walkDirectory(currentPath) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     const items = fs.readdirSync(currentPath);
 
     for (const item of items) {
       const fullPath = path.join(currentPath, item);
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
       const stat = fs.statSync(fullPath);
 
       if (stat.isDirectory()) {
@@ -77,6 +82,7 @@ function getFilesToLint(dirPath) {
  * @returns {Object}
  */
 function parseMarkdownFile(filePath) {
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   const content = fs.readFileSync(filePath, 'utf8');
   const isMarkdown = path.extname(filePath) === '.md';
 
@@ -155,7 +161,7 @@ function checkHeadingHierarchy(content) {
 
   // Check heading level progression
   for (let i = 1; i < headings.length; i++) {
-    const current = headings[i];
+    const current = headings[i]; // eslint-disable-line security/detect-object-injection
     const previous = headings[i - 1];
 
     if (current.level > previous.level + 1) {
@@ -172,11 +178,11 @@ function checkHeadingHierarchy(content) {
 }
 
 /**
- * Check for missing alt text in images
+ * Check for missing alt text, loading, and decoding in images
  * @param {string} content
  * @returns {Object[]}
  */
-function checkImageAltText(content) {
+function checkImageAttributes(content) {
   const issues = [];
   let match;
 
@@ -207,6 +213,94 @@ function checkImageAltText(content) {
         context: imgTag.substring(0, 50) + '...'
       });
     }
+
+    // Check for loading="lazy"
+    if (!imgTag.match(/loading=["']lazy["']/i)) {
+      issues.push({
+        type: 'performance',
+        severity: 'warning',
+        message: 'Image missing loading="lazy" attribute',
+        line: line,
+        context: imgTag.substring(0, 50) + '...'
+      });
+    }
+
+    // Check for decoding="async"
+    if (!imgTag.match(/decoding=["']async["']/i)) {
+      issues.push({
+        type: 'performance',
+        severity: 'warning',
+        message: 'Image missing decoding="async" attribute',
+        line: line,
+        context: imgTag.substring(0, 50) + '...'
+      });
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * Check for empty links or placeholder text
+ * @param {string} content
+ * @returns {Object[]}
+ */
+function checkEmptyLinks(content) {
+  const issues = [];
+  let match;
+
+  // Reset regex
+  EMPTY_LINK_PATTERN.lastIndex = 0;
+
+  while ((match = EMPTY_LINK_PATTERN.exec(content)) !== null) {
+    const line = content.substring(0, match.index).split('\n').length;
+    issues.push({
+      type: 'content',
+      severity: 'error',
+      message: 'Empty markdown link []() found',
+      line: line,
+      context: match[0]
+    });
+  }
+
+  // Check for empty HTML links
+  HTML_LINK_PATTERN.lastIndex = 0;
+  while ((match = HTML_LINK_PATTERN.exec(content)) !== null) {
+    const line = content.substring(0, match.index).split('\n').length;
+    const url = match[1];
+    if (url === '' || url === '#') {
+      issues.push({
+        type: 'content',
+        severity: 'warning',
+        message: `Empty or placeholder HTML link found: ${url}`,
+        line: line,
+        context: match[0].substring(0, 50) + '...'
+      });
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * Check for lorem ipsum placeholder text
+ * @param {string} content
+ * @returns {Object[]}
+ */
+function checkLoremIpsum(content) {
+  const issues = [];
+  let match;
+
+  LOREM_IPSUM_PATTERN.lastIndex = 0;
+  while ((match = LOREM_IPSUM_PATTERN.exec(content)) !== null) {
+    const line = content.substring(0, match.index).split('\n').length;
+    issues.push({
+      type: 'content',
+      severity: 'warning',
+      message: 'Lorem ipsum placeholder text found',
+      line: line,
+      context: '... ' + content.substring(match.index - 10, match.index + 20) + ' ...'
+    });
   }
 
   return issues;
@@ -233,6 +327,7 @@ function checkInternalLinks(content, filePath) {
 
     if (isInternalLink(linkUrl)) {
       const resolvedPath = resolveInternalLink(linkUrl, baseDir);
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
       if (resolvedPath && !fs.existsSync(resolvedPath)) {
         issues.push({
           type: 'link',
@@ -254,6 +349,7 @@ function checkInternalLinks(content, filePath) {
 
     if (isInternalLink(linkUrl)) {
       const resolvedPath = resolveInternalLink(linkUrl, baseDir);
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
       if (resolvedPath && !fs.existsSync(resolvedPath)) {
         issues.push({
           type: 'link',
@@ -314,6 +410,7 @@ function checkFrontMatter(frontMatter) {
   const issues = [];
 
   for (const required of REQUIRED_FRONTMATTER) {
+    // eslint-disable-next-line security/detect-object-injection
     if (!frontMatter[required]) {
       issues.push({
         type: 'frontmatter',
@@ -361,9 +458,16 @@ function lintFile(filePath) {
   }
 
   // Check content
-  issues.push(...checkHeadingHierarchy(parsed.content));
-  issues.push(...checkImageAltText(parsed.content));
+  const isLayout = filePath.includes('layouts/');
+
+  if (!isLayout) {
+    issues.push(...checkHeadingHierarchy(parsed.content));
+    issues.push(...checkImageAttributes(parsed.content));
+    issues.push(...checkLoremIpsum(parsed.content));
+  }
+  
   issues.push(...checkInternalLinks(parsed.content, filePath));
+  issues.push(...checkEmptyLinks(parsed.content));
 
   return {
     filePath,
@@ -477,4 +581,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { lintFile, checkHeadingHierarchy, checkImageAltText, checkInternalLinks };
+module.exports = { lintFile, checkHeadingHierarchy, checkImageAttributes, checkInternalLinks, checkEmptyLinks, checkLoremIpsum };

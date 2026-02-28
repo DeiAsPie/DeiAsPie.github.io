@@ -19,6 +19,10 @@
     "stylelint-config-standard": "^39.0.1",
     "tailwindcss": "^4.1.13"
   },
+  "lint-staged": {
+    "*.{js,mjs}": "eslint --max-warnings=0",
+    "*.css": "stylelint"
+  },
   "name": "deaispie",
   "private": true,
   "scripts": {
@@ -34,7 +38,8 @@
     "lint:markdown": "markdownlint-cli2 '**/*.md'",
     "lint:markdown:fix": "markdownlint-cli2 --fix '**/*.md'",
     "prebuild": "npm run build:css",
-    "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\"",
+    "prepare": "husky",
+    "size:css": "node scripts/check_css_size.js",
     "size:images": "node scripts/check_image_budgets.js --report",
     "size:images:check": "IMAGE_BUDGET_KIB=400 node scripts/check_image_budgets.js",
     "test": "pytest -q",
@@ -43,12 +48,7 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:report": "playwright show-report",
     "test:e2e:ui": "playwright test --ui",
-    "test:smoke": "playwright test --project=smoke-tests",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,mjs}": "eslint --max-warnings=0",
-    "*.css": "stylelint"
+    "test:smoke": "playwright test --project=smoke-tests"
   },
   "version": "2.0.2"
 }

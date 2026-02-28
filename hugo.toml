@@ -36,11 +36,11 @@ author = "DeiAsPie"
 prefetch = ["/recommendations/", "/recommendations/courses/"]
 
 [imaging]
-# Optimize image processing - Hugo best practices
+# Hugo best practices for image processing
 anchor = 'Smart'
 bgColor = '#ffffff'
 hint = 'photo'
-quality = 85
+quality = 90
 resampleFilter = 'lanczos'
 
 [build]

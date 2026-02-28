@@ -1,53 +1,39 @@
 #!/usr/bin/env node
 /**
  * check_css_size.js
- * - Computes size of assets/gen/tailwind.css in KiB
- * - Fails if size exceeds budget
+ * - Monitors CSS file size and enforces budgets
  *
  * Usage:
- *   node scripts/check_css_size.js           # enforce using env CSS_BUDGET_KIB
- *   node scripts/check_css_size.js --print   # print size in KiB
- *   node scripts/check_css_size.js --print --bytes # print raw bytes
+ *   node scripts/check_css_size.js
+ *   CSS_BUDGET_KIB=50 node scripts/check_css_size.js
  */
 const fs = require("fs");
 const path = require("path");
 
-const cssPath = path.resolve(__dirname, "..", "assets", "gen", "tailwind.css");
-if (!fs.existsSync(cssPath)) {
-  console.error(
-    `CSS file not found: ${cssPath}. Did you run 'npm run build:css'?`,
-  );
-  process.exit(2);
-}
-const stat = fs.statSync(cssPath);
-const bytes = stat.size;
-const kib = bytes / 1024;
+const CSS_PATH = './assets/gen/tailwind.css';
+const DEFAULT_BUDGET_KIB = 100;
 
-if (process.argv.includes("--print")) {
-  if (process.argv.includes("--bytes")) {
-    process.stdout.write(String(bytes));
-  } else {
-    process.stdout.write(kib.toFixed(1) + " KiB");
+function main() {
+  if (!fs.existsSync(CSS_PATH)) {
+    console.error(`❌ CSS file not found: ${CSS_PATH}`);
+    console.error(`Run 'npm run build:css' first.`);
+    process.exit(1);
   }
-  process.exit(0);
+
+  const stats = fs.statSync(CSS_PATH);
+  const sizeKib = stats.size / 1024;
+  const budgetKib = process.env.CSS_BUDGET_KIB ? parseFloat(process.env.CSS_BUDGET_KIB) : DEFAULT_BUDGET_KIB;
+
+  console.log(`🎨 CSS Size: ${sizeKib.toFixed(1)} KiB (Budget: ${budgetKib.toFixed(1)} KiB)`);
+
+  if (sizeKib > budgetKib) {
+    console.error(`❌ CSS size exceeds budget!`);
+    process.exit(1);
+  } else {
+    console.log(`✅ CSS size is within budget.`);
+  }
 }
 
-const budgetStr = process.env.CSS_BUDGET_KIB;
-if (!budgetStr) {
-  console.error("CSS_BUDGET_KIB env not set. Skipping budget enforcement.");
-  process.exit(0);
+if (require.main === module) {
+  main();
 }
-const budget = parseFloat(budgetStr);
-if (isNaN(budget)) {
-  console.error(`Invalid CSS_BUDGET_KIB '${budgetStr}'.`);
-  process.exit(2);
-}
-if (kib > budget + 0.0001) {
-  console.error(
-    `CSS size ${kib.toFixed(1)} KiB exceeds budget ${budget.toFixed(1)} KiB`,
-  );
-  process.exit(1);
-}
-console.log(
-  `CSS size ${kib.toFixed(1)} KiB within budget ${budget.toFixed(1)} KiB.`,
-);
