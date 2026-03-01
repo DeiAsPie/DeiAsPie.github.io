@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.0.0...DeiAsPie.github.io-v3.1.0) (2026-03-01)
+
+
+### Features
+
+* **perf:** implement fragment caching and resource persistence ([#37](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/37)) ([c0e40c1](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/c0e40c1771a8e6458738e5589a813ad082f59875))
+
 ## [3.0.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v2.0.3...DeiAsPie.github.io-v3.0.0) (2026-03-01)
 
 
