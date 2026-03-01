@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.1.0...DeiAsPie.github.io-v3.2.0) (2026-03-01)
+
+
+### Features
+
+* **arch:** complete decommissioning of PWA features ([#41](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/41)) ([5c04a00](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/5c04a00cd2adb163680f7af06b4f04c828d53b92))
+
 ## [3.1.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.0.0...DeiAsPie.github.io-v3.1.0) (2026-03-01)
 
 
