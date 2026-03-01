@@ -1,6 +1,7 @@
 # Hugo build outputs (repo root)
 /public/
 /resources/
+!/resources/_gen/
 /.hugo_build.lock
 
 # Generated assets
