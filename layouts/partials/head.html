@@ -54,7 +54,6 @@ absURL) }} {{ end }} {{ end }}
   href="{{ .Site.BaseURL }}index.xml"
   title="RSS"
 />
-<link rel="manifest" href="/manifest.json" />
 {{ partial "fonts.html" . }} {{ if .IsHome }} {{ with .Site.Params.prefetch }}
 {{ $current := $.RelPermalink }} {{ range . }} {{ if ne . $current }}
 <link rel="prefetch" href="{{ . | relURL }}" as="document" />
