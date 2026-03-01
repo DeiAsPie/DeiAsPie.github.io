@@ -62,10 +62,13 @@
   {{- return -}}
 {{- end -}}
 
-{{- $res := index $imgs 0 -}}
+{{- $res := $p.Resources.GetMatch "logo.*" -}}
+{{- if not $res -}}
+  {{- $res = index $imgs 0 -}}
+{{- end -}}
 
 {{- $ext := lower $res.MediaType.SubType -}}
-{{- if eq $ext "svg" -}}
+{{- if or (eq $ext "svg") (eq $ext "svg+xml") -}}
   <img
     class="{{ $class }}"
     src="{{ $res.RelPermalink }}"
@@ -77,50 +80,49 @@
     fetchpriority="{{ $fetchPriority }}"
   />
   {{- return -}}
-{{- end -}}
+{{- else -}}
+  {{- $webpSet := slice -}}
+  {{- $origSet := slice -}}
+  {{- $maxWidth := 0 -}}
 
-{{- $webpSet := slice -}}
-{{- $origSet := slice -}}
-{{- $maxWidth := 0 -}}
-
-{{- range $widths -}}
-  {{- $w := . -}}
-  {{- if ge $res.Width $w -}}
-    {{- $webp := $res.Resize (printf "%dx webp q80" $w) -}}
-    {{- $orig := $res.Resize (printf "%dx q80" $w) -}}
-    {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $w) -}}
-    {{- $origSet = $origSet | append (printf "%s %dw" $orig.RelPermalink $w) -}}
-    {{- if gt $w $maxWidth }}{{ $maxWidth = $w }}{{ end -}}
+  {{- range $widths -}}
+    {{- $w := . -}}
+    {{- if ge $res.Width $w -}}
+      {{- $webp := $res.Resize (printf "%dx webp q80" $w) -}}
+      {{- $orig := $res.Resize (printf "%dx q80" $w) -}}
+      {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $w) -}}
+      {{- $origSet = $origSet | append (printf "%s %dw" $orig.RelPermalink $w) -}}
+      {{- if gt $w $maxWidth }}{{ $maxWidth = $w }}{{ end -}}
+    {{- end -}}
   {{- end -}}
-{{- end -}}
 
-{{- $fallback := $res -}}
-{{- if gt (len $origSet) 0 -}}
-  {{- $fallback = $res.Resize (printf "%dx q80" $maxWidth) -}}
-{{- end -}}
+  {{- $fallback := $res -}}
+  {{- if gt (len $origSet) 0 -}}
+    {{- $fallback = $res.Resize (printf "%dx q80" $maxWidth) -}}
+  {{- end -}}
 
-<picture>
-  {{- if gt (len $webpSet) 0 }}
-  <source
-    type="image/webp"
-    srcset='{{ delimit $webpSet "," }}'
-    sizes="{{ $sizes }}"
-  />
-  {{- end }}
-  {{- if gt (len $origSet) 0 }}
-  <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
-  {{- end }}
-  <img
-    class="{{ $class }}"
-    src="{{ $fallback.RelPermalink }}"
-    alt="{{ $alt | htmlEscape }}"
-    width="{{ $fallback.Width }}"
-    height="{{ $fallback.Height }}"
-    loading="{{ $loading }}"
-    decoding="async"
-    fetchpriority="{{ $fetchPriority }}"
-  />
-</picture>
+  <picture>
+    {{- if gt (len $webpSet) 0 }}
+    <source
+      type="image/webp"
+      srcset='{{ delimit $webpSet "," }}'
+      sizes="{{ $sizes }}"
+    />
+    {{- end }}
+    {{- if gt (len $origSet) 0 }}
+    <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
+    {{- end }}
+    <img
+      class="{{ $class }}"
+      src="{{ $fallback.RelPermalink }}"
+      alt="{{ $alt | htmlEscape }}"
+      width="{{ $fallback.Width }}"
+      height="{{ $fallback.Height }}"
+      loading="{{ $loading }}"
+      decoding="async"
+      fetchpriority="{{ $fetchPriority }}"
+    />
+  </picture>
 
   {{- if $preload }}
   <link
@@ -131,4 +133,5 @@
     imagesizes="{{ $sizes }}"
   />
   {{- end -}}
+{{- end -}}
 {{- end -}}
