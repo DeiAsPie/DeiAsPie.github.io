@@ -25,4 +25,11 @@ export default [
     },
     rules: {},
   },
+  {
+    files: ["scripts/**/*.js", "scripts/**/*.mjs"],
+    rules: {
+      "security/detect-non-literal-fs-filename": "off",
+      "security/detect-object-injection": "off",
+    },
+  },
 ];

@@ -25,16 +25,15 @@
     {{- $final = printf "/%s" $src -}}
   {{- end -}}
 
-  <img
-    class="{{ $class }}"
-    src="{{ $final | relURL }}"
-    alt="{{ $alt | htmlEscape }}"
-    {{- if gt $width 0 }} width="{{ $width }}"{{ end }}
-    {{- if gt $height 0 }} height="{{ $height }}"{{ end }}
-    loading="{{ $loading }}"
-    decoding="async"
-    fetchpriority="{{ $fetchPriority }}"
-  />
+  {{- partial "_img-tag.html" (dict 
+    "class" $class 
+    "src" ($final | relURL) 
+    "alt" $alt 
+    "width" $width 
+    "height" $height 
+    "loading" $loading 
+    "fetchPriority" $fetchPriority
+  ) -}}
 {{- else -}}
   {{- /* Bundle processing only if no src provided */ -}}
   {{- $title := "" -}}
@@ -66,16 +65,15 @@
 
 {{- $ext := lower $res.MediaType.SubType -}}
 {{- if eq $ext "svg" -}}
-  <img
-    class="{{ $class }}"
-    src="{{ $res.RelPermalink }}"
-    alt="{{ $alt | htmlEscape }}"
-    {{- if gt $paramWidth 0 }} width="{{ $paramWidth }}"{{ end }}
-    {{- if gt $paramHeight 0 }} height="{{ $paramHeight }}"{{ end }}
-    loading="{{ $loading }}"
-    decoding="async"
-    fetchpriority="{{ $fetchPriority }}"
-  />
+  {{- partial "_img-tag.html" (dict 
+    "class" $class 
+    "src" $res.RelPermalink 
+    "alt" $alt 
+    "width" $paramWidth 
+    "height" $paramHeight 
+    "loading" $loading 
+    "fetchPriority" $fetchPriority
+  ) -}}
   {{- return -}}
 {{- end -}}
 
@@ -118,16 +116,15 @@
   {{- if gt (len $origSet) 0 }}
   <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
   {{- end }}
-  <img
-    class="{{ $class }} lqip-img"
-    src="{{ $fallback.RelPermalink }}"
-    alt="{{ $alt | htmlEscape }}"
-    width="{{ $fallback.Width }}"
-    height="{{ $fallback.Height }}"
-    loading="{{ $loading }}"
-    decoding="async"
-    fetchpriority="{{ $fetchPriority }}"
-  />
+  {{- partial "_img-tag.html" (dict 
+    "class" (printf "%s lqip-img" $class)
+    "src" $fallback.RelPermalink 
+    "alt" $alt 
+    "width" $fallback.Width 
+    "height" $fallback.Height 
+    "loading" $loading 
+    "fetchPriority" $fetchPriority
+  ) -}}
 </picture>
 </span>
 

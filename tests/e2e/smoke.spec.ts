@@ -213,4 +213,18 @@ test.describe('Performance & Accessibility', () => {
     // Check page has proper title
     await expect(page).toHaveTitle(/.+/); // Non-empty title
   });
+
+  test('LQIP placeholders render on recommendation pages', async ({ page }) => {
+    await page.goto('/recommendations/');
+    const lqipWrap = page.locator('.lqip-wrap');
+    
+    // Ensure at least one exists to avoid false positives
+    await expect(lqipWrap.first()).toBeVisible(); 
+    await expect(lqipWrap.first().locator('img.lqip-img')).toBeVisible();
+    
+    const bgImage = await lqipWrap.first().evaluate(
+      el => getComputedStyle(el).backgroundImage
+    );
+    expect(bgImage).toContain('data:image/webp;base64,');
+  });
 });

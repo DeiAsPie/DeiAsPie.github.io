@@ -1,18 +1,32 @@
 {{- /* Partial: script.html Renders a script tag for a Hugo resource with
-optional `defer`. Usage: {{ partial "script" (dict "path" "js/init-ui.js"
-"defer" true) }} */ -}} {{- $path := .path -}} {{- if not $path -}} {{- errorf
-"partial 'script' requires a 'path' parameter" -}} {{- end -}} {{- $defer :=
-default false .defer -}} {{- $res := resources.Get $path -}} {{- if not
-hugo.IsServer -}} {{- $res = $res | minify | fingerprint -}} {{- end -}} {{- if
-$defer -}}
+optional `defer` and `type`. Usage: {{ partial "script" (dict "path"
+"js/init-ui.js" "defer" true "type" "module") }} */ -}} {{- $path := .path -}}
+{{- if not $path -}} {{- errorf "partial 'script' requires a 'path' parameter"
+-}} {{- end -}} {{- $defer := default false .defer -}} {{- $type := .type -}}
+{{- $res := resources.Get $path -}} {{- if eq $type "module" -}} {{- $res = $res
+| js.Build (dict "minify" (not hugo.IsServer) "target" "es2020" "format" "esm")
+-}} {{- end -}} {{- if not hugo.IsServer -}} {{- if not (eq $type "module") -}}
+{{- /* js.Build already minifies */ -}} {{- $res = $res | minify -}} {{- end -}}
+{{- $res = $res | fingerprint -}} {{- end -}}
 <script
-  defer
+  {{
+  if
+  $defer
+  }}defer{{
+  end
+  }}
+  {{
+  if
+  $type
+  }}type="{{ $type }}"{{
+  end
+  }}
   src="{{ $res.RelPermalink }}"
-  integrity="{{ with $res.Data.Integrity }}{{ . }}{{ end }}"
+  {{
+  if
+  not
+  hugo.IsServer
+  }}integrity="{{ $res.Data.Integrity }}"{{
+  end
+  }}
 ></script>
-{{- else -}}
-<script
-  src="{{ $res.RelPermalink }}"
-  integrity="{{ with $res.Data.Integrity }}{{ . }}{{ end }}"
-></script>
-{{- end -}}
