@@ -1,5 +1,6 @@
 ---
 title: "Privacy & Security Recommendations"
+description: "A battle-tested archive of privacy-focused tools and services. Find secure alternatives to mainstream platforms and protect your digital footprint."
 date: 2024-01-01
 ---
 

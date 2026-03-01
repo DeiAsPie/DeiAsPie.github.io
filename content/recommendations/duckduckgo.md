@@ -6,6 +6,8 @@ categories: ["Search Engine", "Privacy"]
 tags: ["search", "privacy", "no-tracking", "anonymous"]
 link: "https://duckduckgo.com/"
 image: "/images/duckduckgo.svg"
+image_alt: "Official DuckDuckGo logo - the search engine that doesn't track you"
+description: "DuckDuckGo is the leading private search engine that doesn't track your search history or profile you. Simple, fast, and completely anonymous browsing."
 summary: "Privacy-focused search engine that doesn't track users or store personal information."
 ---
 

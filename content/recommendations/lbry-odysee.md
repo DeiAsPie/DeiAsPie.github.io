@@ -13,6 +13,8 @@ tags:
   ]
 link: "https://lbry.com/get/"
 image: "/images/lbry.svg"
+image_alt: "LBRY logo - Decentralized video sharing network"
+description: "Explore LBRY and Odysee, decentralized video sharing platforms built on blockchain. A censorship-resistant, community-driven alternative to mainstream media."
 summary: "Decentralized video sharing platform built on blockchain technology."
 ---
 

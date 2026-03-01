@@ -6,6 +6,8 @@ categories: ["Cloud Storage", "Privacy", "Self-Hosted"]
 tags: ["cloud", "self-hosted", "files", "collaboration", "open-source"]
 link: "https://nextcloud.com/"
 image: "/images/nextcloud.svg"
+image_alt: "Nextcloud logo - Self-hosted productivity and cloud platform"
+description: "Build your own private cloud with Nextcloud. A self-hosted platform for secure file storage, collaboration, video calls, and end-to-end encrypted sync."
 summary: "Self-hosted cloud platform with file storage, office suite, and collaboration tools."
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: "Java"
+description: "Learn Java programming fundamentals with this hands-on course from Test Automation University. Perfect for beginners wanting to build a solid Java foundation."
+image_alt: "Test Automation University Java course logo"
 date: 2024-01-18
 draft: false
 categories: ["Courses"]

@@ -6,6 +6,8 @@ categories: ["Calendar", "Privacy"]
 tags: ["calendar", "encryption", "privacy", "scheduling"]
 link: "https://proton.me/calendar/"
 image: "/images/proton-calendar.svg"
+image_alt: "Official Proton Calendar logo - end-to-end encrypted calendar service"
+description: "Manage your schedule privately with Proton Calendar. Features end-to-end encryption, event sharing, and seamless integration with the Proton ecosystem."
 summary: "Encrypted calendar service with automatic end-to-end encryption of all data."
 ---
 

@@ -6,6 +6,8 @@ categories: ["DNS", "Privacy", "Security"]
 tags: ["dns", "privacy", "security", "malware-blocking", "switzerland"]
 link: "https://www.quad9.net/"
 image: "/images/Quad9.svg"
+image_alt: "Official Quad9 DNS logo - secure and private recursive DNS resolver"
+description: "Enhance your internet privacy and security with Quad9 DNS. A Swiss non-profit service that blocks malicious domains without logging your personal data."
 summary: "Privacy-focused DNS service operated by a Swiss non-profit foundation."
 ---
 

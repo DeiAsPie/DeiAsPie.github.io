@@ -6,6 +6,8 @@ categories: ["Operating System", "Privacy", "Mobile"]
 tags: ["android", "privacy", "security", "mobile", "pixel"]
 link: "https://grapheneos.org/"
 image: "/images/grapheneos.svg"
+image_alt: "Official GrapheneOS logo - security-hardened and private mobile operating system"
+description: "GrapheneOS is a security-hardened mobile OS based on Android. Experience the highest level of privacy and security on your Google Pixel device."
 summary: "The most private and secure mobile OS with Android app compatibility."
 ---
 

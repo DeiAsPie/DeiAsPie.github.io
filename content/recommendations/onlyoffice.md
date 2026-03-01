@@ -6,6 +6,8 @@ categories: ["Office Suite", "Productivity", "Compatibility"]
 tags: ["office", "documents", "microsoft-compatible", "collaboration"]
 link: "https://www.onlyoffice.com/"
 image: "/images/onlyoffice.svg"
+image_alt: "OnlyOffice logo - Online document editors for business"
+description: "ONLYOFFICE provides cloud and desktop office apps with high Microsoft Office compatibility. Ideal for collaborative document editing and project management."
 summary: "Free office suite with exceptional Microsoft Office compatibility."
 ---
 

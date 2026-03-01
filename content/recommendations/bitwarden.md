@@ -6,6 +6,8 @@ categories: ["Password Manager", "Security", "Cloud"]
 tags: ["password-manager", "cloud", "sync", "open-source", "subscription"]
 link: "https://bitwarden.com/"
 image: "/images/bitwarden.svg"
+image_alt: "Official Bitwarden logo - secure open source password management and vault"
+description: "Bitwarden is a secure and open-source password manager that syncs your logins across devices. Features zero-knowledge encryption and self-hosting options."
 summary: "Easy-to-use cloud password manager with optional self-hosting."
 ---
 

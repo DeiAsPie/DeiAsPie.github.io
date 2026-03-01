@@ -6,6 +6,8 @@ categories: ["File Sync", "Privacy", "Peer-to-Peer"]
 tags: ["sync", "peer-to-peer", "decentralized", "open-source", "local"]
 link: "https://syncthing.net/"
 image: "/images/syncthing.svg"
+image_alt: "Official Syncthing logo - decentralized and private file sync"
+description: "Sync your files between devices without the cloud. Syncthing is an open-source, peer-to-peer file synchronization tool that keeps your data under your control."
 summary: "Peer-to-peer file synchronization without cloud dependencies."
 ---
 

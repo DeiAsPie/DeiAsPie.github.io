@@ -6,6 +6,8 @@ categories: ["VPN", "Privacy", "Security"]
 tags: ["vpn", "privacy", "no-logs", "sweden", "anonymous"]
 link: "https://mullvad.net/en/"
 image: "/images/mullvad.svg"
+image_alt: "Mullvad VPN logo - Privacy-focused VPN with anonymous accounts"
+description: "Experience true privacy with Mullvad VPN. Anonymous account creation, no-logs policy, audited security, and a flat €5/month pricing model for everyone."
 summary: "Privacy-focused VPN with anonymous account creation and cryptocurrency payments."
 ---
 

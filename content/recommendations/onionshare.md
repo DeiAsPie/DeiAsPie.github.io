@@ -6,6 +6,8 @@ categories: ["File Sharing", "Privacy", "Anonymity"]
 tags: ["file-sharing", "tor", "anonymous", "secure", "temporary"]
 link: "https://onionshare.org/"
 image: "/images/onionshare.svg"
+image_alt: "OnionShare logo - Anonymous peer-to-peer file sharing"
+description: "Share files of any size anonymously with OnionShare. Secure, peer-to-peer file sharing via Tor onion services with no third-party servers or limits."
 summary: "Anonymous file sharing through the Tor network with unguessable URLs."
 ---
 

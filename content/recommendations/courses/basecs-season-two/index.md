@@ -1,5 +1,7 @@
 ---
 title: "BaseCS Season Two"
+description: "Dive deeper into computer science with BaseCS Season Two. Learn about memory management, architecture, and how computers process information through visual logs."
+image_alt: "BaseCS Season Two computer science series logo"
 date: 2024-01-15
 draft: false
 categories: ["Courses"]

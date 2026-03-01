@@ -6,6 +6,8 @@ categories: ["Operating System", "Linux", "Advanced"]
 tags: ["linux", "advanced", "rolling-release", "customizable"]
 link: "https://archlinux.org/"
 image: "/images/archlinux.svg"
+image_alt: "Official Arch Linux logo - a minimal and elegant Linux distribution for advanced users"
+description: "Arch Linux is a minimal, customizable Linux distribution for power users who want full control over their OS with a simple, rolling-release model."
 summary: "A minimal, customizable Linux distribution for advanced users who want full control."
 ---
 

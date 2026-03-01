@@ -6,6 +6,8 @@ categories: ["Messaging", "Privacy"]
 tags: ["messaging", "end-to-end-encryption", "privacy", "secure"]
 link: "https://www.signal.org/"
 image: "/images/signal.svg"
+image_alt: "Official Signal logo - end-to-end encrypted messenger"
+description: "Communicate securely with Signal, the gold standard for private messaging. Enjoy end-to-end encrypted calls and messages without tracking or data mining."
 summary: "The gold standard for private messaging with military-grade encryption."
 ---
 

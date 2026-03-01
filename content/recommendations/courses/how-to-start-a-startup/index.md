@@ -1,5 +1,7 @@
 ---
 title: "How to Start a Startup"
+description: "Master the essentials of starting a startup with this Y Combinator lecture series featuring Paul Graham, Sam Altman, Peter Thiel, and top YC founders."
+image_alt: "Y Combinator How to Start a Startup course logo"
 date: 2024-01-11
 aliases: ["/recommendations/how-to-start-a-startup/"]
 draft: false

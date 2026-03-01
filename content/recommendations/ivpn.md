@@ -6,6 +6,8 @@ categories: ["VPN", "Privacy", "Security"]
 tags: ["vpn", "privacy", "no-logs", "gibraltar", "audited"]
 link: "https://www.ivpn.net/"
 image: "/images/ivpn.svg"
+image_alt: "IVPN logo - Private and secure VPN service"
+description: "Secure your internet with IVPN, an audited VPN service based in Gibraltar. Features open-source clients, multi-hop connections, and anonymous payment methods."
 summary: "Audited VPN service with cryptocurrency support and open-source clients."
 ---
 

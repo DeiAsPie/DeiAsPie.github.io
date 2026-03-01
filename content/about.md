@@ -1,6 +1,7 @@
 ---
 title: "About"
 url: "/about/"
+description: "Learn about DeiAsPie's mission to empower individuals with privacy-focused tools and knowledge for digital sovereignty in the age of surveillance."
 date: 2024-01-01
 ---
 

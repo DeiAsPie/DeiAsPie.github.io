@@ -1,5 +1,7 @@
 ---
 title: "JavaScript Array Methods"
+description: "Master JavaScript array methods like map, filter, and reduce. Improve your JS fluency with practical examples and clear explanations for modern development."
+image_alt: "JavaScript programming language logo"
 date: 2024-01-12
 aliases: ["/recommendations/javascript-array-methods/"]
 draft: false

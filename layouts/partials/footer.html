@@ -5,13 +5,18 @@
     <p>© {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
     <div class="flex items-center gap-4">
       <a class="nav-link" href="{{ .Site.BaseURL }}index.xml">RSS</a>
-      <a
-        class="nav-link"
-        href='https://github.com/{{ .Site.Params.github | default "DeiAsPie" }}'
-        target="_blank"
-        rel="noopener"
-        >GitHub</a
-      >
+      {{ range $name, $val := .Site.Params.social }}
+        {{ $url := "" }}
+        {{ if eq $name "github" }}{{ $url = printf "https://github.com/%s" $val }}
+        {{ else if eq $name "twitter" }}{{ $url = printf "https://twitter.com/%s" $val }}
+        {{ else if eq $name "mastodon" }}
+          {{ if hasPrefix $val "http" }}{{ $url = $val }}
+          {{ else }}{{ $url = printf "https://mastodon.social/%s" (strings.TrimPrefix "@" $val) }}{{ end }}
+        {{ end }}
+        {{ if $url }}
+          <a class="nav-link" href="{{ $url }}" target="_blank" rel="noopener">{{ $name | humanize }}</a>
+        {{ end }}
+      {{ end }}
     </div>
   </div>
 </footer>

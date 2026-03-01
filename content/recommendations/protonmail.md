@@ -6,6 +6,8 @@ categories: ["Email", "Privacy"]
 tags: ["email", "encryption", "privacy", "switzerland"]
 link: "https://protonmail.com/"
 image: "/images/protonmail.svg"
+image_alt: "Official Proton Mail logo - secure and encrypted email service"
+description: "Protect your emails with Proton Mail, the world's largest secure email service. Based in Switzerland, offering end-to-end encryption and no data mining."
 summary: "Encrypted email service based in Switzerland with strong privacy protections."
 ---
 

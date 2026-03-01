@@ -7,6 +7,8 @@ tags: ["course"]
 area: "Computer Science"
 link: "https://people.seas.harvard.edu/~minilek/cs224/fall14/index.html"
 video: "https://redirect.invidious.io/playlist?list=PL2SOU6wwxB0uP4rJgf5ayhHWgw7akUWSf"
+description: "Master complex algorithmic challenges with Harvard's Advanced Algorithms course. Covers streaming, dimensionality reduction, and advanced data structures."
+image_alt: "Harvard University shield - the official emblem of Harvard University, a leading global research institution."
 summary: "A Harvard University Advanced Algorithms course by Prof. Jelani Nelson"
 aliases: ["/recommendations/advanced-algorithms/"]
 ---

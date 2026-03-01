@@ -6,6 +6,8 @@ categories: ["Office Suite", "Privacy", "Online"]
 tags: ["office", "documents", "online", "encryption", "collaboration"]
 link: "https://cryptpad.fr/"
 image: "/images/cryptpad.svg"
+image_alt: "Official CryptPad logo - encrypted and collaborative online office suite"
+description: "CryptPad is an end-to-end encrypted office suite for secure collaboration. Edit documents, spreadsheets, and more without compromising your privacy."
 summary: "Open-source online office suite with zero-knowledge encryption."
 ---
 

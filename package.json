@@ -19,7 +19,7 @@
     "stylelint-config-standard": "^39.0.1",
     "tailwindcss": "^4.1.13"
   },
-  "name": "deaispie",
+  "name": "DeiAsPie.github.io",
   "private": true,
   "scripts": {
     "axe": "AXE_URLS='http://localhost:8080/' node scripts/run_axe.mjs",

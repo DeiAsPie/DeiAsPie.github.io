@@ -6,6 +6,8 @@ categories: ["Browser", "Privacy", "Anonymity"]
 tags: ["browser", "tor", "anonymity", "privacy", "onion"]
 link: "https://www.torproject.org/"
 image: "/images/tor.svg"
+image_alt: "Official Tor Browser logo - anonymous web browsing"
+description: "Experience true anonymity online with Tor Browser. Protect yourself against tracking, surveillance, and censorship by browsing through the Tor network."
 summary: "The ultimate privacy browser for anonymous web browsing through the Tor network."
 ---
 

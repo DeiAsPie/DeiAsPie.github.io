@@ -6,6 +6,8 @@ categories: ["Browser", "Privacy", "Security"]
 tags: ["browser", "privacy", "ad-blocking", "chromium", "rewards"]
 link: "https://brave.com/"
 image: "/images/brave.svg"
+image_alt: "Official Brave Browser logo - privacy-focused web browser with built-in blocking"
+description: "Brave Browser offers fast, private browsing with built-in ad and tracker blocking. Built on Chromium for full compatibility with Chrome extensions."
 summary: "Chromium-based browser with built-in ad/tracker blocking and privacy features."
 ---
 

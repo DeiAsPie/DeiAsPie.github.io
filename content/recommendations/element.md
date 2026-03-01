@@ -6,6 +6,8 @@ categories: ["Messaging", "Privacy", "Decentralized"]
 tags: ["messaging", "matrix", "decentralized", "open-source", "federation"]
 link: "https://element.io/"
 image: "/images/element.svg"
+image_alt: "Official Element logo - decentralized and secure messaging on Matrix"
+description: "Element is a secure, decentralized messaging app built on the Matrix protocol. Enjoy end-to-end encrypted chats without needing a phone number."
 summary: "Decentralized messaging on the Matrix network - no phone number required."
 ---
 

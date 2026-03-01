@@ -1,5 +1,7 @@
 ---
 title: "Operating Systems"
+description: "Explore the core principles of operating systems with Berkeley's CS162. Deep dive into processes, concurrency, memory management, and distributed systems."
+image_alt: "UC Berkeley Operating Systems course logo"
 date: 2024-01-05
 draft: false
 categories: ["Courses"]

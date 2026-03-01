@@ -1,5 +1,7 @@
 ---
 title: "BaseCS Season One"
+description: "Explore core computer science fundamentals through visual storytelling. Learn binary, data structures, and foundational computing principles with BaseCS Season One."
+image_alt: "BaseCS computer science storytelling series logo"
 date: 2024-01-15
 draft: false
 categories: ["Courses"]

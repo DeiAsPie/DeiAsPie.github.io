@@ -6,6 +6,8 @@ categories: ["VPN", "Privacy", "Freemium"]
 tags: ["vpn", "privacy", "free-tier", "switzerland", "proton"]
 link: "https://protonvpn.com/"
 image: "/images/protonvpn.svg"
+image_alt: "Official Proton VPN logo - privacy-focused virtual private network"
+description: "Browse the web privately with Proton VPN. High-speed Swiss VPN with a strict no-logs policy, Secure Core routing, and a reliable free tier for everyone."
 summary: "Swiss-based VPN with a limited free tier and premium features."
 ---
 
