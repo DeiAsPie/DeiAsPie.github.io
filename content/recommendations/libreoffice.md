@@ -6,6 +6,8 @@ categories: ["Office Suite", "Productivity", "Open Source"]
 tags: ["office", "documents", "offline", "open-source", "free"]
 link: "https://www.libreoffice.org/"
 image: "/images/libreoffice.svg"
+image_alt: "LibreOffice logo - Open-source office productivity suite"
+description: "Discover LibreOffice, the leading free and open-source office suite. A powerful, privacy-respecting offline alternative to Microsoft Office for all platforms."
 summary: "Complete free and open-source office suite - the best offline alternative to Microsoft Office."
 ---
 

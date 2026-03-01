@@ -6,6 +6,8 @@ categories: ["Password Manager", "Security", "Offline"]
 tags: ["password-manager", "offline", "open-source", "2fa", "local"]
 link: "https://keepassxc.org/"
 image: "/images/keepassxc.svg"
+image_alt: "KeePassXC logo - Secure offline password manager"
+description: "Take full control of your passwords with KeePassXC, a secure offline password manager. Features AES-256 encryption, cross-platform support, and 2FA capabilities."
 summary: "Offline password manager with complete control over your data."
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: "DeiAsPie - Privacy & Security Recommendations"
+description: "Your guide to reclaiming digital sovereignty. Explore curated privacy-focused tools, secure alternatives, and independent education for a free mind."
 date: 2024-01-01
 ---
 

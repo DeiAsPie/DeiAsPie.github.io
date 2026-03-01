@@ -43,6 +43,10 @@ htmlEscape }}{{ end }} {{ if and (eq $desc "") (.Params.summary) }}{{ $desc =
 }} {{ $ogimg = ($first.Permalink) }} {{ else }} {{ $ogimg = ("/favicon.svg" |
 absURL) }} {{ end }} {{ end }}
 <meta property="og:image" content="{{ $ogimg }}" />
+{{ with .Site.Params.social.twitter }}
+<meta name="twitter:site" content="@{{ . }}" />
+<meta name="twitter:creator" content="@{{ . }}" />
+{{ end }}
 <meta name="twitter:card" content="summary_large_image" />
 <meta
   name="twitter:title"

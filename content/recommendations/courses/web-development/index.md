@@ -1,5 +1,7 @@
 ---
 title: "Web Development"
+description: "Become a full-stack developer with this FreeCodeCamp course on Svelte and modern web tools. Learn to build and deploy end-to-end applications from scratch."
+image_alt: "FreeCodeCamp Full Stack Web Development course logo"
 date: 2024-01-16
 draft: false
 categories: ["Courses"]

@@ -4,6 +4,8 @@ date: 2025-08-15T12:00:00+00:00
 categories: ["Recommendations", "Maps"]
 tags: ["maps", "privacy", "mobile"]
 image: "/images/organic-maps.svg"
+image_alt: "Organic Maps logo - Privacy-focused offline navigation app"
+description: "Navigate privately with Organic Maps, an offline-first GPS app based on OpenStreetMap. Features turn-by-turn navigation for hikers, cyclists, and drivers."
 summary: "Organic Maps — offline, privacy-first maps and navigation built on OpenStreetMap data."
 ---
 

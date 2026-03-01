@@ -1,5 +1,7 @@
 ---
 title: "Personal Finance 💰 SMART MONEY"
+description: "Master your money with this personal finance course. Learn simple math and logic-based habits to build wealth, manage debt, and achieve financial independence."
+image_alt: "Personal finance and money management course logo"
 date: 2024-01-20
 aliases: ["/recommendations/personal-finance-smart-money/"]
 draft: false

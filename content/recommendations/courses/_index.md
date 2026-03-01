@@ -1,7 +1,7 @@
 ---
 title: "Courses"
 layout: "courses-hierarchy"
-summary: "Curated courses organized by topic to mirror the legacy hierarchy."
+description: "Curated collection of high-quality educational courses. Master computer science, economics, and independent thinking with top university resources."
 date: 2024-01-01
 ---
 

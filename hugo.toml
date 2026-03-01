@@ -35,6 +35,11 @@ author = "DeiAsPie"
 # googleFonts = "family=Inter:wght@400;600;700&display=swap"
 prefetch = ["/recommendations/", "/recommendations/courses/"]
 
+[params.social]
+github = "DeiAsPie"
+twitter = "DeiAsPie"
+mastodon = "@DeiAsPie@mastodon.social"
+
 [imaging]
 # Optimize image processing - Hugo best practices
 anchor = 'Smart'

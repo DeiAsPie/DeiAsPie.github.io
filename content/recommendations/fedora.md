@@ -6,6 +6,8 @@ categories: ["Operating System", "Linux", "Desktop"]
 tags: ["linux", "beginner-friendly", "desktop", "open-source"]
 link: "https://getfedora.org/"
 image: "/images/fedora.svg"
+image_alt: "Official Fedora Linux logo - user-friendly and innovative Linux distribution"
+description: "Fedora Linux is a user-friendly, stable, and up-to-date operating system. Perfect for users transitioning from Windows or macOS who value open source."
 summary: "A user-friendly Linux distribution perfect for beginners migrating from Windows or macOS."
 ---
 

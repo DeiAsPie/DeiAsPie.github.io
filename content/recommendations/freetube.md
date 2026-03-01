@@ -6,6 +6,8 @@ categories: ["Video Streaming", "Privacy", "YouTube"]
 tags: ["youtube", "privacy", "desktop", "ad-blocking", "sponsorblock"]
 link: "https://freetubeapp.io/"
 image: "/images/freetube.svg"
+image_alt: "Official FreeTube logo - private desktop YouTube client with ad blocking"
+description: "FreeTube is an open-source YouTube client for desktop that blocks ads and protects your privacy by storing subscriptions locally. Includes SponsorBlock."
 summary: "Privacy-focused desktop YouTube client with ad blocking and SponsorBlock integration."
 ---
 

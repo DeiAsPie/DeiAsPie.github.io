@@ -6,6 +6,8 @@ categories: ["Search Engine", "Privacy"]
 tags: ["search", "privacy", "independent-index", "brave"]
 link: "https://search.brave.com/"
 image: "/images/brave-search.svg"
+image_alt: "Official Brave Search logo - independent and private search engine index"
+description: "Brave Search is an independent search engine with its own index. Experience private, unbiased search results without the tracking of big tech engines."
 summary: "Independent search engine by Brave with its own index and privacy focus."
 ---
 
