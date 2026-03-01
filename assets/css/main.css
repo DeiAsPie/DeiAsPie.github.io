@@ -85,6 +85,26 @@
   border-radius: 0.375rem;
 }
 
+/* LQIP blur-up wrapper — blurred background shows while image loads.
+   The 20x webp q20 placeholder is already blurred by Hugo's `blur 20`
+   parameter + natural browser upscaling smoothing — no CSS filter needed.
+   When the <img> loads, it paints opaquely over the background. */
+.lqip-wrap {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.lqip-img {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
 /* Rich typography for content areas */
 .prose {
   @apply max-w-none;

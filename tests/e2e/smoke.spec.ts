@@ -16,7 +16,7 @@ test.describe('Critical User Journeys', () => {
     await page.goto('/');
 
     // Check core page elements
-      await expect(page).toHaveTitle(/DeiAsPie - Privacy & Security Recommendations/);
+    await expect(page).toHaveTitle(/DeiAsPie - Privacy & Security Recommendations/);
     await expect(page.locator('h1')).toBeVisible();
 
     // Check navigation exists and has proper links
@@ -74,8 +74,8 @@ test.describe('Critical User Journeys', () => {
   test('individual recommendation page loads', async ({ page }) => {
     await page.goto('/recommendations/');
 
-  // Find and click first recommendation card link
-  const firstRecommendationLink = page.locator('.card > a.block').first();
+    // Find and click first recommendation card link
+    const firstRecommendationLink = page.locator('.card > a.block').first();
     await expect(firstRecommendationLink).toBeVisible();
 
     await firstRecommendationLink.click();
@@ -194,10 +194,7 @@ test.describe('Performance & Accessibility', () => {
       !error.includes('service-worker') &&
       !error.toLowerCase().includes('third-party') &&
       !error.includes("Content Security Policy directive 'frame-ancestors' is ignored") &&
-      !error.includes('Refused to apply inline style because it violates the following Content Security Policy directive') &&
-      !error.includes('InvalidStateError') &&
-      !error.includes("The page's settings blocked an inline style (style-src-attr)") &&
-      !error.includes('blocked an inline style (style-src-attr)')
+      !error.includes('InvalidStateError')
     );
 
     expect(criticalErrors).toHaveLength(0);
@@ -215,5 +212,19 @@ test.describe('Performance & Accessibility', () => {
 
     // Check page has proper title
     await expect(page).toHaveTitle(/.+/); // Non-empty title
+  });
+
+  test('LQIP placeholders render on recommendation pages', async ({ page }) => {
+    await page.goto('/recommendations/');
+    const lqipWrap = page.locator('.lqip-wrap');
+    
+    // Ensure at least one exists to avoid false positives
+    await expect(lqipWrap.first()).toBeVisible(); 
+    await expect(lqipWrap.first().locator('img.lqip-img')).toBeVisible();
+    
+    const bgImage = await lqipWrap.first().evaluate(
+      el => getComputedStyle(el).backgroundImage
+    );
+    expect(bgImage).toContain('data:image/webp;base64,');
   });
 });

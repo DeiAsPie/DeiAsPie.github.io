@@ -7,11 +7,15 @@
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/typography": "^0.5.19",
     "axe-core": "^4.11.0",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.36.0",
     "eslint-plugin-security": "^4.0.0",
     "gray-matter": "^4.0.3",
+    "http-server": "^14.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",
+    "playwright": "^1.55.1",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-go-template": "^0.0.15",
@@ -19,12 +23,23 @@
     "stylelint-config-standard": "^39.0.1",
     "tailwindcss": "^4.1.13"
   },
+  "lint-staged": {
+    "*.{js,mjs}": "eslint --max-warnings=0",
+    "*.css": "stylelint"
+  },
   "name": "deaispie",
   "private": true,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "scripts": {
+    "audit:tasks": "node scripts/check_task_completion.js",
     "axe": "AXE_URLS='http://localhost:8080/' node scripts/run_axe.mjs",
     "build": "hugo --minify --gc",
     "build:css": "tailwindcss -i ./assets/css/main.css -o ./assets/gen/tailwind.css --minify",
+    "commit": "cz",
     "dev": "hugo server --disableFastRender",
     "format": "prettier --write .",
     "lint": "eslint assets/js --max-warnings=0",
@@ -34,7 +49,8 @@
     "lint:markdown": "markdownlint-cli2 '**/*.md'",
     "lint:markdown:fix": "markdownlint-cli2 --fix '**/*.md'",
     "prebuild": "npm run build:css",
-    "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\"",
+    "prepare": "husky",
+    "size:css": "node scripts/check_css_size.js",
     "size:images": "node scripts/check_image_budgets.js --report",
     "size:images:check": "IMAGE_BUDGET_KIB=400 node scripts/check_image_budgets.js",
     "test": "pytest -q",
@@ -43,12 +59,7 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:report": "playwright show-report",
     "test:e2e:ui": "playwright test --ui",
-    "test:smoke": "playwright test --project=smoke-tests",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,mjs}": "eslint --max-warnings=0",
-    "*.css": "stylelint"
+    "test:smoke": "playwright test --project=smoke-tests"
   },
   "version": "2.0.2"
 }

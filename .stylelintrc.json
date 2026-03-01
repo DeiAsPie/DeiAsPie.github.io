@@ -1,0 +1,17 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["config", "plugin", "source", "custom-variant", "reference", "theme", "utility", "variant", "apply", "tailwind"]
+    }],
+    "import-notation": null,
+    "no-invalid-position-at-import-rule": null,
+    "value-keyword-case": null,
+    "no-descending-specificity": null,
+    "at-rule-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+    "comment-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": null
+  }
+}

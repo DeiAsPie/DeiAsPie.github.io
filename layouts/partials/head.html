@@ -1,11 +1,37 @@
-{{/* Copied from theme's head.html and extended: hardened CSP rollout */}} {{
-partial "style" (dict "path" "gen/tailwind.css") }} {{ partial "script"
-(dict "path" "js/init-theme.js") }} {{ $styleSources := "'self'" }} {{
-$fontSources := "'self'" }} {{ if .Site.Params.googleFonts }} {{ $styleSources
-= printf "%s %s" $styleSources "https://fonts.googleapis.com" }} {{
-$fontSources = printf "%s %s" $fontSources "https://fonts.gstatic.com" }} {{
-end }} {{ $csp := printf "default-src 'self'; script-src 'self'; style-src %s; img-src 'self' https:; font-src %s; connect-src 'self'; base-uri 'self'; form-action 'none'; frame-src 'none'; object-src 'none'; upgrade-insecure-requests" $styleSources $fontSources }}
+{{/* Copied from theme's head.html and extended: hardened CSP rollout */}} 
+{{ partial "style" (dict "path" "gen/tailwind.css") }} 
+{{ partial "script" (dict "path" "js/init-theme.js") }} 
+
+{{ $styleSources := .Site.Params.security.csp.style_src | default "'self'" }} 
+{{ $fontSources := .Site.Params.security.csp.font_src | default "'self'" }} 
+
+{{ if .Site.Params.googleFonts }} 
+  {{ $styleSources = printf "%s %s" $styleSources "https://fonts.googleapis.com" }} 
+  {{ $fontSources = printf "%s %s" $fontSources "https://fonts.gstatic.com" }} 
+{{ end }} 
+
+{{ $directives := slice
+  (printf "default-src %s" (.Site.Params.security.csp.default_src | default "'self'"))
+  (printf "script-src %s" (.Site.Params.security.csp.script_src | default "'self'"))
+  (printf "style-src %s" $styleSources)
+  (printf "style-src-attr %s" (.Site.Params.security.csp.style_src_attr | default "'unsafe-inline'"))
+  (printf "img-src %s" (.Site.Params.security.csp.img_src | default "'self' https: data:"))
+  (printf "font-src %s" $fontSources)
+  (printf "connect-src %s" (.Site.Params.security.csp.connect_src | default "'self'"))
+  (printf "base-uri %s" (.Site.Params.security.csp.base_uri | default "'self'"))
+  (printf "form-action %s" (.Site.Params.security.csp.form_action | default "'none'"))
+  (printf "frame-src %s" (.Site.Params.security.csp.frame_src | default "'none'"))
+  (printf "object-src %s" (.Site.Params.security.csp.object_src | default "'none'"))
+}}
+
+{{ if .Site.Params.security.csp.upgrade_insecure_requests }}
+  {{ $directives = $directives | append "upgrade-insecure-requests" }}
+{{ end }}
+
+{{ $csp := delimit $directives "; " }}
 <meta http-equiv="Content-Security-Policy" content="{{ $csp }}" />
+<meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />

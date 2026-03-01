@@ -20,10 +20,6 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v5
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-
       - name: Install Node dependencies
         shell: bash
         run: |
@@ -76,14 +72,14 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "latest"
+          hugo-version: "0.149.1"
           extended: true
 
       - name: Build site (production)
         run: npm run build
 
       - name: Start static server
-        run: npx -y http-server ./public -p 8080 &
+        run: npx http-server ./public -p 8080 &
 
       - name: Wait for server
         run: |
@@ -104,7 +100,7 @@ jobs:
         run: node scripts/run_lighthouse.mjs
 
       - name: Install Playwright Chromium (for Axe)
-        run: npx -y playwright install chromium
+        run: npx playwright install chromium
 
       - name: Run Axe (axe-core) accessibility checks (serious/critical)
         env:
