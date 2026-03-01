@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/deaispie-v2.0.2...deaispie-v2.0.3) (2026-03-01)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump minimatch ([#33](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/33)) ([2af3166](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/2af3166206d83473c1c4e54ecbed2e58abf17cb6))
+
 ## [2.0.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/deaispie-v2.0.1...deaispie-v2.0.2) (2026-02-26)
 
 

@@ -50,5 +50,5 @@
     "*.{js,mjs}": "eslint --max-warnings=0",
     "*.css": "stylelint"
   },
-  "version": "2.0.2"
+  "version": "2.0.3"
 }
