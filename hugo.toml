@@ -70,7 +70,6 @@ resampleFilter = 'lanczos'
 
 [caches]
   [caches.images]
-  dir = ":cacheDir/images"
   maxAge = "720h"
 
 [minify]

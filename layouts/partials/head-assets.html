@@ -1,0 +1,14 @@
+{{/* Extracted global assets and CSP for partialCached */}} 
+{{ partial "style" (dict "path" "gen/tailwind.css") }} 
+{{ partial "script" (dict "path" "js/init-theme.js") }} 
+
+{{ $styleSources := "'self'" }} 
+{{ $fontSources := "'self'" }} 
+
+{{ if .Site.Params.googleFonts }} 
+  {{ $styleSources = printf "%s %s" $styleSources "https://fonts.googleapis.com" }} 
+  {{ $fontSources = printf "%s %s" $fontSources "https://fonts.gstatic.com" }} 
+{{ end }} 
+
+{{ $csp := printf "default-src 'self'; script-src 'self'; style-src %s; img-src 'self' https:; font-src %s; connect-src 'self'; base-uri 'self'; form-action 'none'; frame-src 'none'; object-src 'none'; upgrade-insecure-requests" $styleSources $fontSources }}
+<meta http-equiv="Content-Security-Policy" content="{{ $csp }}" />

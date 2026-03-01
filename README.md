@@ -148,6 +148,21 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 - Add new recommendations as page bundles under `content/recommendations/`.
 - For Courses, set `area` for correct grouping on the Courses page.
 
+#### Resource Cache Maintenance
+To speed up CI builds, this repository commits generated assets in `resources/_gen/`. Over time, or when upgrading the Hugo binary version, this cache may need purging to prevent format incompatibilities and bloat.
+
+To purge and regenerate the cache locally:
+```fish
+# Clear old cache
+hugo --gc
+# Delete the tracked resources folder
+rm -rf resources/_gen
+# Regenerate production assets
+npm run build
+# Commit the fresh resources
+git add resources/_gen && git commit -m "chore: purge and regenerate Hugo resources"
+```
+
 ## Deploy
 
 Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` branch via Pages.
