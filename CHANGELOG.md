@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.0...DeiAsPie.github.io-v3.2.1) (2026-03-28)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump axe-core from 4.11.0 to 4.11.1 ([#43](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/43)) ([a9ca0ec](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/a9ca0ec92fdb401f30575bba926f2761c7e88fbe))
+
 ## [3.2.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.1.0...DeiAsPie.github.io-v3.2.0) (2026-03-01)
 
 
