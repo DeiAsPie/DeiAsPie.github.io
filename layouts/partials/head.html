@@ -4,13 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
-{{ $desc := "" }} {{ with .Params.description }}{{ $desc = . | plainify |
-htmlEscape }}{{ end }} {{ if and (eq $desc "") (.Params.summary) }}{{ $desc =
-(.Params.summary | plainify | htmlEscape) }}{{ end }} {{ if and (eq $desc "")
-(.Summary) }}{{ $desc = (.Summary | plainify | htmlEscape) }}{{ end }} {{ if and
-(eq $desc "") (.Site.Params.description) }}{{ $desc = (.Site.Params.description
-| plainify | htmlEscape) }}{{ end }} {{ if eq $desc "" }}{{ $desc = (.Site.Title
-| plainify | htmlEscape) }}{{ end }}
+{{ $desc := .Params.description | default .Params.summary | default .Summary | default .Site.Params.description | default .Site.Title | plainify | htmlEscape }}
 <meta name="description" content="{{ $desc }}" />
 <meta name="author" content="{{ .Site.Params.author }}" />
 <link rel="canonical" href="{{ .Permalink }}" />
@@ -57,6 +51,6 @@ absURL) }} {{ end }} {{ end }}
 {{ partial "fonts.html" . }} {{ if .IsHome }} {{ with .Site.Params.prefetch }}
 {{ $current := $.RelPermalink }} {{ range . }} {{ if ne . $current }}
 <link rel="prefetch" href="{{ . | relURL }}" as="document" />
-{{ end }} {{ end }} {{ end }} {{ end }} {{ if and (not .IsHome) (not .IsNode) }}
-{{ partial "seo-jsonld.html" . }} {{ else if .IsPage }} {{ partial
-"seo-jsonld.html" . }} {{ end }}
+{{ end }} {{ end }} {{ end }} {{ end }} {{ if .IsPage }}
+{{ partial "seo-jsonld.html" . }}
+{{ end }}

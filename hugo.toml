@@ -4,7 +4,7 @@ languageCode = "en-us"
 summaryLength = 24
 enableRobotsTXT = true
 cleanDestinationDir = true
-canonifyURLs = true
+canonifyURLs = false
 
 [markup]
   [markup.goldmark]
@@ -66,7 +66,7 @@ resampleFilter = 'lanczos'
   [security.http]
     # Allow specific domains for resources.GetRemote
     methods = ['GET', 'HEAD']
-    urls = ['.*']
+    urls = []
 
 [caches]
   [caches.images]

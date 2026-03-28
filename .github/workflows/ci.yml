@@ -33,8 +33,15 @@ jobs:
             npm install
           fi
 
-      - name: Build CSS (Tailwind)
-        run: npm run build:css
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      - name: Build site (production)
+        run: npm run build
+
 
       - name: Compute CSS size and set budget (current * 1.15)
         id: csssize
@@ -72,15 +79,6 @@ jobs:
 
       - name: Run tests
         run: pytest -q
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: "latest"
-          extended: true
-
-      - name: Build site (production)
-        run: npm run build
 
       - name: Start static server
         run: npx -y http-server ./public -p 8080 &
