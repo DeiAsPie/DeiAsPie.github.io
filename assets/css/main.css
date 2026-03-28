@@ -1,5 +1,4 @@
 /* Tailwind v4 CSS entrypoint */
-@config "../../tailwind.config.js";
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 

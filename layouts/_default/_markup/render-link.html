@@ -12,10 +12,10 @@ keep internal links clean. */}} {{- $u := .Destination | safeURL -}} {{- $isAbs
   {{
   end
   }}
-  >{{ .Text | safeHTML }}</a
+  >{{ .Text }}</a
 >
 {{- else -}}
 <a href="{{ $u | relURL }}" {{ with .Title }} title="{{ . }}" {{ end }}
-  >{{ .Text | safeHTML }}</a
+  >{{ .Text }}</a
 >
 {{- end -}}

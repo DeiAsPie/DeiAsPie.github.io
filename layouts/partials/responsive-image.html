@@ -1,77 +1,66 @@
 {{- $p := .Page | default . -}}
 {{- $src := .Src -}}
 
-{{- /* Early return for external/static images */ -}}
-{{- if and $src (ne $src "") -}}
-  {{- $title := "" -}}
-  {{- with $p.Title }}{{ $title = . }}{{ end -}}
-  {{- $alt := .Alt -}}
-  {{- if not $alt -}}
-    {{- $alt = printf "%s image" $title -}}
-  {{- end -}}
-  {{- $class := .Class | default "" -}}
-  {{- $fetchPriority := .FetchPriority | default "auto" -}}
-  {{- $loading := .Loading | default "lazy" -}}
-  {{- $width := .Width | default 0 -}}
-  {{- $height := .Height | default 0 -}}
+{{- $title := "" -}}
+{{- with $p.Title }}{{ $title = . }}{{ end -}}
+{{- $alt := .Alt -}}
+{{- if not $alt -}}
+  {{- $alt = printf "%s image" $title -}}
+{{- end -}}
+{{- $class := .Class | default "" -}}
+{{- $fetchPriority := .FetchPriority | default "auto" -}}
+{{- $loading := .Loading | default "lazy" -}}
+{{- $sizes := .Sizes | default "100vw" -}}
+{{- $preload := .Preload | default false -}}
+{{- $widths := .Widths | default (slice 320 480 640 800 1024) -}}
+{{- $paramWidth := .Width | default 0 -}}
+{{- $paramHeight := .Height | default 0 -}}
 
-  {{- $isRemote := false -}}
-  {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") -}}
-    {{- $isRemote = true -}}
-  {{- end -}}
+{{- $isRemote := false -}}
+{{- if and $src (or (hasPrefix $src "http://") (hasPrefix $src "https://")) -}}
+  {{- $isRemote = true -}}
+{{- end -}}
 
+{{- $res := "" -}}
+
+{{- if and $src (not $isRemote) -}}
+  {{- $cleanSrc := strings.TrimPrefix "/" $src -}}
+  {{- if $p.Resources -}}
+    {{- $res = $p.Resources.GetMatch $cleanSrc -}}
+    {{- if not $res -}}
+      {{- $res = $p.Resources.GetMatch $src -}}
+    {{- end -}}
+  {{- end -}}
+  
+  {{- if not $res -}}
+    {{- $res = resources.Get $cleanSrc -}}
+    {{- if not $res -}}
+      {{- $res = resources.Get $src -}}
+    {{- end -}}
+  {{- end -}}
+{{- else if not $src -}}
+  {{- $isBundle := and (ne $p.BundleType "") (ne $p.BundleType nil) -}}
+  {{- if $isBundle -}}
+    {{- if $p.Resources -}}
+      {{- $imgs := $p.Resources.ByType "image" -}}
+      {{- if gt (len $imgs) 0 -}}
+        {{- $res = $p.Resources.GetMatch "logo.*" -}}
+        {{- if not $res -}}
+          {{- $res = index $imgs 0 -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if or $isRemote (and $src (not $res)) -}}
   {{- $final := $src -}}
   {{- if and (not $isRemote) (not (hasPrefix $src "/")) -}}
     {{- $final = printf "/%s" $src -}}
   {{- end -}}
-
   <img
     class="{{ $class }}"
     src="{{ $final | relURL }}"
-    alt="{{ $alt | htmlEscape }}"
-    {{- if gt $width 0 }} width="{{ $width }}"{{ end }}
-    {{- if gt $height 0 }} height="{{ $height }}"{{ end }}
-    loading="{{ $loading }}"
-    decoding="async"
-    fetchpriority="{{ $fetchPriority }}"
-  />
-{{- else -}}
-  {{- /* Bundle processing only if no src provided */ -}}
-  {{- $title := "" -}}
-  {{- with $p.Title }}{{ $title = . }}{{ end -}}
-  {{- $alt := .Alt -}}
-  {{- if not $alt -}}
-    {{- $alt = printf "%s image" $title -}}
-  {{- end -}}
-  {{- $class := .Class | default "" -}}
-  {{- $sizes := .Sizes | default "100vw" -}}
-  {{- $fetchPriority := .FetchPriority | default "auto" -}}
-  {{- $loading := .Loading | default "lazy" -}}
-  {{- $preload := .Preload | default false -}}
-  {{- $widths := .Widths | default (slice 320 480 640 800 1024) -}}
-  {{- $paramWidth := .Width | default 0 -}}
-  {{- $paramHeight := .Height | default 0 -}}
-
-{{- $isBundle := and (ne $p.BundleType "") (ne $p.BundleType nil) -}}
-{{- if not $isBundle -}}
-  {{- return -}}
-{{- end -}}
-
-{{- $imgs := $p.Resources.ByType "image" -}}
-{{- if le (len $imgs) 0 -}}
-  {{- return -}}
-{{- end -}}
-
-{{- $res := $p.Resources.GetMatch "logo.*" -}}
-{{- if not $res -}}
-  {{- $res = index $imgs 0 -}}
-{{- end -}}
-
-{{- $ext := lower $res.MediaType.SubType -}}
-{{- if or (eq $ext "svg") (eq $ext "svg+xml") -}}
-  <img
-    class="{{ $class }}"
-    src="{{ $res.RelPermalink }}"
     alt="{{ $alt | htmlEscape }}"
     {{- if gt $paramWidth 0 }} width="{{ $paramWidth }}"{{ end }}
     {{- if gt $paramHeight 0 }} height="{{ $paramHeight }}"{{ end }}
@@ -79,59 +68,71 @@
     decoding="async"
     fetchpriority="{{ $fetchPriority }}"
   />
-  {{- return -}}
-{{- else -}}
-  {{- $webpSet := slice -}}
-  {{- $origSet := slice -}}
-  {{- $maxWidth := 0 -}}
-
-  {{- range $widths -}}
-    {{- $w := . -}}
-    {{- if ge $res.Width $w -}}
-      {{- $webp := $res.Resize (printf "%dx webp q80" $w) -}}
-      {{- $orig := $res.Resize (printf "%dx q80" $w) -}}
-      {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $w) -}}
-      {{- $origSet = $origSet | append (printf "%s %dw" $orig.RelPermalink $w) -}}
-      {{- if gt $w $maxWidth }}{{ $maxWidth = $w }}{{ end -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- $fallback := $res -}}
-  {{- if gt (len $origSet) 0 -}}
-    {{- $fallback = $res.Resize (printf "%dx q80" $maxWidth) -}}
-  {{- end -}}
-
-  <picture>
-    {{- if gt (len $webpSet) 0 }}
-    <source
-      type="image/webp"
-      srcset='{{ delimit $webpSet "," }}'
-      sizes="{{ $sizes }}"
-    />
-    {{- end }}
-    {{- if gt (len $origSet) 0 }}
-    <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
-    {{- end }}
+{{- else if $res -}}
+  {{- $ext := lower $res.MediaType.SubType -}}
+  {{- if or (eq $ext "svg") (eq $ext "svg+xml") -}}
     <img
       class="{{ $class }}"
-      src="{{ $fallback.RelPermalink }}"
+      src="{{ $res.RelPermalink }}"
       alt="{{ $alt | htmlEscape }}"
-      width="{{ $fallback.Width }}"
-      height="{{ $fallback.Height }}"
+      {{- if gt $paramWidth 0 }} width="{{ $paramWidth }}"{{ end }}
+      {{- if gt $paramHeight 0 }} height="{{ $paramHeight }}"{{ end }}
       loading="{{ $loading }}"
       decoding="async"
       fetchpriority="{{ $fetchPriority }}"
     />
-  </picture>
+  {{- else -}}
+    {{- $webpSet := slice -}}
+    {{- $origSet := slice -}}
+    {{- $maxWidth := 0 -}}
 
-  {{- if $preload }}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ $fallback.RelPermalink }}"
-    imagesrcset='{{ if gt (len $webpSet) 0 }}{{ delimit $webpSet "," }}{{ end }}'
-    imagesizes="{{ $sizes }}"
-  />
+    {{- range $widths -}}
+      {{- $w := . -}}
+      {{- if ge $res.Width $w -}}
+        {{- $webp := $res.Resize (printf "%dx webp q80" $w) -}}
+        {{- $orig := $res.Resize (printf "%dx q80" $w) -}}
+        {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $w) -}}
+        {{- $origSet = $origSet | append (printf "%s %dw" $orig.RelPermalink $w) -}}
+        {{- if gt $w $maxWidth }}{{ $maxWidth = $w }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $fallback := $res -}}
+    {{- if gt (len $origSet) 0 -}}
+      {{- $fallback = $res.Resize (printf "%dx q80" $maxWidth) -}}
+    {{- end -}}
+
+    <picture>
+      {{- if gt (len $webpSet) 0 }}
+      <source
+        type="image/webp"
+        srcset='{{ delimit $webpSet "," }}'
+        sizes="{{ $sizes }}"
+      />
+      {{- end }}
+      {{- if gt (len $origSet) 0 }}
+      <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
+      {{- end }}
+      <img
+        class="{{ $class }}"
+        src="{{ $fallback.RelPermalink }}"
+        alt="{{ $alt | htmlEscape }}"
+        width="{{ $fallback.Width }}"
+        height="{{ $fallback.Height }}"
+        loading="{{ $loading }}"
+        decoding="async"
+        fetchpriority="{{ $fetchPriority }}"
+      />
+    </picture>
+
+    {{- if $preload }}
+    <link
+      rel="preload"
+      as="image"
+      href="{{ $fallback.RelPermalink }}"
+      imagesrcset='{{ if gt (len $webpSet) 0 }}{{ delimit $webpSet "," }}{{ end }}'
+      imagesizes="{{ $sizes }}"
+    />
+    {{- end -}}
   {{- end -}}
-{{- end -}}
 {{- end -}}

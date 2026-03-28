@@ -45,17 +45,17 @@ $collection := dict "@type" "CollectionPage" "name" (.Title | default $siteTitle
 | plainify) "description" $desc "url" $permalink }} {{ $graph := slice
 $collection $itemList $breadcrumbList }}
 <script type="application/ld+json">
-  {{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}
+  {{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}
 </script>
 {{ else }} {{ if $isCourse }} {{ $course := dict "@type" "Course" "name" (.Title
 | default $siteTitle | plainify) "description" $desc "provider" (dict "@type"
 "Organization" "name" $siteTitle "sameAs" .Site.BaseURL) }} {{ $graph := slice
 $article $course $breadcrumbList }}
 <script type="application/ld+json">
-  {{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}
+  {{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}
 </script>
 {{ else }} {{ $graph := slice $article $breadcrumbList }}
 <script type="application/ld+json">
-  {{ dict "@context" "https://schema.org" "@graph" $graph | jsonify }}
+  {{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}
 </script>
 {{ end }} {{ end }}
