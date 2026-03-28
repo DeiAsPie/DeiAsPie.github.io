@@ -11,8 +11,13 @@ $query = printf "%s&display=swap" $query -}} {{- else -}} {{- $query =
   media="print"
   id="google-fonts-css"
 />
+{{ $fontScript := "document.getElementById('google-fonts-css').media='all';" }}
 <script>
-  document.getElementById("google-fonts-css").media = "all";
+  {
+    {
+      $fontScript | safeJS;
+    }
+  }
 </script>
 <noscript><link rel="stylesheet" href="{{ $cssURL }}" /></noscript>
 {{- end -}}
