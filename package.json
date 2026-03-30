@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
-    "@commitlint/config-conventional": "^20.0.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@playwright/test": "^1.55.1",
     "@tailwindcss/cli": "^4.1.16",
     "@tailwindcss/typography": "^0.5.19",
