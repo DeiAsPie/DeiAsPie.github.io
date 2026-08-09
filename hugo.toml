@@ -59,7 +59,7 @@ resampleFilter = 'lanczos'
   enableInlineShortcodes = false
   [security.exec]
     # Only allow specific binaries if needed
-    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$']
+    allow = ['^npx$']
     osEnv = ['^HUGO_', '^CI$']
   [security.funcs]
     getenv = ['^HUGO_', '^CI$']
