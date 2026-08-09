@@ -9,9 +9,6 @@
         {{ $url := "" }}
         {{ if eq $name "github" }}{{ $url = printf "https://github.com/%s" $val }}
         {{ else if eq $name "twitter" }}{{ $url = printf "https://twitter.com/%s" $val }}
-        {{ else if eq $name "mastodon" }}
-          {{ if hasPrefix $val "http" }}{{ $url = $val }}
-          {{ else }}{{ $url = printf "https://mastodon.social/%s" (strings.TrimPrefix "@" $val) }}{{ end }}
         {{ end }}
         {{ if $url }}
           <a class="nav-link" href="{{ $url }}" target="_blank" rel="noopener">{{ $name | humanize }}</a>

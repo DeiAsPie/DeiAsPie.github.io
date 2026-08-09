@@ -37,8 +37,7 @@ prefetch = ["/recommendations/", "/recommendations/courses/"]
 
 [params.social]
 github = "DeiAsPie"
-twitter = "DeiAsPie"
-mastodon = "@DeiAsPie@mastodon.social"
+twitter = "Dei_As_Pie"
 
 [imaging]
 # Optimize image processing - Hugo best practices
