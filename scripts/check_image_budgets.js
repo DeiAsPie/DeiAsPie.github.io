@@ -23,12 +23,12 @@ const OVERSIZED_THRESHOLD = 1000; // Warn about individual images over this size
 const SUPPORTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif', '.svg'];
 
 // Directory-specific budgets (in KiB)
-const BUDGET_OVERRIDES = {
-  'static/courses': 1200, // Courses have more images, allow higher budget
-  'courses': 1200,        // Alternative path mapping
-  'static/images': 400,
-  'default': 400
-};
+const BUDGET_OVERRIDES = new Map([
+  ['static/courses', 1200], // Courses have more images, allow higher budget
+  ['courses', 1200],        // Alternative path mapping
+  ['static/images', 400],
+  ['default', 400]
+]);
 
 // Content directories to analyze
 const CONTENT_DIRS = [
@@ -44,6 +44,7 @@ const CONTENT_DIRS = [
  */
 function getFileSizeKib(filePath) {
   try {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- path derived from repo structure, not external input
     const stat = fs.statSync(filePath);
     return stat.size / 1024;
   } catch (error) {
@@ -69,15 +70,18 @@ function isImageFile(filePath) {
 function findImagesInDirectory(dirPath) {
   const images = [];
 
+  // eslint-disable-next-line security/detect-non-literal-fs-filename -- path derived from CONTENT_DIRS constant, not external input
   if (!fs.existsSync(dirPath)) {
     return images;
   }
 
   function walkDirectory(currentPath) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- path built from directory walk over repo-derived root paths
     const items = fs.readdirSync(currentPath);
 
     for (const item of items) {
       const fullPath = path.join(currentPath, item);
+      // eslint-disable-next-line security/detect-non-literal-fs-filename -- path built from directory walk over repo-derived root paths
       const stat = fs.statSync(fullPath);
 
       if (stat.isDirectory()) {
@@ -135,19 +139,13 @@ function groupImagesByBundle(images) {
  * @returns {number}
  */
 function getBudgetForBundle(bundleName) {
-  // Check for exact match first
-  if (BUDGET_OVERRIDES[bundleName]) {
-    return BUDGET_OVERRIDES[bundleName];
+  // Exact match lookup
+  if (BUDGET_OVERRIDES.has(bundleName)) {
+    return BUDGET_OVERRIDES.get(bundleName);
   }
 
-  // Check for partial match
-  for (const [key, value] of Object.entries(BUDGET_OVERRIDES)) {
-    if (bundleName.includes(key) || key.includes(bundleName)) {
-      return value;
-    }
-  }
-
-  return BUDGET_OVERRIDES['default'] || DEFAULT_BUDGET_KIB;
+  // Default fallback
+  return BUDGET_OVERRIDES.get('default') || DEFAULT_BUDGET_KIB;
 }
 
 /**
