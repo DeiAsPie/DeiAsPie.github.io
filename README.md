@@ -256,7 +256,7 @@ Main and mobile navigation `<nav>` elements include `aria-label`. Active menu li
 
 - Builds Tailwind CSS and the site, runs Python tests (pytest), and enforces a CSS size budget (current size +15%).
 - Runs Lighthouse audits and Axe (axe-core CLI) on key pages.
-- Blocking thresholds (owner-selected): Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90. Artifacts are uploaded to `ci/lighthouse/` and `ci/pa11y/`.
+- Blocking thresholds (owner-selected): Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90. Artifacts are uploaded to `ci/lighthouse/`.
 
 ### Run audits locally
 
