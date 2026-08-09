@@ -17,12 +17,14 @@
  *
  * Environment:
  *   CSS_BUDGET_KIB — explicit budget override (optional); if set, used instead of baseline × 1.15
+ *   CSS_FILE — override path to CSS file (default: assets/gen/tailwind.css)
+ *   CSS_BASELINE_FILE — override path to baseline file (default: css-baseline-kib.txt)
  */
 const fs = require("fs");
 const path = require("path");
 
-const cssPath = path.resolve(__dirname, "..", "assets", "gen", "tailwind.css");
-const baselinePath = path.resolve(__dirname, "..", "css-baseline-kib.txt");
+const cssPath = process.env.CSS_FILE || path.resolve(__dirname, "..", "assets", "gen", "tailwind.css");
+const baselinePath = process.env.CSS_BASELINE_FILE || path.resolve(__dirname, "..", "css-baseline-kib.txt");
 
 if (!fs.existsSync(cssPath)) {
   console.error(

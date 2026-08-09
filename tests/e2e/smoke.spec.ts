@@ -496,9 +496,14 @@ test.describe("Performance & Accessibility", () => {
 		// The params.prefetch path is unchanged and still .IsHome-gated
 		const prefetchLinks = page.locator('link[rel="prefetch"]');
 
-		// There should be at least some prefetch links on the home page
-		// (from the params.prefetch configuration)
+		// params.prefetch lists two URLs and the block is .IsHome-gated, so the
+		// home page must carry them. `>= 0` would be a tautology.
 		const count = await prefetchLinks.count();
-		expect(count).toBeGreaterThanOrEqual(0); // At minimum, the check should not error
+		expect(count).toBeGreaterThan(0);
+
+		const hrefs = await prefetchLinks.evaluateAll((links) =>
+			links.map((l) => l.getAttribute("href")),
+		);
+		expect(hrefs).toContain("/recommendations/");
 	});
 });
