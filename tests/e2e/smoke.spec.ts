@@ -147,6 +147,183 @@ test.describe('Mobile Responsiveness', () => {
     }
   });
 
+  test('mobile menu traps focus while open', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const mobileMenuButton = page.locator('#mobile-menu-toggle');
+    const mobileMenu = page.locator('#mobile-menu');
+
+    await expect(mobileMenuButton).toBeVisible();
+    await mobileMenuButton.click();
+    await expect(mobileMenu).toBeVisible();
+
+    // Tab well past the number of focusable children. If focus were not
+    // trapped it would reach the page behind the menu within these presses.
+    const linkCount = await mobileMenu.locator('a').count();
+    expect(linkCount).toBeGreaterThan(0);
+
+    // Focus may leave to the browser's own UI between passes, which surfaces
+    // as <body>. What must never happen is focus landing on an interactive
+    // control behind the modal.
+    const landings: string[] = [];
+    for (let i = 0; i < linkCount + 3; i++) {
+      await page.keyboard.press('Tab');
+      const landing = await page.evaluate(() => {
+        const menu = document.getElementById('mobile-menu');
+        const active = document.activeElement;
+        if (!menu || !active) return 'none';
+        if (menu.contains(active)) return 'inside';
+        if (active === document.body || active === document.documentElement) return 'body';
+        return `outside:${active.tagName}#${active.id || ''}.${active.className || ''}`;
+      });
+      landings.push(landing);
+      expect(landing, `Tab press ${i + 1} reached a control behind the modal`).not.toMatch(/^outside:/);
+    }
+
+    // Prove it is cycling rather than parked: focus returns into the menu.
+    expect(landings.filter((l) => l === 'inside').length).toBeGreaterThan(0);
+  });
+
+  test('mobile menu opens below the header rather than over it', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const mobileMenuButton = page.locator('#mobile-menu-toggle');
+    await expect(mobileMenuButton).toBeVisible();
+    await mobileMenuButton.click();
+    await expect(page.locator('#mobile-menu')).toBeVisible();
+
+    // showModal() lifts the dialog into the top layer, where the UA would
+    // centre it over the page. It must stay anchored under the header.
+    const headerBox = await page.locator('header').boundingBox();
+    const menuBox = await page.locator('#mobile-menu').boundingBox();
+    expect(headerBox).not.toBeNull();
+    expect(menuBox).not.toBeNull();
+    expect(menuBox!.y).toBeGreaterThanOrEqual(headerBox!.y + headerBox!.height - 1);
+  });
+
+  test('mobile menu makes the page behind it inert', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const mobileMenuButton = page.locator('#mobile-menu-toggle');
+    await expect(mobileMenuButton).toBeVisible();
+    await mobileMenuButton.click();
+    await expect(page.locator('#mobile-menu')).toBeVisible();
+
+    // showModal() marks everything outside the dialog inert, so focusing an
+    // element behind it must be a no-op.
+    const focusedSomethingOutside = await page.evaluate(() => {
+      const menu = document.getElementById('mobile-menu');
+      const outside = document.querySelector('#mobile-menu-toggle') as HTMLElement | null;
+      if (!menu || !outside) return null;
+      outside.focus();
+      return document.activeElement === outside;
+    });
+
+    expect(focusedSomethingOutside).toBe(false);
+  });
+
+  test('mobile menu initial focus on first nav link', async ({ page }) => {
+    // Set mobile viewport
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const mobileMenuButton = page.locator('#mobile-menu-toggle');
+
+    // Only test if mobile menu exists
+    if (await mobileMenuButton.isVisible()) {
+      // Open menu
+      await mobileMenuButton.click();
+
+      const mobileMenu = page.locator('#mobile-menu');
+      await expect(mobileMenu).toBeVisible();
+
+      // Get first nav link in menu
+      const navLinks = mobileMenu.locator('a');
+      if (await navLinks.first().isVisible()) {
+        // Focus should be on the first link, not on the dialog container
+        const firstLinkText = await navLinks.first().textContent();
+        const focusedElement = page.locator(':focus');
+        const focusedText = await focusedElement.textContent();
+
+        expect(focusedText?.trim()).toBe(firstLinkText?.trim());
+      }
+    }
+  });
+
+  test('mobile menu closes on Escape and returns focus to toggle', async ({ page }) => {
+    // Set mobile viewport
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const mobileMenuButton = page.locator('#mobile-menu-toggle');
+
+    // Only test if mobile menu exists
+    if (await mobileMenuButton.isVisible()) {
+      // Open menu
+      await mobileMenuButton.click();
+
+      const mobileMenu = page.locator('#mobile-menu');
+      await expect(mobileMenu).toBeVisible();
+
+      // Wait for menu to be open
+      await page.waitForTimeout(100);
+
+      // Press Escape
+      await page.keyboard.press('Escape');
+
+      // Menu should be hidden
+      await expect(mobileMenu).not.toBeVisible();
+
+      // Wait for close animation/event
+      await page.waitForTimeout(100);
+
+      // Verify focus returned to toggle
+      const isFocused = await mobileMenuButton.evaluate((el) => el === document.activeElement);
+      expect(isFocused).toBe(true);
+
+      // aria-expanded should be false
+      const ariaExpanded = await mobileMenuButton.getAttribute('aria-expanded');
+      expect(ariaExpanded).toBe('false');
+    }
+  });
+
+  test('mobile menu closes on outside click and returns focus to toggle', async ({ page }) => {
+    // Set mobile viewport
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('/');
+
+    const mobileMenuButton = page.locator('#mobile-menu-toggle');
+
+    // Only test if mobile menu exists
+    if (await mobileMenuButton.isVisible()) {
+      // Open menu
+      await mobileMenuButton.click();
+
+      const mobileMenu = page.locator('#mobile-menu');
+      await expect(mobileMenu).toBeVisible();
+
+      // Wait for menu to be open
+      await page.waitForTimeout(100);
+
+      // Click on the dialog backdrop (outside the menu content)
+      // This clicks at top-left of viewport which should be on the backdrop
+      await page.click('dialog#mobile-menu', { position: { x: 5, y: 5 } });
+
+      // Small delay for close to complete
+      await page.waitForTimeout(100);
+
+      // Menu should be hidden
+      await expect(mobileMenu).not.toBeVisible();
+
+      // Verify focus returned to toggle
+      const isFocused = await mobileMenuButton.evaluate((el) => el === document.activeElement);
+      expect(isFocused).toBe(true);
+    }
+  });
+
   test('responsive images load correctly', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/recommendations/');

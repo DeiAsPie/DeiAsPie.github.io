@@ -16,57 +16,6 @@
 
   window.SiteA11y = {
     /**
-     * Focus trap for modal/mobile menu
-     * @param {HTMLElement} container - Container element to trap focus within
-     * @returns {Function} Cleanup function to remove listeners
-     */
-    createFocusTrap: function (container) {
-      var focusableSelectors =
-        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-      var getFocusableElements = function () {
-        return Array.from(
-          container.querySelectorAll(focusableSelectors)
-        ).filter(function (el) {
-          return (
-            el.offsetParent !== null &&
-            !el.hasAttribute("inert") &&
-            window.getComputedStyle(el).display !== "none"
-          );
-        });
-      };
-
-      var handleKeyDown = function (e) {
-        if (e.key !== "Tab") return;
-
-        var focusableElements = getFocusableElements();
-        if (focusableElements.length === 0) return;
-
-        var firstElement = focusableElements[0];
-        var lastElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey && document.activeElement === firstElement) {
-          e.preventDefault();
-          lastElement.focus();
-        } else if (!e.shiftKey && document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement.focus();
-        }
-      };
-
-      container.addEventListener("keydown", handleKeyDown);
-
-      var focusableElements = getFocusableElements();
-      if (focusableElements.length > 0) {
-        focusableElements[0].focus();
-      }
-
-      return function () {
-        container.removeEventListener("keydown", handleKeyDown);
-      };
-    },
-
-    /**
      * Announce to screen readers
      * @param {string} message - Message to announce
      * @param {string} priority - 'polite' or 'assertive'

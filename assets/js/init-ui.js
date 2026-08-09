@@ -109,40 +109,14 @@
    * @param {HTMLElement} menu
    */
   function setupMobileMenu(toggle, menu) {
-    var isOpen = false;
-    var focusTrapCleanup = null;
-
-    function open() {
-      isOpen = true;
-      menu.classList.remove("hidden");
-      toggle.setAttribute("aria-expanded", "true");
-      menu.setAttribute("aria-hidden", "false");
-
-      // Setup focus trap via SiteA11y namespace
-      if (window.SiteA11y) {
-        focusTrapCleanup = window.SiteA11y.createFocusTrap(menu);
-        window.SiteA11y.announceToScreenReader('Menu opened');
-      } else {
-        console.warn('SiteA11y not loaded — a11y features disabled');
-        // Fallback: just focus first link
-        var firstLink = menu.querySelector('a');
-        if (firstLink instanceof HTMLElement) {
-          firstLink.focus();
-        }
-      }
+    // Type guard: menu must be a dialog for showModal/close
+    if (!(menu instanceof HTMLDialogElement)) {
+      console.warn('Mobile menu is not a <dialog> element');
+      return;
     }
 
-    function close() {
-      isOpen = false;
-      menu.classList.add("hidden");
+    function handleClose() {
       toggle.setAttribute("aria-expanded", "false");
-      menu.setAttribute("aria-hidden", "true");
-
-      // Cleanup focus trap
-      if (focusTrapCleanup) {
-        focusTrapCleanup();
-        focusTrapCleanup = null;
-      }
 
       // Return focus to toggle button
       toggle.focus();
@@ -153,28 +127,59 @@
       }
     }
 
+    function open() {
+      // showModal() lifts the dialog into the top layer, so it no longer sits
+      // under the header in normal flow. Anchor it to the header's measured
+      // bottom edge to keep the dropdown where it has always appeared.
+      var header = toggle.closest("header");
+      if (header) {
+        menu.style.top = header.getBoundingClientRect().bottom + "px";
+      }
+
+      menu.showModal();
+      toggle.setAttribute("aria-expanded", "true");
+
+      // showModal() alone leaves focus on the dialog in some engines; the
+      // previous focus trap always moved it to the first menu item.
+      var firstLink = menu.querySelector("a");
+      if (firstLink instanceof HTMLElement) {
+        firstLink.focus();
+      }
+
+      if (window.SiteA11y) {
+        window.SiteA11y.announceToScreenReader("Menu opened");
+      }
+    }
+
+    function close() {
+      if (menu.open) {
+        menu.close();
+      }
+    }
+
     // Attach event listeners
     toggle.addEventListener("click", function () {
-      if (isOpen) {
+      if (menu.open) {
         close();
       } else {
         open();
       }
     });
 
-    // Close menu when clicking outside
-    document.addEventListener("click", function (event) {
-      if (isOpen && !menu.contains(event.target) && !toggle.contains(event.target)) {
+    // Listen for native close event (triggered by Escape or programmatic close())
+    menu.addEventListener("close", handleClose);
+
+    // Close menu when clicking on the backdrop (outside click dismissal)
+    // This fires when event.target is the dialog element itself (the backdrop)
+    menu.addEventListener("click", function (event) {
+      if (event.target === menu) {
         close();
       }
     });
 
-    // Close menu on Escape key
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && isOpen) {
-        close();
-      }
-    });
+    // Native Escape key handling is automatic via showModal()
+    // Native focus trapping is automatic via showModal()
+    // Native background inertness is automatic via showModal()
   }
 
   if (document.readyState === "loading") {

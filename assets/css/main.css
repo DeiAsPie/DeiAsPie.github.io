@@ -283,3 +283,25 @@ nav h3,
 aside h3 {
   font-size: clamp(1.125rem, 1.5vw, 1.5rem);
 }
+
+/* Mobile menu dialog: reset the UA modal defaults (centred, auto-margined,
+   bordered) so the menu still reads as the dropdown under the header. `top` is
+   set from JS to the header's measured bottom edge, since the header is
+   sticky and its height is not a fixed value. */
+dialog#mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  padding: 0.75rem 0;
+  border: none;
+  background: var(--color-bg-primary);
+}
+
+dialog#mobile-menu::backdrop {
+  background: transparent;
+}
