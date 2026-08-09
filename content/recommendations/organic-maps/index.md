@@ -20,9 +20,9 @@ Features
 
 Links
 
-- Homepage: https://organicmaps.app/
-- Privacy Policy: https://organicmaps.app/privacy
-- Source code: https://git.omaps.dev/organicmaps/organicmaps
+- Homepage: <https://organicmaps.app/>
+- Privacy Policy: <https://organicmaps.app/privacy>
+- Source code: <https://git.omaps.dev/organicmaps/organicmaps>
 
 Notes
 

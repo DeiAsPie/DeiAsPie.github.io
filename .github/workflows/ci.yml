@@ -51,6 +51,9 @@ jobs:
       - name: Lint content quality
         run: npm run lint:content
 
+      - name: Lint markdown
+        run: npm run lint:markdown
+
       - name: Lint JavaScript
         run: npm run lint
 

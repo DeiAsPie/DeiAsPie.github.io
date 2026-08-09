@@ -63,7 +63,7 @@ npm run test:e2e -- --update-snapshots
 
 ## Test Structure
 
-```
+```text
 tests/
 ├── e2e/
 │   └── smoke.spec.ts      # Smoke tests for critical user journeys
@@ -74,6 +74,7 @@ tests/
 ## Test Coverage
 
 ### E2E Tests (Playwright)
+
 - ✅ Critical user journeys
   - Homepage loads and displays key content
   - Navigation works correctly
@@ -91,6 +92,7 @@ tests/
   - Proper meta tags and SEO
 
 ### Python Tests (pytest)
+
 - Template validation
 - Hugo template forbidden patterns
 
@@ -101,6 +103,7 @@ WebKit browser requires additional system dependencies on Linux. See the detaile
 📄 **[docs/PLAYWRIGHT_WEBKIT_SETUP.md](../docs/PLAYWRIGHT_WEBKIT_SETUP.md)**
 
 To enable WebKit testing:
+
 1. Install dependencies (see guide)
 2. Uncomment the webkit project in `playwright.config.ts`
 3. Run: `npm run test:e2e:webkit`
@@ -108,10 +111,12 @@ To enable WebKit testing:
 ## CI/CD Integration
 
 Tests run automatically in GitHub Actions on:
+
 - Pull requests
 - Pushes to main branch
 
 CI runs:
+
 - Chromium tests
 - Firefox tests
 - WebKit tests (in Docker environment)
@@ -119,6 +124,7 @@ CI runs:
 ## Troubleshooting
 
 ### Hugo server won't start
+
 ```bash
 # Check if port 8080 is in use
 lsof -i :8080
@@ -128,6 +134,7 @@ kill -9 <PID>
 ```
 
 ### Tests are flaky
+
 ```bash
 # Run with retries
 npm run test:e2e -- --retries=3
@@ -137,12 +144,15 @@ npm run test:e2e -- --workers=1
 ```
 
 ### WebKit dependency errors
+
 See [PLAYWRIGHT_WEBKIT_SETUP.md](../docs/PLAYWRIGHT_WEBKIT_SETUP.md) for:
+
 - Missing library installation
 - Docker-based testing alternative
 - Skip WebKit option
 
 ### View test artifacts
+
 ```bash
 # Screenshots and traces are saved in test-results/
 ls -la test-results/
@@ -156,6 +166,7 @@ npx playwright show-trace test-results/<test-name>/trace.zip
 ### Best Practices
 
 1. **Use semantic selectors**
+
    ```typescript
    // ✅ Good - semantic, robust
    page.getByRole('navigation', { name: 'Main navigation' })
@@ -167,6 +178,7 @@ npx playwright show-trace test-results/<test-name>/trace.zip
    ```
 
 2. **Scope selectors properly**
+
    ```typescript
    // ✅ Good - scoped to component
    const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
@@ -177,6 +189,7 @@ npx playwright show-trace test-results/<test-name>/trace.zip
    ```
 
 3. **Test user journeys, not implementation**
+
    ```typescript
    // ✅ Good - tests behavior
    test('user can toggle theme', async ({ page }) => {
@@ -192,6 +205,7 @@ npx playwright show-trace test-results/<test-name>/trace.zip
    ```
 
 4. **Handle browser differences**
+
    ```typescript
    // Filter out known browser-specific console warnings
    const criticalErrors = consoleErrors.filter(error =>

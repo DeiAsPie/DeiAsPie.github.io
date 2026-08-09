@@ -20,7 +20,7 @@ Features
 
 Links
 
-- Proton Pass homepage: https://proton.me/pass
+- Proton Pass homepage: <https://proton.me/pass>
 
 Notes
 

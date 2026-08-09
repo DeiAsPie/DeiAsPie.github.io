@@ -1,14 +1,21 @@
 {
   "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json",
   "default": true,
-  "MD013": {
-    "line_length": 120,
-    "code_blocks": false,
-    "tables": false
-  },
+  // Content prose is written as unwrapped lines, one paragraph per line. Hard
+  // wrapping it would churn every content file and make future edits noisier
+  // in diffs for no reader benefit. Code blocks and tables were already exempt.
+  "MD013": false,
   "MD025": false,
   "MD033": {
     "allowed_elements": ["img", "picture", "source", "a", "br", "strong", "em", "code", "kbd", "span"]
   },
-  "MD041": false
+  // Recommendation pages open with front matter and a paragraph rather than an
+  // H1; the layout supplies the heading.
+  "MD041": false,
+  // Blockquotes on the home page are separate pull-quotes, deliberately
+  // separated by blank lines rather than merged into one quote.
+  "MD028": false,
+  // The bold "DO NOT USE A DEVICE..." line is a warning inside prose, not a
+  // section title. Promoting it to a heading would put it in the page TOC.
+  "MD036": false
 }

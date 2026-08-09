@@ -31,10 +31,10 @@ hugo server -D
 
 Preferred: page bundles with minimal front matter. Create a folder and an `index.md`:
 
-```
+```text
 content/recommendations/my-tool/
-	index.md
-	logo.png   # optional; first image is auto-used if `image` is omitted
+ index.md
+ logo.png   # optional; first image is auto-used if `image` is omitted
 ```
 
 Minimal front matter:
@@ -78,12 +78,12 @@ Manual usage (normally not required):
 
 ```go-html-template
 {{ partial "responsive-image.html" (dict
-	"Page" .
-	"Src" .Params.image
-	"Alt" (printf "%s image" .Title)
-	"Class" "w-full mb-6"
-	"Widths" (slice 320 640 1024)
-	"Sizes" "(max-width: 900px) 100vw, 800px"
+ "Page" .
+ "Src" .Params.image
+ "Alt" (printf "%s image" .Title)
+ "Class" "w-full mb-6"
+ "Widths" (slice 320 640 1024)
+ "Sizes" "(max-width: 900px) 100vw, 800px"
 ) }}
 ```
 
@@ -149,9 +149,11 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 - For Courses, set `area` for correct grouping on the Courses page.
 
 #### Resource Cache Maintenance
+
 To speed up CI builds, this repository commits generated assets in `resources/_gen/`. Over time, or when upgrading the Hugo binary version, this cache may need purging to prevent format incompatibilities and bloat.
 
 To purge and regenerate the cache locally:
+
 ```fish
 # Clear old cache
 hugo --gc
@@ -275,7 +277,7 @@ npx -y @axe-core/cli http://localhost:1313/
 
 Goldmark is configured with `unsafe = true` (raw HTML allowed). We mitigate via a meta CSP in report-only mode first:
 
-```
+```html
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint">
 ```
 
@@ -290,7 +292,7 @@ To enforce later, progressively remove `'unsafe-inline'` by moving inline script
 
 Add the CI badge after the workflow is on default branch:
 
-```
+```markdown
 ![CI](https://github.com/<user>/<repo>/actions/workflows/ci.yml/badge.svg)
 ```
 
