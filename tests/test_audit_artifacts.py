@@ -127,6 +127,47 @@ class TestAuditCSS(unittest.TestCase):
             audit_artifacts.CSS_FILE = original_css
             pathlib.Path(css_path).unlink()
 
+    def test_reports_every_class_in_a_chained_selector(self):
+        """Both classes of `.panel.active` are extracted, not just the first."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".css", delete=False) as f:
+            f.write(
+                ".panel.active { color: red; } "
+                ".parent > .child:hover { color: blue; } "
+                "div { margin: 1.125rem; padding: 0.5vw; } "
+                ".used-class { color: green; }"
+            )
+            css_path = f.name
+
+        try:
+            original_css = audit_artifacts.CSS_FILE
+            audit_artifacts.CSS_FILE = css_path
+
+            result = audit_artifacts.audit_css({"used-class"})
+            # panel, active, parent, child — and no numeric fragments.
+            self.assertEqual(result, 4)
+        finally:
+            audit_artifacts.CSS_FILE = original_css
+            pathlib.Path(css_path).unlink()
+
+    def test_ignores_dotted_paths_inside_value_functions(self):
+        """theme(colors.slate.500) and url(app.js) are values, not selectors."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".css", delete=False) as f:
+            f.write(
+                "a { color: theme(colors.slate.500); background: url(app.js); } "
+                ".real-class { color: red; }"
+            )
+            css_path = f.name
+
+        try:
+            original_css = audit_artifacts.CSS_FILE
+            audit_artifacts.CSS_FILE = css_path
+
+            result = audit_artifacts.audit_css(set())
+            self.assertEqual(result, 1)
+        finally:
+            audit_artifacts.CSS_FILE = original_css
+            pathlib.Path(css_path).unlink()
+
 
 class TestAuditLeafBundles(unittest.TestCase):
     """Test audit_leaf_bundles function with fixture content tree."""

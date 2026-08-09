@@ -47,16 +47,22 @@ def audit_css(used_classes: set[str]) -> int:
     with open(CSS_FILE) as f:
         content = f.read()
 
-    # Comments and quoted strings hold file extensions (main.js, index.html)
-    # and content values that look like selectors but are not.
+    # Comments, url() targets, and quoted strings hold file extensions
+    # (main.js, index.html) and content values that look like selectors.
     selectors = re.sub(r"/\*.*?\*/", " ", content, flags=re.DOTALL)
-    selectors = re.sub(r"\"[^\"]*\"|'[^']*'", " ", selectors)
+    # Value functions carry dotted paths — url(app.js), theme(colors.slate.500)
+    # — that are not selectors. The selector functions are excluded because
+    # :not(.foo) and :is(.a, .b) really do contain class names.
+    selectors = re.sub(
+        r"(?<![\w-])(?!(?:not|is|where|has)\()[a-zA-Z-]+\([^()]*\)", " ", selectors
+    )
+    selectors = re.sub(r"\"(?:[^\"\\]|\\.)*\"|'(?:[^'\\]|\\.)*'", " ", selectors)
 
-    # A class selector is a dot not preceded by a word char, dot, or hyphen
-    # (which would make it a decimal fraction such as 1.125rem), followed by a
-    # name that cannot start with a digit, followed by a legal selector break.
+    # A class name cannot start with a digit, which is what rules out decimal
+    # fractions such as 1.125rem without needing a lookbehind. A lookbehind
+    # here would also reject the second class of a chained `.card.active`.
     found_definitions = re.findall(
-        r"(?<![\w.\-])\.(-?[_a-zA-Z][\w-]*)(?=[\s,{:.>+~\[)]|$)", selectors
+        r"\.(-?[_a-zA-Z][\w-]*)(?=[\s,{:.>+~\[)]|$)", selectors
     )
 
     unused = []
@@ -71,6 +77,12 @@ def audit_css(used_classes: set[str]) -> int:
 
 def audit_leaf_bundles(fix: bool = False) -> int:
     """Checks Leaf Bundles for unreferenced images."""
+    if not os.path.isdir(CONTENT_DIR):
+        # os.walk on a missing directory yields nothing, which would report a
+        # clean tree rather than admit it never looked at one.
+        print(f"{CONTENT_DIR} not found.", file=sys.stderr)
+        sys.exit(2)
+
     total_orphans = 0
 
     for root, _dirs, files in os.walk(CONTENT_DIR):
