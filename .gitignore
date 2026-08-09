@@ -16,6 +16,7 @@ css-budget-kib.txt
 /.lighthouseci/
 /ci/lighthouse/
 /ci/axe/
+/ci/lighthouserc.with.chrome.json
 
 # Node
 /node_modules/
