@@ -44,7 +44,6 @@ const CONTENT_DIRS = [
  */
 function getFileSizeKib(filePath) {
   try {
-    // eslint-disable-next-line security/detect-non-literal-fs-filename -- path derived from repo structure, not external input
     const stat = fs.statSync(filePath);
     return stat.size / 1024;
   } catch (error) {
@@ -70,18 +69,15 @@ function isImageFile(filePath) {
 function findImagesInDirectory(dirPath) {
   const images = [];
 
-  // eslint-disable-next-line security/detect-non-literal-fs-filename -- path derived from CONTENT_DIRS constant, not external input
   if (!fs.existsSync(dirPath)) {
     return images;
   }
 
   function walkDirectory(currentPath) {
-    // eslint-disable-next-line security/detect-non-literal-fs-filename -- path built from directory walk over repo-derived root paths
     const items = fs.readdirSync(currentPath);
 
     for (const item of items) {
       const fullPath = path.join(currentPath, item);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename -- path built from directory walk over repo-derived root paths
       const stat = fs.statSync(fullPath);
 
       if (stat.isDirectory()) {
