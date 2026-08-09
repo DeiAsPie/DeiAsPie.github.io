@@ -1,10 +1,13 @@
-{{/* Extracted global assets and CSP for partialCached */}} 
-{{ partial "style" (dict "path" "gen/tailwind.css") }} 
+{{/* Extracted global assets and CSP for partialCached */}}
+{{ partial "style" (dict "path" "gen/tailwind.css") }}
 {{ $themeScript := resources.Get "js/init-theme.js" | minify }}
-<script>{{ $themeScript.Content | safeJS }}</script> 
+<script>{{ $themeScript.Content | safeJS }}</script>
 {{ $themeHash := printf "'sha256-%s'" ($themeScript.Content | crypto.SHA256 | encoding.Base64Encode) }}
+{{ $speculationRules := resources.Get "speculation-rules.json" | minify }}
+<script type="speculationrules">{{ $speculationRules.Content | safeHTML }}</script>
+{{ $specHash := printf "'sha256-%s'" ($speculationRules.Content | crypto.SHA256 | encoding.Base64Encode) }}
 
-{{ $scriptSources := printf "'self' %s" $themeHash }}
+{{ $scriptSources := printf "'self' %s %s" $themeHash $specHash }}
 {{ $styleSources := "'self'" }} 
 {{ $fontSources := "'self'" }} 
 

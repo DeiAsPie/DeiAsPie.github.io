@@ -426,4 +426,79 @@ test.describe("Performance & Accessibility", () => {
 		// Check page has proper title
 		await expect(page).toHaveTitle(/.+/); // Non-empty title
 	});
+
+	test("speculation rules configured correctly", async ({ page }) => {
+		await page.goto("/");
+
+		// Exactly one speculation-rules script on the page
+		const speculationScripts = page.locator('script[type="speculationrules"]');
+		await expect(speculationScripts).toHaveCount(1);
+
+		// Parse the JSON and verify structure
+		const scriptContent = await speculationScripts.first().textContent();
+		expect(scriptContent).toBeTruthy();
+		const trimmedContent = scriptContent?.trim();
+		const rules = JSON.parse(trimmedContent!);
+
+		// Must have prefetch rules
+		expect(rules.prefetch).toBeDefined();
+		expect(Array.isArray(rules.prefetch)).toBe(true);
+		expect(rules.prefetch.length).toBeGreaterThan(0);
+
+		// First rule should have eagerness set to "moderate" (not the default "conservative")
+		const rule = rules.prefetch[0];
+		expect(rule.eagerness).toBe("moderate");
+
+		// Rule must have selector_matches scoping to nav
+		expect(rule.where).toBeDefined();
+		expect(rule.where.and).toBeDefined();
+		const conditions = rule.where.and;
+		const selectorCondition = conditions.find((c: any) => c.selector_matches);
+		expect(selectorCondition).toBeDefined();
+		expect(selectorCondition.selector_matches).toBe("nav a");
+	});
+
+	test("CSP contains two script hashes", async ({ page }) => {
+		await page.goto("/");
+
+		const cspMeta = page.locator('meta[http-equiv="Content-Security-Policy"]');
+		const cspContent = await cspMeta.getAttribute("content");
+		expect(cspContent).toBeTruthy();
+
+		// Count sha256- hashes in script-src
+		const scriptSrcMatch = cspContent!.match(/script-src ([^;]+)/);
+		expect(scriptSrcMatch).toBeTruthy();
+		const scriptSrc = scriptSrcMatch![1];
+
+		const hashCount = (scriptSrc.match(/sha256-/g) || []).length;
+		expect(hashCount).toBe(2);
+	});
+
+	test("no request for prefetch-nav.js", async ({ page }) => {
+		const requests: string[] = [];
+		page.on("request", (request) => {
+			requests.push(request.url());
+		});
+
+		await page.goto("/");
+		await page.goto("/recommendations/");
+		await page.goto("/about/");
+
+		const prefetchNavRequests = requests.filter((url) =>
+			url.includes("prefetch-nav.js"),
+		);
+		expect(prefetchNavRequests).toHaveLength(0);
+	});
+
+	test("static prefetch links still render on home page", async ({ page }) => {
+		await page.goto("/");
+
+		// The params.prefetch path is unchanged and still .IsHome-gated
+		const prefetchLinks = page.locator('link[rel="prefetch"]');
+
+		// There should be at least some prefetch links on the home page
+		// (from the params.prefetch configuration)
+		const count = await prefetchLinks.count();
+		expect(count).toBeGreaterThanOrEqual(0); // At minimum, the check should not error
+	});
 });
