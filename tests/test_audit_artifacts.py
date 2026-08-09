@@ -1,10 +1,8 @@
 import json
 import pathlib
-import subprocess
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -243,43 +241,53 @@ class TestAuditLeafBundles(unittest.TestCase):
 class TestAuditStaticImages(unittest.TestCase):
     """Test audit_static_images function with fixture static tree."""
 
-    def test_reports_unreferenced_image(self):
-        """Reports an image in static/images not found in content or layouts."""
+    def _run_against_fixture(self, image_name, referenced_in=None):
+        """Run audit_static_images against a fixture tree, not the real repo.
+
+        SEARCH_DIRS is overridden alongside STATIC_DIR; without that the real
+        grep runs over the repository's own content/ and layouts/, so the
+        fixture is never consulted and the result depends on repo contents.
+        """
         with tempfile.TemporaryDirectory() as tmpdir:
             static_dir = pathlib.Path(tmpdir) / "static" / "images"
             static_dir.mkdir(parents=True)
-            (static_dir / "orphan.png").write_text("fake")
+            (static_dir / image_name).write_text("fake")
 
             content_dir = pathlib.Path(tmpdir) / "content"
             content_dir.mkdir()
             layouts_dir = pathlib.Path(tmpdir) / "layouts"
             layouts_dir.mkdir()
 
-            original_static = audit_artifacts.STATIC_DIR
-            try:
-                audit_artifacts.STATIC_DIR = str(static_dir)
-                result = audit_artifacts.audit_static_images()
-                self.assertEqual(result, 1)
-            finally:
-                audit_artifacts.STATIC_DIR = original_static
-
-    def test_does_not_report_referenced_image(self):
-        """Does not report an image found in content or layouts."""
-        with tempfile.TemporaryDirectory() as tmpdir:
-            static_dir = pathlib.Path(tmpdir) / "static" / "images"
-            static_dir.mkdir(parents=True)
-            (static_dir / "used.png").write_text("fake")
+            if referenced_in == "content":
+                (content_dir / "page.md").write_text(f"![alt](/images/{image_name})")
+            elif referenced_in == "layouts":
+                (layouts_dir / "page.html").write_text(f'<img src="/images/{image_name}">')
 
             original_static = audit_artifacts.STATIC_DIR
+            original_search = audit_artifacts.SEARCH_DIRS
             try:
                 audit_artifacts.STATIC_DIR = str(static_dir)
-                # Mock grep to succeed for used.png (return 0 = found)
-                with patch("subprocess.run") as mock_run:
-                    mock_run.return_value = None  # Return value doesn't matter, we check returncode via exception
-                    result = audit_artifacts.audit_static_images()
-                    self.assertEqual(result, 0)
+                audit_artifacts.SEARCH_DIRS = [str(content_dir), str(layouts_dir)]
+                return audit_artifacts.audit_static_images()
             finally:
                 audit_artifacts.STATIC_DIR = original_static
+                audit_artifacts.SEARCH_DIRS = original_search
+
+    def test_reports_unreferenced_image(self):
+        """Reports an image in static/images referenced by neither tree."""
+        self.assertEqual(self._run_against_fixture("orphan.png"), 1)
+
+    def test_does_not_report_image_referenced_in_content(self):
+        """An image referenced from content/ is not an orphan."""
+        self.assertEqual(
+            self._run_against_fixture("used.png", referenced_in="content"), 0
+        )
+
+    def test_does_not_report_image_referenced_in_layouts(self):
+        """An image referenced from layouts/ is not an orphan."""
+        self.assertEqual(
+            self._run_against_fixture("used.png", referenced_in="layouts"), 0
+        )
 
 
 class TestMainExitCode(unittest.TestCase):

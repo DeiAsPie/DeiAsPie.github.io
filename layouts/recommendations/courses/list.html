@@ -6,12 +6,7 @@
   </div>
 
   {{ if eq (len .Pages) 0 }}
-  <p class="text-slate-600 dark:text-slate-300">
-    No areas defined yet. All courses:
-  </p>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {{ range sort .Pages "Title" }} {{ partial "card.html" . }} {{ end }}
-  </div>
+  <p class="text-slate-600 dark:text-slate-300">No courses yet.</p>
   {{ else }} {{ $groups := .Pages.GroupByParam "area" }} {{ $order := slice
   "Computer Science" "Programming" "Web Development" "Systems" "Security" "Data"
   "Economics" "Finance" "Other" }} {{ $groupsMap := dict }} {{ range $groups }}

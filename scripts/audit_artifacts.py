@@ -8,6 +8,9 @@ import sys
 # Configuration
 CONTENT_DIR = "content/recommendations"
 STATIC_DIR = "static/images"
+# Roots searched for references to a static image. Module-level so tests can
+# point them at a fixture tree instead of the real repository.
+SEARCH_DIRS = ["content", "layouts"]
 STATS_FILE = "hugo_stats.json"
 CSS_FILE = "assets/css/main.css"
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".svg", ".webp"}
@@ -127,8 +130,7 @@ def audit_static_images() -> int:
     for img in static_images:
         found = False
         try:
-            # Search in content/ and layouts/
-            subprocess.run(["grep", "-r", img, "content", "layouts"], check=True, capture_output=True)
+            subprocess.run(["grep", "-r", img, *SEARCH_DIRS], check=True, capture_output=True)
             found = True
         except subprocess.CalledProcessError:
             pass
