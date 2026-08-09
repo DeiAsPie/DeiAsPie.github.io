@@ -35,7 +35,7 @@
     "lint:markdown:fix": "markdownlint-cli2 --fix '**/*.md'",
     "prebuild": "npm run build:css",
     "prepare": "husky",
-    "size:css": "node -e \"const fs=require('fs');const b=fs.statSync('./assets/gen/tailwind.css').size;console.log((b/1024).toFixed(1)+' KiB');\"",
+    "size:css": "node scripts/check_css_size.js --print",
     "size:images": "node scripts/check_image_budgets.js --report",
     "size:images:check": "IMAGE_BUDGET_KIB=400 node scripts/check_image_budgets.js",
     "test": "pytest -q",
