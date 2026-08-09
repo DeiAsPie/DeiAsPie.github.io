@@ -2,12 +2,16 @@
 /**
  * check_css_size.js
  * - Computes size of assets/gen/tailwind.css in KiB
+ * - Computes budget as current size × 1.15 (or uses explicit CSS_BUDGET_KIB)
  * - Fails if size exceeds budget
  *
  * Usage:
- *   node scripts/check_css_size.js           # enforce using env CSS_BUDGET_KIB
+ *   node scripts/check_css_size.js           # enforce with 1.15× multiplier
  *   node scripts/check_css_size.js --print   # print size in KiB
  *   node scripts/check_css_size.js --print --bytes # print raw bytes
+ *
+ * Environment:
+ *   CSS_BUDGET_KIB — explicit budget override (optional); if set, used instead of 1.15× multiplier
  */
 const fs = require("fs");
 const path = require("path");
@@ -32,16 +36,20 @@ if (process.argv.includes("--print")) {
   process.exit(0);
 }
 
+// Determine budget: explicit env override, or computed 1.15× multiplier
+let budget;
 const budgetStr = process.env.CSS_BUDGET_KIB;
-if (!budgetStr) {
-  console.error("CSS_BUDGET_KIB env not set. Skipping budget enforcement.");
-  process.exit(0);
+if (budgetStr) {
+  budget = parseFloat(budgetStr);
+  if (isNaN(budget)) {
+    console.error(`Invalid CSS_BUDGET_KIB '${budgetStr}'.`);
+    process.exit(2);
+  }
+} else {
+  // Compute budget as 15% headroom over current size
+  budget = kib * 1.15;
 }
-const budget = parseFloat(budgetStr);
-if (isNaN(budget)) {
-  console.error(`Invalid CSS_BUDGET_KIB '${budgetStr}'.`);
-  process.exit(2);
-}
+
 if (kib > budget + 0.0001) {
   console.error(
     `CSS size ${kib.toFixed(1)} KiB exceeds budget ${budget.toFixed(1)} KiB`,

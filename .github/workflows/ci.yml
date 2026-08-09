@@ -42,18 +42,7 @@ jobs:
       - name: Build site (production)
         run: npm run build
 
-
-      - name: Compute CSS size and set budget (current * 1.15)
-        id: csssize
-        run: |
-          # Compute CSS KiB and a 15% headroom budget directly with Node
-          node -e "const fs=require('fs'); const b=fs.statSync('./assets/gen/tailwind.css').size; const kib=b/1024; const bud=kib*1.15; console.log(kib.toFixed(1)); console.error(bud.toFixed(1));" 1> css-size-kib.txt 2> css-budget-kib.txt
-          echo "size_kib=$(cat css-size-kib.txt)" >> "$GITHUB_OUTPUT"
-          echo "budget_kib=$(cat css-budget-kib.txt)" >> "$GITHUB_OUTPUT"
-
       - name: Enforce CSS size budget
-        env:
-          CSS_BUDGET_KIB: ${{ steps.csssize.outputs.budget_kib }}
         run: node scripts/check_css_size.js
 
       - name: Check image quality budgets
