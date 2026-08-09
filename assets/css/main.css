@@ -1,6 +1,5 @@
 /* Tailwind v4 CSS entrypoint */
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
 /* Tell Tailwind where to scan for class usage (v4) */
 @source "./content/**/*.{html,md}";
@@ -37,25 +36,6 @@
   --color-focus-ring: theme(colors.sky.500);
   --color-focus-ring-offset: theme(colors.white);
   --color-focus-ring-special: theme(colors.fuchsia.500);
-
-  /* Spacing tokens */
-  --space-xs: theme(spacing.1);
-  --space-sm: theme(spacing.2);
-  --space-md: theme(spacing.4);
-  --space-lg: theme(spacing.6);
-  --space-xl: theme(spacing.8);
-  --space-2xl: theme(spacing.10);
-
-  /* Border radius tokens */
-  --radius-sm: theme(borderRadius.md);
-  --radius-md: theme(borderRadius.lg);
-  --radius-lg: theme(borderRadius.xl);
-  --radius-xl: theme(borderRadius.2xl);
-
-  /* Shadow tokens */
-  --shadow-sm: theme(boxShadow.sm);
-  --shadow-md: theme(boxShadow.DEFAULT);
-  --shadow-lg: theme(boxShadow.lg);
 }
 
 /* Dark mode overrides */
@@ -206,10 +186,6 @@
 
 .card-title {
   @apply text-lg font-semibold mb-1;
-}
-
-.card-meta {
-  @apply text-sm text-slate-500 dark:text-slate-400;
 }
 
 /* Card images */
