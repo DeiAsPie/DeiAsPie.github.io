@@ -75,7 +75,7 @@ test.describe('Critical User Journeys', () => {
     await page.goto('/recommendations/');
 
   // Find and click first recommendation card link
-  const firstRecommendationLink = page.locator('.card > a.block').first();
+  const firstRecommendationLink = page.locator('.card > a').first();
     await expect(firstRecommendationLink).toBeVisible();
 
     await firstRecommendationLink.click();

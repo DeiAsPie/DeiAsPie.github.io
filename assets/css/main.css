@@ -177,7 +177,18 @@
 
 /* Card component */
 .card {
-  @apply rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow overflow-hidden;
+  @apply flex flex-col rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow overflow-hidden;
+}
+
+/* The card is a flex column so the text block settles against the bottom edge
+   and the media area absorbs the leftover height, centring the logo in it.
+   Cards in a row therefore stay the same height whatever their logo's ratio. */
+.card-link {
+  @apply flex flex-1 flex-col;
+}
+
+.card-media {
+  @apply flex flex-1 items-center justify-center p-4;
 }
 
 .card-body {
@@ -190,8 +201,11 @@
 
 /* Card images */
 img.card-img {
-  /* Ensure padding doesn't increase the visual width and images are centered */
-  @apply box-border block w-full h-40 max-h-40 object-contain object-center p-4;
+  /* Sized by its own ratio inside the media box rather than stretched to it:
+     a fixed box plus object-contain would letterbox the logo, and the feather
+     mask would then fade empty space instead of the artwork's edges. The
+     padding lives on .card-media so it sits outside the mask. */
+  @apply block h-auto max-h-full w-full max-w-full object-contain object-center;
 }
 
 /* Buttons */
@@ -282,6 +296,28 @@ section h3,
 nav h3,
 aside h3 {
   font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+}
+
+/* Feather image edges so they dissolve into the page instead of ending on a
+   hard line. Two gradients intersected cover all four sides at once. The fade
+   is a fixed 8px rather than a percentage: a feather consumes whatever sits at
+   the edge, and on a wide wordmark a percentage was eating the first and last
+   glyphs. */
+.img-feather {
+  /* Anchor the gradients to the content box so an image's own padding is not
+     what gets faded. */
+  -webkit-mask-origin: content-box;
+  mask-origin: content-box;
+  -webkit-mask-clip: content-box;
+  mask-clip: content-box;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8px, #000 calc(100% - 8px), transparent),
+    linear-gradient(to bottom, transparent, #000 8px, #000 calc(100% - 8px), transparent);
+  mask-image:
+    linear-gradient(to right, transparent, #000 8px, #000 calc(100% - 8px), transparent),
+    linear-gradient(to bottom, transparent, #000 8px, #000 calc(100% - 8px), transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
 /* Mobile menu dialog: reset the UA modal defaults (centred, auto-margined,
