@@ -48,7 +48,11 @@ if (chromePath) {
     cfg.ci.collect = cfg.ci.collect || {};
     cfg.ci.collect.settings = cfg.ci.collect.settings || {};
     cfg.ci.collect.settings.chromePath = chromePath;
-    cfg.ci.collect.settings.chromeFlags = ["--headless=new"]; // modern headless
+    // --no-sandbox is required wherever unprivileged user namespaces are
+    // disabled (Ubuntu 23.10+ under AppArmor, most containers, GitHub's
+    // runner images). Without it Chrome aborts with "No usable sandbox!"
+    // before the debugging port ever opens.
+    cfg.ci.collect.settings.chromeFlags = ["--headless=new", "--no-sandbox"];
     fs.mkdirSync("ci", { recursive: true });
     fs.writeFileSync(
       "ci/lighthouserc.with.chrome.json",

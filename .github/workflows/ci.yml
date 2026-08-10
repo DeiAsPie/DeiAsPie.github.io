@@ -70,43 +70,12 @@ jobs:
       - name: Run tests
         run: pytest -q
 
-      - name: Start static server
-        run: npx -y http-server ./public -p 8080 &
-
-      - name: Wait for server
-        run: |
-          for i in {1..10}; do
-            if curl -sSf http://localhost:8080 >/dev/null; then exit 0; fi
-            sleep 1
-          done
-          echo "Server did not start in time" >&2
-          exit 1
-
-      - name: Run Lighthouse audits (blocking)
-        env:
-          LH_URLS: http://localhost:8080/,http://localhost:8080/about/,http://localhost:8080/recommendations/
-        run: node scripts/run_lighthouse.mjs
-
-      - name: Install Playwright Chromium (for Axe)
-        run: npx -y playwright install chromium
-
-      - name: Run Axe (axe-core) accessibility checks (serious/critical)
-        env:
-          AXE_URLS: http://localhost:8080/,http://localhost:8080/about/,http://localhost:8080/recommendations/
-        run: node scripts/run_axe.mjs
-
+      # Lighthouse and axe run in the .husky/pre-push hook, not here. They need
+      # a real browser, and the runner images disable unprivileged user
+      # namespaces, so Chrome aborts with "No usable sandbox!". Playwright
+      # manages its own server, so no manual http-server is needed.
       - name: Install Playwright browsers
         run: npx playwright install chromium
-
-      - name: Kill http-server before Playwright tests
-        run: |
-          # Kill any processes using port 8080 to avoid conflicts
-          if command -v lsof &> /dev/null; then
-            lsof -ti :8080 | xargs -r kill -9 2>/dev/null || true
-          else
-            fuser -k 8080/tcp 2>/dev/null || true
-          fi
-          sleep 1
 
       - name: Run Playwright smoke tests
         run: npm run test:smoke
@@ -117,13 +86,12 @@ jobs:
           name: site-public
           path: public/
 
-      - name: Upload audit artifacts
+      - name: Upload test artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: audits
+          name: playwright
           path: |
-            ci/lighthouse/*.html
-            ci/lighthouse/*.json
-            ci/axe/*.json
             playwright-report/
             test-results/
+          if-no-files-found: ignore
