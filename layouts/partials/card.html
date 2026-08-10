@@ -1,17 +1,19 @@
 <article class="card">
-  <a href="{{ .RelPermalink }}" class="block">
-    {{- partial "responsive-image.html" (dict
-      "Page" .
-      "Src" .Params.image
-      "Alt" (default (printf "%s logo" .Title) .Params.image_alt)
-      "Class" "card-img"
-      "Loading" "lazy"
-      "FetchPriority" "low"
-      "Width" 200
-      "Height" 200
-      "Widths" (slice 200 320 400)
-      "Sizes" "(max-width: 480px) 50vw, 200px"
-    ) -}}
+  <a href="{{ .RelPermalink }}" class="card-link">
+    <div class="card-media">
+      {{- partial "responsive-image.html" (dict
+        "Page" .
+        "Src" .Params.image
+        "Alt" (default (printf "%s logo" .Title) .Params.image_alt)
+        "Class" "card-img"
+        "Loading" "lazy"
+        "FetchPriority" "low"
+        "Width" 200
+        "Height" 200
+        "Widths" (slice 200 320 400)
+        "Sizes" "(max-width: 480px) 50vw, 200px"
+      ) -}}
+    </div>
     <div class="card-body">
       <h3 class="card-title">{{ .Title }}</h3>
       {{ if .Params.summary }}

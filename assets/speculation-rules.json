@@ -1,0 +1,22 @@
+{
+  "prefetch": [
+    {
+      "eagerness": "moderate",
+      "where": {
+        "and": [
+          {
+            "selector_matches": "nav a"
+          },
+          {
+            "href_matches": "/*"
+          },
+          {
+            "not": {
+              "href_matches": "*#*"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -48,7 +48,7 @@ absURL) }} {{ end }} {{ end }}
   href="{{ .Site.BaseURL }}index.xml"
   title="RSS"
 />
-{{ partial "fonts.html" . }} {{ if .IsHome }} {{ with .Site.Params.prefetch }}
+{{ if .IsHome }} {{ with .Site.Params.prefetch }}
 {{ $current := $.RelPermalink }} {{ range . }} {{ if ne . $current }}
 <link rel="prefetch" href="{{ . | relURL }}" as="document" />
 {{ end }} {{ end }} {{ end }} {{ end }} {{ if .IsPage }}

@@ -1,20 +1,13 @@
-{{/* Extracted global assets and CSP for partialCached */}} 
-{{ partial "style" (dict "path" "gen/tailwind.css") }} 
+{{/* Extracted global assets and CSP for partialCached */}}
+{{ partial "style" (dict "path" "gen/tailwind.css") }}
 {{ $themeScript := resources.Get "js/init-theme.js" | minify }}
-<script>{{ $themeScript.Content | safeJS }}</script> 
+<script>{{ $themeScript.Content | safeJS }}</script>
 {{ $themeHash := printf "'sha256-%s'" ($themeScript.Content | crypto.SHA256 | encoding.Base64Encode) }}
+{{ $speculationRules := resources.Get "speculation-rules.json" | minify }}
+<script type="speculationrules">{{ $speculationRules.Content | safeHTML }}</script>
+{{ $specHash := printf "'sha256-%s'" ($speculationRules.Content | crypto.SHA256 | encoding.Base64Encode) }}
 
-{{ $scriptSources := printf "'self' %s" $themeHash }}
-{{ $styleSources := "'self'" }} 
-{{ $fontSources := "'self'" }} 
+{{ $scriptSources := printf "'self' %s %s" $themeHash $specHash }}
 
-{{ if .Site.Params.googleFonts }} 
-  {{ $fontScript := "document.getElementById('google-fonts-css').media='all';" }}
-  {{ $fontHash := printf "'sha256-%s'" ($fontScript | crypto.SHA256 | encoding.Base64Encode) }}
-  {{ $scriptSources = printf "%s %s" $scriptSources $fontHash }}
-  {{ $styleSources = printf "%s %s" $styleSources "https://fonts.googleapis.com" }} 
-  {{ $fontSources = printf "%s %s" $fontSources "https://fonts.gstatic.com" }} 
-{{ end }} 
-
-{{ $csp := printf "default-src 'self'; script-src %s; style-src %s; img-src 'self' https:; font-src %s; connect-src 'self'; base-uri 'self'; form-action 'none'; frame-src 'none'; object-src 'none'; upgrade-insecure-requests" $scriptSources $styleSources $fontSources }}
+{{ $csp := printf "default-src 'self'; script-src %s; style-src 'self'; img-src 'self' https:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none'; frame-src 'none'; object-src 'none'; upgrade-insecure-requests" $scriptSources }}
 <meta http-equiv="Content-Security-Policy" content="{{ $csp }}" />

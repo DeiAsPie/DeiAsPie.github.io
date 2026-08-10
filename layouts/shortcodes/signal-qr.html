@@ -1,0 +1,14 @@
+{{/* Signal QR figure. Raw HTML in markdown is discarded (unsafe = false), so
+     the image goes through a shortcode. Reuses responsive-image so it gets the
+     same srcset and feathered edges as every other image on the site. */}}
+<figure class="mt-6 max-w-48">
+  {{ partial "responsive-image.html" (dict
+    "Page" .Page
+    "Src" "signal-qr.png"
+    "Alt" (.Get "alt" | default "Signal QR code")
+    "Loading" "lazy"
+    "Sizes" "12rem"
+    "Widths" (slice 192 384)
+  ) }}
+  <figcaption class="text-sm mt-2">{{ .Get "caption" | default "Scan to add me on Signal." }}</figcaption>
+</figure>

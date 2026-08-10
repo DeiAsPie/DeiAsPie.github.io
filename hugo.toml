@@ -31,14 +31,11 @@ term = ["HTML"]
 [params]
 description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
 author = "DeiAsPie"
-# Optional Google Fonts query (after css2?) e.g. family=Inter:wght@400;600;700&display=swap
-# googleFonts = "family=Inter:wght@400;600;700&display=swap"
 prefetch = ["/recommendations/", "/recommendations/courses/"]
 
 [params.social]
 github = "DeiAsPie"
-twitter = "DeiAsPie"
-mastodon = "@DeiAsPie@mastodon.social"
+twitter = "Dei_As_Pie"
 
 [imaging]
 # Optimize image processing - Hugo best practices
@@ -59,7 +56,7 @@ resampleFilter = 'lanczos'
   enableInlineShortcodes = false
   [security.exec]
     # Only allow specific binaries if needed
-    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$']
+    allow = ['^npx$']
     osEnv = ['^HUGO_', '^CI$']
   [security.funcs]
     getenv = ['^HUGO_', '^CI$']

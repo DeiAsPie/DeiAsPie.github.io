@@ -8,10 +8,15 @@
 /assets/gen/
 /assets/gen/tailwind.css
 
+# Build artifacts
+css-size-kib.txt
+css-budget-kib.txt
+
 # Audit artifacts & reports
 /.lighthouseci/
 /ci/lighthouse/
 /ci/axe/
+/ci/lighthouserc.with.chrome.json
 
 # Node
 /node_modules/

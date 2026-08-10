@@ -20,8 +20,8 @@ Features
 
 Links
 
-- Proton Authenticator: https://proton.me/authenticator
-- Proton Pass (related): https://proton.me/pass
+- Proton Authenticator: <https://proton.me/authenticator>
+- Proton Pass (related): <https://proton.me/pass>
 
 Notes
 

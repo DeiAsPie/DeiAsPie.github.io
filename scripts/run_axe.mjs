@@ -51,7 +51,6 @@ try {
       }
 
       const results = await page.evaluate(async () => {
-        // eslint-disable-next-line no-undef
         return await axe.run(document, {
           resultTypes: ["violations"],
           reporter: "v2",

@@ -98,7 +98,7 @@
       </button>
     </div>
   </div>
-  <div id="mobile-menu" class="md:hidden hidden pb-3">
+  <dialog id="mobile-menu" class="md:hidden">
     <nav class="flex flex-col gap-2" aria-label="Mobile navigation">
       {{ $current := . }} {{ range .Site.Menus.main }} {{ $isActive := or
       ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq
@@ -117,5 +117,5 @@
       >
       {{ end }}
     </nav>
-  </div>
+  </dialog>
 </header>

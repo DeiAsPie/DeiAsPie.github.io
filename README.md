@@ -31,10 +31,10 @@ hugo server -D
 
 Preferred: page bundles with minimal front matter. Create a folder and an `index.md`:
 
-```
+```text
 content/recommendations/my-tool/
-	index.md
-	logo.png   # optional; first image is auto-used if `image` is omitted
+ index.md
+ logo.png   # optional; first image is auto-used if `image` is omitted
 ```
 
 Minimal front matter:
@@ -78,12 +78,12 @@ Manual usage (normally not required):
 
 ```go-html-template
 {{ partial "responsive-image.html" (dict
-	"Page" .
-	"Src" .Params.image
-	"Alt" (printf "%s image" .Title)
-	"Class" "w-full mb-6"
-	"Widths" (slice 320 640 1024)
-	"Sizes" "(max-width: 900px) 100vw, 800px"
+ "Page" .
+ "Src" .Params.image
+ "Alt" (printf "%s image" .Title)
+ "Class" "w-full mb-6"
+ "Widths" (slice 320 640 1024)
+ "Sizes" "(max-width: 900px) 100vw, 800px"
 ) }}
 ```
 
@@ -149,9 +149,11 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 - For Courses, set `area` for correct grouping on the Courses page.
 
 #### Resource Cache Maintenance
+
 To speed up CI builds, this repository commits generated assets in `resources/_gen/`. Over time, or when upgrading the Hugo binary version, this cache may need purging to prevent format incompatibilities and bloat.
 
 To purge and regenerate the cache locally:
+
 ```fish
 # Clear old cache
 hugo --gc
@@ -252,30 +254,35 @@ Main and mobile navigation `<nav>` elements include `aria-label`. Active menu li
 - Offer reduced motion preference (respect `prefers-reduced-motion`) for hover/transition-heavy elements.
 - Provide high-contrast toggle if expanding beyond current palette.
 
-## Continuous Integration (CI)
+## Verification: what runs where
 
-- Builds Tailwind CSS and the site, runs Python tests (pytest), and enforces a CSS size budget (current size +15%).
-- Runs Lighthouse audits and Axe (axe-core CLI) on key pages.
-- Blocking thresholds (owner-selected): Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90. Artifacts are uploaded to `ci/lighthouse/` and `ci/pa11y/`.
+Verification is split by cost. Anything needing a real browser runs locally; everything else runs on GitHub.
 
-### Run audits locally
+### Before every push (`.husky/pre-push`)
 
-```fish
-# serve production-like site in one terminal
-hugo server -D &
+Lighthouse and Axe run against a local production build of the whole site. The hook blocks the push if either fails, and has no bypass.
 
-# Lighthouse (writes to ci/lighthouse)
-npx -y @lhci/cli autorun --config=ci/lighthouserc.json
+These moved out of CI for two reasons: each run downloaded roughly 280 MB of Chromium, and GitHub's runner images disable unprivileged user namespaces, so Chrome aborts with `No usable sandbox!` before the debugging port opens. Locally the browser is already cached and the sandbox works.
 
-# Axe (serious/critical only in CI)
-npx -y @axe-core/cli http://localhost:1313/
+Blocking thresholds: Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90, set in `ci/lighthouserc.json`. Axe fails on serious or critical violations only. Reports land in `ci/lighthouse/` and `ci/axe/`, both gitignored.
+
+To run them without pushing:
+
+```bash
+sh .husky/pre-push
 ```
+
+### On every push and pull request (`.github/workflows/ci.yml`)
+
+Build, ESLint, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, and the Playwright smoke tests.
+
+The smoke tests stay in CI deliberately: the pre-push hook only protects the machine it is installed on, so PRs from a fresh clone or from Dependabot still get browser-level verification of the critical journeys.
 
 ## CSP rollout
 
 Goldmark is configured with `unsafe = true` (raw HTML allowed). We mitigate via a meta CSP in report-only mode first:
 
-```
+```html
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint">
 ```
 
@@ -290,7 +297,7 @@ To enforce later, progressively remove `'unsafe-inline'` by moving inline script
 
 Add the CI badge after the workflow is on default branch:
 
-```
+```markdown
 ![CI](https://github.com/<user>/<repo>/actions/workflows/ci.yml/badge.svg)
 ```
 

@@ -12,15 +12,9 @@
     } else {
       document.documentElement.classList.remove("dark");
     }
-    if (pref === "auto") {
-      try {
-        mql.addEventListener("change", function (e) {
-          var eff = e.matches ? "dark" : "light";
-          if (eff === "dark") document.documentElement.classList.add("dark");
-          else document.documentElement.classList.remove("dark");
-        });
-      } catch (e) {}
-    }
+    // Reacting to a later OS theme change is not a first-paint concern:
+    // init-ui.js owns that listener and also syncs the toggle button's
+    // accessible state, which this script cannot do.
   } catch (e) {
     document.documentElement.classList.add("dark");
   }

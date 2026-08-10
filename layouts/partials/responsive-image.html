@@ -31,7 +31,7 @@
       {{- $res = $p.Resources.GetMatch $src -}}
     {{- end -}}
   {{- end -}}
-  
+
   {{- if not $res -}}
     {{- $res = resources.Get $cleanSrc -}}
     {{- if not $res -}}
@@ -53,14 +53,27 @@
   {{- end -}}
 {{- end -}}
 
+{{/* A remote source, an unresolved source, and an SVG all emit the same plain
+     <img>; only the src differs. Resolve it once so there is one block to
+     maintain. Anything else is a raster resource and gets the <picture>. */}}
+{{- $simpleSrc := "" -}}
 {{- if or $isRemote (and $src (not $res)) -}}
   {{- $final := $src -}}
   {{- if and (not $isRemote) (not (hasPrefix $src "/")) -}}
     {{- $final = printf "/%s" $src -}}
   {{- end -}}
+  {{- $simpleSrc = $final | relURL -}}
+{{- else if $res -}}
+  {{- $ext := lower $res.MediaType.SubType -}}
+  {{- if or (eq $ext "svg") (eq $ext "svg+xml") -}}
+    {{- $simpleSrc = $res.RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $simpleSrc -}}
   <img
-    class="{{ $class }}"
-    src="{{ $final | relURL }}"
+    class="img-feather {{ $class }}"
+    src="{{ $simpleSrc }}"
     alt="{{ $alt | htmlEscape }}"
     {{- if gt $paramWidth 0 }} width="{{ $paramWidth }}"{{ end }}
     {{- if gt $paramHeight 0 }} height="{{ $paramHeight }}"{{ end }}
@@ -69,19 +82,6 @@
     fetchpriority="{{ $fetchPriority }}"
   />
 {{- else if $res -}}
-  {{- $ext := lower $res.MediaType.SubType -}}
-  {{- if or (eq $ext "svg") (eq $ext "svg+xml") -}}
-    <img
-      class="{{ $class }}"
-      src="{{ $res.RelPermalink }}"
-      alt="{{ $alt | htmlEscape }}"
-      {{- if gt $paramWidth 0 }} width="{{ $paramWidth }}"{{ end }}
-      {{- if gt $paramHeight 0 }} height="{{ $paramHeight }}"{{ end }}
-      loading="{{ $loading }}"
-      decoding="async"
-      fetchpriority="{{ $fetchPriority }}"
-    />
-  {{- else -}}
     {{- $webpSet := slice -}}
     {{- $origSet := slice -}}
     {{- $maxWidth := 0 -}}
@@ -114,7 +114,7 @@
       <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
       {{- end }}
       <img
-        class="{{ $class }}"
+        class="img-feather {{ $class }}"
         src="{{ $fallback.RelPermalink }}"
         alt="{{ $alt | htmlEscape }}"
         width="{{ $fallback.Width }}"
@@ -134,5 +134,4 @@
       imagesizes="{{ $sizes }}"
     />
     {{- end -}}
-  {{- end -}}
 {{- end -}}

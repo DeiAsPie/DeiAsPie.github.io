@@ -435,7 +435,6 @@ function generateReport(results) {
 function main() {
   const args = process.argv.slice(2);
   const isReport = args.includes('--report') || args.length === 0;
-  const isFix = args.includes('--fix');
 
   console.log('🔍 Scanning content files...');
 
@@ -463,11 +462,6 @@ function main() {
   if (hasErrors && !isReport) {
     console.error('❌ Content linting found errors.');
     process.exit(1);
-  }
-
-  if (isFix) {
-    console.log('\n🔧 Auto-fix is not yet implemented.');
-    console.log('Consider using markdownlint-cli2 --fix for markdown files.');
   }
 
   process.exit(hasErrors ? 1 : 0);
