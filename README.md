@@ -283,7 +283,10 @@ The smoke tests stay in CI deliberately: the pre-push hook only protects the mac
 Goldmark is configured with `unsafe = true` (raw HTML allowed). We mitigate via a meta CSP in report-only mode first:
 
 ```html
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint"
+/>
 ```
 
 To enforce later, progressively remove `'unsafe-inline'` by moving inline scripts/styles to external files and relaxing directives for required external services (fonts, analytics) as needed.

@@ -14,27 +14,35 @@
  * Directory-specific budgets are configured in BUDGET_OVERRIDES below.
  * This allows different content types to have different size limits.
  */
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
 // Configuration
 const DEFAULT_BUDGET_KIB = 400; // Default budget per bundle in KiB
 const OVERSIZED_THRESHOLD = 1000; // Warn about individual images over this size
-const SUPPORTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif', '.svg'];
+const SUPPORTED_EXTENSIONS = [
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".avif",
+  ".gif",
+  ".svg",
+];
 
 // Directory-specific budgets (in KiB)
 const BUDGET_OVERRIDES = new Map([
-  ['static/courses', 1200], // Courses have more images, allow higher budget
-  ['courses', 1200],        // Alternative path mapping
-  ['static/images', 400],
-  ['default', 400]
+  ["static/courses", 1200], // Courses have more images, allow higher budget
+  ["courses", 1200], // Alternative path mapping
+  ["static/images", 400],
+  ["default", 400],
 ]);
 
 // Content directories to analyze
 const CONTENT_DIRS = [
-  'content/recommendations',
-  'static/images',
-  'static/courses'
+  "content/recommendations",
+  "static/images",
+  "static/courses",
 ];
 
 /**
@@ -46,7 +54,7 @@ function getFileSizeKib(filePath) {
   try {
     const stat = fs.statSync(filePath);
     return stat.size / 1024;
-  } catch (error) {
+  } catch (_error) {
     return 0;
   }
 }
@@ -85,7 +93,7 @@ function findImagesInDirectory(dirPath) {
       } else if (isImageFile(fullPath)) {
         images.push({
           path: fullPath,
-          size: getFileSizeKib(fullPath)
+          size: getFileSizeKib(fullPath),
         });
       }
     }
@@ -107,17 +115,17 @@ function groupImagesByBundle(images) {
     let bundleName;
 
     // Group by immediate parent directory for content bundles
-    if (image.path.includes('content/recommendations/')) {
-      const parts = image.path.split('/');
-      const recIndex = parts.findIndex(part => part === 'recommendations');
-      bundleName = parts[recIndex + 1] || 'root';
-    } else if (image.path.includes('static/')) {
+    if (image.path.includes("content/recommendations/")) {
+      const parts = image.path.split("/");
+      const recIndex = parts.indexOf("recommendations");
+      bundleName = parts[recIndex + 1] || "root";
+    } else if (image.path.includes("static/")) {
       // Group static images by subdirectory
-      const parts = image.path.split('/');
-      const staticIndex = parts.findIndex(part => part === 'static');
-      bundleName = `static/${parts[staticIndex + 1] || 'root'}`;
+      const parts = image.path.split("/");
+      const staticIndex = parts.indexOf("static");
+      bundleName = `static/${parts[staticIndex + 1] || "root"}`;
     } else {
-      bundleName = 'other';
+      bundleName = "other";
     }
 
     if (!bundles.has(bundleName)) {
@@ -141,7 +149,7 @@ function getBudgetForBundle(bundleName) {
   }
 
   // Default fallback
-  return BUDGET_OVERRIDES.get('default') || DEFAULT_BUDGET_KIB;
+  return BUDGET_OVERRIDES.get("default") || DEFAULT_BUDGET_KIB;
 }
 
 /**
@@ -149,9 +157,15 @@ function getBudgetForBundle(bundleName) {
  * @param {Map} bundles
  * @param {number} defaultBudget
  */
-function generateReport(bundles, defaultBudget) {
+function generateReport(bundles, _defaultBudget) {
   console.log(`\n📊 Image Budget Report\n`);
-  console.log("Bundle".padEnd(30) + "Budget".padEnd(12) + "Images".padEnd(8) + "Total".padEnd(12) + "Status");
+  console.log(
+    "Bundle".padEnd(30) +
+      "Budget".padEnd(12) +
+      "Images".padEnd(8) +
+      "Total".padEnd(12) +
+      "Status",
+  );
   console.log("-".repeat(72));
 
   let totalImages = 0;
@@ -159,13 +173,11 @@ function generateReport(bundles, defaultBudget) {
   let violatingBundles = 0;
 
   // Sort bundles by total size descending
-  const sortedBundles = Array.from(bundles.entries()).sort(
-    (a, b) => {
-      const aTotalSize = a[1].reduce((sum, img) => sum + img.size, 0);
-      const bTotalSize = b[1].reduce((sum, img) => sum + img.size, 0);
-      return bTotalSize - aTotalSize;
-    }
-  );
+  const sortedBundles = Array.from(bundles.entries()).sort((a, b) => {
+    const aTotalSize = a[1].reduce((sum, img) => sum + img.size, 0);
+    const bTotalSize = b[1].reduce((sum, img) => sum + img.size, 0);
+    return bTotalSize - aTotalSize;
+  });
 
   for (const [bundleName, images] of sortedBundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
@@ -177,20 +189,24 @@ function generateReport(bundles, defaultBudget) {
 
     console.log(
       bundleName.padEnd(30) +
-      `${bundleBudget.toFixed(0)} KiB`.padEnd(12) +
-      images.length.toString().padEnd(8) +
-      `${bundleTotalSize.toFixed(1)} KiB`.padEnd(12) +
-      status
+        `${bundleBudget.toFixed(0)} KiB`.padEnd(12) +
+        images.length.toString().padEnd(8) +
+        `${bundleTotalSize.toFixed(1)} KiB`.padEnd(12) +
+        status,
     );
 
     totalImages += images.length;
     totalSize += bundleTotalSize;
 
     // Show oversized individual images
-    const oversizedImages = images.filter(img => img.size > OVERSIZED_THRESHOLD);
+    const oversizedImages = images.filter(
+      (img) => img.size > OVERSIZED_THRESHOLD,
+    );
     if (oversizedImages.length > 0) {
       for (const img of oversizedImages) {
-        console.log(`    📸 ${path.basename(img.path)}: ${img.size.toFixed(1)} KiB`);
+        console.log(
+          `    📸 ${path.basename(img.path)}: ${img.size.toFixed(1)} KiB`,
+        );
       }
     }
   }
@@ -201,7 +217,9 @@ function generateReport(bundles, defaultBudget) {
 
   if (violatingBundles > 0) {
     console.log("\n💡 Recommendations:");
-    console.log("- Consider optimizing images with tools like imagemin or squoosh");
+    console.log(
+      "- Consider optimizing images with tools like imagemin or squoosh",
+    );
     console.log("- Use WebP/AVIF formats for better compression");
     console.log("- Implement responsive images with srcset");
     console.log("- Move large hero images to separate optimization workflow");
@@ -213,8 +231,8 @@ function generateReport(bundles, defaultBudget) {
  */
 function main() {
   const args = process.argv.slice(2);
-  const isPrint = args.includes('--print');
-  const isReport = args.includes('--report');
+  const isPrint = args.includes("--print");
+  const isReport = args.includes("--report");
 
   // Collect all images
   const allImages = [];
@@ -235,7 +253,7 @@ function main() {
   const budgetStr = process.env.IMAGE_BUDGET_KIB;
   const budget = budgetStr ? parseFloat(budgetStr) : DEFAULT_BUDGET_KIB;
 
-  if (isNaN(budget)) {
+  if (Number.isNaN(budget)) {
     console.error(`Invalid IMAGE_BUDGET_KIB '${budgetStr}'.`);
     process.exit(2);
   }
@@ -253,12 +271,13 @@ function main() {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
     const bundleBudget = getBudgetForBundle(bundleName);
 
-    if (bundleTotalSize > bundleBudget + 0.01) { // Small tolerance for floating point
+    if (bundleTotalSize > bundleBudget + 0.01) {
+      // Small tolerance for floating point
       hasViolations = true;
       violations.push({
         bundle: bundleName,
         size: bundleTotalSize,
-        budget: bundleBudget
+        budget: bundleBudget,
       });
     }
   }
@@ -266,12 +285,18 @@ function main() {
   if (hasViolations) {
     console.error(`\n❌ Image budget violations found:\n`);
     for (const violation of violations) {
-      console.error(`  ${violation.bundle}: ${violation.size.toFixed(1)} KiB exceeds budget ${violation.budget.toFixed(1)} KiB`);
+      console.error(
+        `  ${violation.bundle}: ${violation.size.toFixed(1)} KiB exceeds budget ${violation.budget.toFixed(1)} KiB`,
+      );
     }
-    console.error(`\nRun 'node scripts/check_image_budgets.js --report' for detailed analysis.`);
+    console.error(
+      `\nRun 'node scripts/check_image_budgets.js --report' for detailed analysis.`,
+    );
     process.exit(1);
   } else {
-    console.log(`✅ All ${bundles.size} image bundles within their respective budgets.`);
+    console.log(
+      `✅ All ${bundles.size} image bundles within their respective budgets.`,
+    );
     process.exit(0);
   }
 }
@@ -280,4 +305,9 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { findImagesInDirectory, groupImagesByBundle, getFileSizeKib, getBudgetForBundle };
+module.exports = {
+  findImagesInDirectory,
+  groupImagesByBundle,
+  getFileSizeKib,
+  getBudgetForBundle,
+};

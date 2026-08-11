@@ -1,0 +1,26 @@
+# Biome owns JS, TS, JSON and CSS (see biome.json).
+# Prettier keeps only what Biome cannot parse: Go templates, Markdown and YAML.
+*.js
+*.mjs
+*.cjs
+*.ts
+*.tsx
+*.jsx
+*.json
+*.jsonc
+*.css
+
+# prettier-plugin-go-template@0.0.15 wraps Go template string literals across
+# newlines, which Hugo rejects with "unterminated quoted string". It broke the
+# build on 2026-08-11. Templates are hand-formatted until the plugin is fixed.
+layouts/
+static/404.html
+static/courses/index.html
+
+# Generated or vendored — nobody formats these.
+assets/gen/
+node_modules/
+public/
+resources/
+package-lock.json
+hugo_stats.json

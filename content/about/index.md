@@ -3,6 +3,7 @@ title: "About"
 url: "/about/"
 description: "Learn about DeiAsPie's mission to empower individuals with privacy-focused tools and knowledge for digital sovereignty in the age of surveillance."
 date: 2024-01-01
+image: false
 ---
 
 Hi, I'm DeiAsPie. This is my corner of the web where I share privacy-focused tools, services, and knowledge that can help you reclaim your digital sovereignty.
@@ -39,7 +40,7 @@ I believe in making privacy accessible. You don't need to be a security expert t
 
 {{< signal-qr alt="Signal QR (DeiAsPie.101)" caption="Scan to add me on Signal (preferred)." >}}
 
-- **[Signal (preferred)](https://signal.me/#eu/19Yp0f7xGAZV1OSnvg3wxR-Es0HoI34qBLhRA5UjhgG2Gt4Tl01KFJxgfUt1U2YA)**
+- **[Signal (preferred)](https://signal.me/#eu/wnMYTNtNQ3FetbthOQzkOGQKtqWJU5Bb5LHHmmhdo3-i9Ts59hlI1pxu1pZGr2rN)**
 - [LBRY/Odysee Tech Blog 📜](https://open.lbry.com/@DeiAsPieBlog:f) — Detailed guides and tutorials
 - [LBRY/Odysee Tech Videos 🎬](https://open.lbry.com/@DeiAsPie:1) — Video reviews and walkthroughs
 - [LBRY/Odysee Mind Space 🧠](https://open.lbry.com/@DeiAsPieMindSpace:7) — Thoughts on digital freedom

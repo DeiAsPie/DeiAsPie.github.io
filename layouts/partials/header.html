@@ -1,13 +1,11 @@
-<header
-  class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/60 dark:border-slate-800/60"
->
-  <div class="py-3 flex items-center justify-between">
+<header class="sticky top-0 z-50 headerbar">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-6xl py-3 flex items-center justify-between">
     {{/* NOTE: Home link: ensure no leading space before slash ("/"). Regression
     guard suggestion: search for href values that have a leading space before
     the slash (e.g. look for patterns like: href contains a space then /). Avoid
     including the raw bad substring in source to keep the guard effective. */}}
     <a
-      class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300"
+      class="text-xl font-bold text-primary"
       href='{{ "/" | relURL }}'
       >{{ .Site.Title }}</a
     >
@@ -20,7 +18,7 @@
         ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq
         .URL $current.RelPermalink) }}
         <a
-          class="nav-link {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
+          class="nav-link"
           href="{{ .URL | relURL }}"
           {{
           if
@@ -104,7 +102,7 @@
       ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) (eq
       .URL $current.RelPermalink) }}
       <a
-        class="nav-link px-2 py-1 rounded {{ if $isActive }}font-semibold underline underline-offset-4{{ end }}"
+        class="nav-link px-2 py-1 rounded"
         href="{{ .URL | relURL }}"
         {{
         if

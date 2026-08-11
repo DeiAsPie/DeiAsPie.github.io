@@ -169,37 +169,37 @@ npx playwright show-trace test-results/<test-name>/trace.zip
 
    ```typescript
    // ✅ Good - semantic, robust
-   page.getByRole('navigation', { name: 'Main navigation' })
-   page.getByRole('button', { name: 'Theme toggle' })
+   page.getByRole("navigation", { name: "Main navigation" });
+   page.getByRole("button", { name: "Theme toggle" });
 
    // ❌ Avoid - fragile
-   page.locator('nav')
-   page.locator('#some-id')
+   page.locator("nav");
+   page.locator("#some-id");
    ```
 
 2. **Scope selectors properly**
 
    ```typescript
    // ✅ Good - scoped to component
-   const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
-   await expect(mainNav.getByRole('link', { name: 'About' })).toBeVisible();
+   const mainNav = page.getByRole("navigation", { name: "Main navigation" });
+   await expect(mainNav.getByRole("link", { name: "About" })).toBeVisible();
 
    // ❌ Avoid - ambiguous global selector
-   await expect(page.getByRole('link', { name: 'About' })).toBeVisible();
+   await expect(page.getByRole("link", { name: "About" })).toBeVisible();
    ```
 
 3. **Test user journeys, not implementation**
 
    ```typescript
    // ✅ Good - tests behavior
-   test('user can toggle theme', async ({ page }) => {
-     await page.goto('/');
-     await page.getByRole('button', { name: /theme/i }).click();
+   test("user can toggle theme", async ({ page }) => {
+     await page.goto("/");
+     await page.getByRole("button", { name: /theme/i }).click();
      // Verify theme changed (visually or via class)
    });
 
    // ❌ Avoid - tests implementation details
-   test('theme toggle changes data attribute', async ({ page }) => {
+   test("theme toggle changes data attribute", async ({ page }) => {
      // Too coupled to implementation
    });
    ```
@@ -208,27 +208,28 @@ npx playwright show-trace test-results/<test-name>/trace.zip
 
    ```typescript
    // Filter out known browser-specific console warnings
-   const criticalErrors = consoleErrors.filter(error =>
-     !error.includes('Content Security Policy') &&
-     !error.includes('blocked an inline style')
+   const criticalErrors = consoleErrors.filter(
+     (error) =>
+       !error.includes("Content Security Policy") &&
+       !error.includes("blocked an inline style"),
    );
    ```
 
 ### Test Template
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Feature Name', () => {
-  test('should do something', async ({ page }) => {
+test.describe("Feature Name", () => {
+  test("should do something", async ({ page }) => {
     // Arrange
-    await page.goto('/');
+    await page.goto("/");
 
     // Act
-    await page.getByRole('button', { name: 'Click me' }).click();
+    await page.getByRole("button", { name: "Click me" }).click();
 
     // Assert
-    await expect(page.getByText('Success')).toBeVisible();
+    await expect(page.getByText("Success")).toBeVisible();
   });
 });
 ```

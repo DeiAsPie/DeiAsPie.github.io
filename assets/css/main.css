@@ -12,56 +12,173 @@
 /* Allow @apply to reference Tailwind utilities (Tailwind v4) */
 @reference "tailwindcss";
 
-/* Design tokens - CSS custom properties for maintainability */
+/* ---------------------------------------------------------------------------
+   Adwaita (GNOME) design language
+
+   The `slate` scale below is deliberately REDEFINED rather than replaced.
+   Tailwind's stock slate is a blue-tinted grey; Adwaita's greys are near
+   neutral. Overriding the scale in-place means every existing `slate-*`
+   utility already sitting in the templates renders in Adwaita greys without
+   touching the markup. Ramp values are anchored on real libadwaita surface
+   colours (noted per stop) and interpolated between them.
+   https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/css-variables.html
+--------------------------------------------------------------------------- */
+@theme {
+  --font-sans: system-ui, sans-serif;
+
+  --color-slate-50: #fafafb; /* adw window_bg_color (light) */
+  --color-slate-100: #f2f2f4;
+  --color-slate-200: #e3e3e6;
+  --color-slate-250: #ebebed; /* adw sidebar_bg_color (light) */
+  --color-slate-300: #c8c8cd;
+  --color-slate-400: #9a9aa0;
+  --color-slate-500: #77767b; /* GNOME palette Dark 1 */
+  --color-slate-600: #5e5c64; /* GNOME palette Dark 2 */
+  --color-slate-700: #46464d;
+  --color-slate-800: #36363a; /* adw popover_bg_color (dark) */
+  --color-slate-900: #2e2e32; /* adw headerbar_bg_color (dark) */
+  --color-slate-950: #1d1d20; /* adw view_bg_color (dark) */
+
+  /* GNOME's nine selectable accents (Adw.AccentColor). Only the active one is
+     consumed, via --adw-accent below; the rest are kept so switching accent is
+     a one-line change rather than a hunt for the right hex. */
+  --accent-blue: #3584e4;
+  --accent-teal: #2190a4;
+  --accent-green: #3a944a;
+  --accent-yellow: #c88800;
+  --accent-orange: #ed5b00;
+  --accent-red: #e62d42;
+  --accent-pink: #d56199;
+  --accent-purple: #9141ac;
+  --accent-slate: #6f8396;
+
+  --color-destructive: #e01b24;
+
+  /* Adwaita geometry from libadwaita 1.10.rc stylesheet sources:
+     $button_radius: 9px, $card_radius: 12px. The 15px popover/dialog/window
+     radii are omitted — this site has no popovers, dialogs, or window chrome. */
+  --radius-card: 12px;
+  --radius-button: 9px;
+}
+
 :root {
   color-scheme: light dark;
 
-  /* Core semantic colors */
-  --color-text-primary: theme(colors.slate.900);
-  --color-text-secondary: theme(colors.slate.700);
-  --color-text-tertiary: theme(colors.slate.500);
-  --color-text-accent: theme(colors.slate.800);
+  /* Adwaita named colours — light */
+  --adw-window-bg: #fafafb;
+  --adw-view-bg: #ffffff;
+  --adw-headerbar-bg: #ffffff;
+  --adw-card-bg: #ffffff;
+  --adw-sidebar-bg: #ebebed;
+  --card-shade-color: rgb(
+    0 0 6 /
+    7%
+  ); /* card_shade_color — used for separators specifically */
+  --adw-border: rgb(0 0 6 / 12%);
+  --adw-accent: var(--accent-blue);
+  --adw-accent-text: #0461be;
+  --adw-accent-fg: #ffffff;
 
-  --color-bg-primary: theme(colors.white);
-  --color-bg-secondary: theme(colors.slate.100);
-  --color-bg-tertiary: theme(colors.slate.50);
+  /* Upstream card elevation shadow (_misc.scss:202-204): hairline outline + 2 layers */
+  --card-shadow:
+    0 0 0 1px rgb(0 0 6 / 3%), 0 1px 3px 1px rgb(0 0 6 / 7%),
+    0 2px 6px 2px rgb(0 0 6 / 3%);
 
-  --color-border-primary: theme(colors.slate.200);
-  --color-border-secondary: theme(colors.slate.300);
+  /* Upstream --dim-opacity is 55% (~3.9:1 on white). Raised to 64% (~6.0:1) to clear WCAG AA (KTD7) */
+  --dim-opacity: 64%;
 
-  --color-interactive-primary: theme(colors.slate.900);
-  --color-interactive-hover: theme(colors.slate.700);
+  /* Semantic aliases */
+  --color-text-primary: rgb(0 0 6 / 80%); /* adw window_fg_color */
+  --color-text-secondary: rgb(0 0 6 / 70%);
+  --color-text-tertiary: rgb(0 0 6 / var(--dim-opacity));
+  --color-text-accent: rgb(0 0 6 / 90%);
 
-  /* Focus ring system */
-  --color-focus-ring: theme(colors.sky.500);
-  --color-focus-ring-offset: theme(colors.white);
-  --color-focus-ring-special: theme(colors.fuchsia.500);
+  --color-bg-primary: var(--adw-view-bg);
+  --color-bg-secondary: var(--adw-sidebar-bg);
+  --color-bg-tertiary: var(--adw-window-bg);
+
+  --color-border-primary: var(--adw-border);
+  --color-border-secondary: rgb(0 0 6 / 18%);
+
+  --color-interactive-primary: var(--adw-accent);
+  --color-interactive-hover: #1c71d8; /* GNOME palette Blue 4 */
+
+  --color-focus-ring: var(--adw-accent);
+  --color-focus-ring-offset: var(--adw-view-bg);
+  --color-focus-ring-special: var(--adw-accent);
 }
 
-/* Dark mode overrides */
+/* Adwaita named colours — dark */
 .dark {
-  --color-text-primary: theme(colors.white);
-  --color-text-secondary: theme(colors.slate.300);
-  --color-text-tertiary: theme(colors.slate.400);
-  --color-text-accent: theme(colors.slate.200);
+  --adw-window-bg: #222226;
+  --adw-view-bg: #1d1d20;
+  --adw-headerbar-bg: #2e2e32;
+  --adw-card-bg: rgb(255 255 255 / 8%); /* translucent overlay, not a fill */
+  --adw-sidebar-bg: #2e2e32;
+  --card-shade-color: rgb(0 0 6 / 36%);
+  --adw-border: rgb(255 255 255 / 12%);
+  --adw-accent: var(--accent-blue);
+  --adw-accent-text: #81d0ff; /* adw accent_color, dark */
+  --adw-accent-fg: #ffffff;
 
-  --color-bg-primary: theme(colors.slate.900);
-  --color-bg-secondary: theme(colors.slate.800);
-  --color-bg-tertiary: theme(colors.slate.950);
+  /* Upstream dark card elevation shadow */
+  --card-shadow:
+    0 0 0 1px rgb(255 255 255 / 12%), 0 1px 3px 1px rgb(0 0 0 / 36%),
+    0 2px 6px 2px rgb(0 0 0 / 14%);
 
-  --color-border-primary: theme(colors.slate.800);
-  --color-border-secondary: theme(colors.slate.700);
+  --dim-opacity: 64%;
 
-  --color-interactive-primary: theme(colors.slate.200);
-  --color-interactive-hover: theme(colors.white);
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgb(255 255 255 / 70%);
+  --color-text-tertiary: rgb(255 255 255 / var(--dim-opacity));
+  --color-text-accent: rgb(255 255 255 / 90%);
 
-  --color-focus-ring: theme(colors.sky.400);
-  --color-focus-ring-offset: theme(colors.slate.950);
-  --color-focus-ring-special: theme(colors.fuchsia.400);
+  --color-bg-primary: var(--adw-view-bg);
+  --color-bg-secondary: var(--adw-sidebar-bg);
+  --color-bg-tertiary: var(--adw-window-bg);
+
+  --color-border-primary: var(--adw-border);
+  --color-border-secondary: rgb(255 255 255 / 18%);
+
+  --color-interactive-primary: var(--adw-accent);
+  --color-interactive-hover: #62a0ea; /* GNOME palette Blue 2 */
+
+  --color-focus-ring: var(--adw-accent);
+  --color-focus-ring-offset: var(--adw-view-bg);
+  --color-focus-ring-special: var(--adw-accent);
+}
+
+/* Adwaita windows sit on window_bg, content sits on view_bg */
+body {
+  background-color: var(--adw-window-bg);
+  color: var(--color-text-primary);
 }
 
 .prose img {
-  border-radius: 0.375rem;
+  border-radius: var(--radius-button);
+}
+
+/* ---------------------------------------------------------------------------
+   Adwaita typography scale
+   Upstream libadwaita _labels.scss definitions:
+   .title-1 (181% / 800), .title-2 (136% / 800), .title-3 (136% / 700),
+   .title-4 (118% / 700), .heading (700), .body (400, 1.4),
+   .caption (82% / 400, 1.4), .caption-heading (82% / 700), .dimmed (--dim-opacity).
+--------------------------------------------------------------------------- */
+@utility title-1 {
+  font-size: 1.81rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+@utility title-2 {
+  font-size: 1.36rem;
+  font-weight: 800;
+}
+
+@utility title-3 {
+  font-size: 1.36rem;
+  font-weight: 700;
 }
 
 /* Rich typography for content areas */
@@ -72,38 +189,53 @@
 
 .prose h1 {
   /* Remove gradient/text-transparent so native emoji keep their color */
-  @apply text-3xl font-bold tracking-tight mb-4;
+  @apply title-1 mb-4;
   color: var(--color-text-primary);
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold mt-10 mb-4;
+  @apply title-2 mt-10 mb-4;
   color: var(--color-text-primary);
 }
 
 .prose h3 {
-  @apply text-xl font-semibold mt-8 mb-3;
+  @apply title-3 mt-8 mb-3;
   color: var(--color-text-primary);
 }
 
 .prose p {
-  @apply leading-7 text-slate-700 dark:text-slate-300 mb-4;
+  @apply leading-7 mb-4;
+  color: var(--color-text-secondary);
 }
 
+/* Adwaita links are accent-coloured rather than underlined body text */
 .prose a {
-  @apply underline underline-offset-4 decoration-slate-300 dark:decoration-slate-600 hover:decoration-slate-500 dark:hover:decoration-slate-400 transition-colors;
+  @apply underline underline-offset-4 transition-colors;
+  color: var(--adw-accent-text);
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--adw-accent-text) 40%,
+    transparent
+  );
+}
+
+.prose a:hover {
+  text-decoration-color: currentColor;
 }
 
 .prose strong {
-  @apply font-semibold text-slate-900 dark:text-slate-100;
+  @apply font-bold;
+  color: var(--color-text-primary);
 }
 
 .prose em {
-  @apply text-slate-800 dark:text-slate-200;
+  color: var(--color-text-accent);
 }
 
 .prose blockquote {
-  @apply relative my-6 pl-4 border-l-4 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 italic;
+  @apply relative my-6 pl-4 italic;
+  border-left: 4px solid var(--adw-accent);
+  color: var(--color-text-secondary);
 }
 
 .prose ul,
@@ -112,15 +244,22 @@
 }
 
 .prose li::marker {
-  @apply text-slate-500 dark:text-slate-400;
+  color: var(--color-text-tertiary);
 }
 
 .prose code {
-  @apply rounded px-1.5 py-0.5 text-sm bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200;
+  @apply px-1.5 py-0.5 text-sm;
+  border-radius: var(--radius-button);
+  background-color: var(--card-shade-color);
+  color: var(--color-text-accent);
 }
 
 .prose pre {
-  @apply my-6 p-4 rounded-lg bg-slate-950/95 text-slate-100 overflow-x-auto;
+  @apply my-6 p-4 overflow-x-auto;
+  border-radius: var(--radius-card);
+  background-color: #1d1d20; /* adw view_bg_color (dark) — code stays dark in both themes */
+  color: #ffffff;
+  border: 1px solid var(--adw-border);
 }
 
 .prose pre code {
@@ -128,24 +267,28 @@
 }
 
 .prose hr {
-  @apply my-8 border-slate-200 dark:border-slate-800;
+  @apply my-8;
+  border-color: var(--adw-border);
 }
 
 .prose table {
-  @apply w-full text-left border-collapse my-6 overflow-hidden rounded-lg;
+  @apply w-full text-left border-collapse my-6 overflow-hidden;
+  border-radius: var(--radius-card);
 }
 
 .prose thead {
-  @apply bg-slate-100 dark:bg-slate-900;
+  background-color: var(--card-shade-color);
 }
 
 .prose th,
 .prose td {
-  @apply border border-slate-200 dark:border-slate-800 px-3 py-2 align-top;
+  @apply px-3 py-2 align-top;
+  border: 1px solid var(--adw-border);
 }
 
 .prose figcaption {
-  @apply text-sm text-slate-500 dark:text-slate-400 mt-2 text-center;
+  @apply text-sm mt-2 text-center;
+  color: var(--color-text-tertiary);
 }
 
 /* Anchored headings shouldn't hide under sticky header */
@@ -172,12 +315,52 @@
 }
 
 .toc a {
-  @apply text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white underline-offset-4 hover:underline;
+  @apply underline-offset-4 hover:underline;
+  color: var(--color-text-secondary);
 }
 
-/* Card component */
+.toc a:hover {
+  color: var(--adw-accent-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Adwaita surfaces
+
+   Adwaita cards carry a three-layer elevation shadow, with a hairline outline
+   drawn by the first shadow layer (0 0 0 1px) rather than an explicit border element.
+   High-contrast mode replaces the shadow with a 1px border.
+--------------------------------------------------------------------------- */
 .card {
-  @apply flex flex-col rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow hover:shadow-lg transition-shadow overflow-hidden;
+  @apply flex flex-col overflow-hidden;
+  border-radius: var(--radius-card);
+  background-color: var(--adw-card-bg);
+  box-shadow: var(--card-shadow);
+  border: none;
+}
+
+@media (prefers-contrast: more) {
+  /* Upstream swaps only the hairline layer for an opaque border colour and
+     keeps both depth layers (_misc.scss:206-210). */
+  .card {
+    box-shadow:
+      0 0 0 1px var(--color-text-primary),
+      0 1px 3px 1px rgb(0 0 6 / 7%),
+      0 2px 6px 2px rgb(0 0 6 / 3%);
+  }
+}
+
+.card.activatable:hover {
+  background-image: linear-gradient(
+    color-mix(in srgb, currentColor 3%, transparent),
+    color-mix(in srgb, currentColor 3%, transparent)
+  );
+}
+
+.card.activatable:active {
+  background-image: linear-gradient(
+    color-mix(in srgb, currentColor 8%, transparent),
+    color-mix(in srgb, currentColor 8%, transparent)
+  );
 }
 
 /* The card is a flex column so the text block settles against the bottom edge
@@ -208,30 +391,162 @@ img.card-img {
   @apply block h-auto max-h-full w-full max-w-full object-contain object-center;
 }
 
-/* Buttons */
+/* ---------------------------------------------------------------------------
+   Adwaita controls
+
+   Adwaita's default button is a low-contrast tinted surface, not a filled
+   block. `.suggested-action` is the accent-filled variant reserved for the
+   primary action, matching GTK's own style-class split.
+--------------------------------------------------------------------------- */
 .btn {
-  @apply inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-700 dark:bg-slate-200 dark:text-slate-900 dark:hover:bg-white transition-colors;
+  @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-bold transition-colors;
+  border-radius: var(--radius-button);
+  color: var(--color-text-primary);
+  /* Upstream buttons tint from their own text colour, so one rule works on any
+     surface in either theme (_buttons.scss, $button_color family). */
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
+  border: 1px solid var(--adw-border);
 }
 
-/* Header nav */
+.btn:hover {
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.btn:active {
+  background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+/* Adwaita also defines .suggested-action, .destructive-action, and .pill.
+   None are used here, so none are shipped — re-add from upstream
+   _buttons.scss if a primary, destructive, or standalone action appears. */
+
+/* .flat — frameless button default in GNOME apps */
+.flat,
+.btn.flat {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.flat:hover,
+.btn.flat:hover {
+  background-color: color-mix(in srgb, currentColor 7%, transparent);
+}
+
+/* Header nav — flat, no animated underline; GNOME marks the current view with
+   a filled pill rather than a moving rule. */
 .nav-link {
-  @apply relative text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors;
+  @apply relative px-3 py-1.5 text-sm font-medium transition-colors;
+  border-radius: var(--radius-button);
+  color: var(--color-text-secondary);
 }
 
-/* Animated underline on hover */
-.nav-link::after {
-  content: "";
-  @apply absolute left-0 -bottom-0.5 h-0.5 w-0 bg-slate-900 dark:bg-white transition-all duration-200;
+.nav-link:hover {
+  color: var(--color-text-primary);
+  background-color: color-mix(in srgb, currentColor 7%, transparent);
 }
 
-.nav-link:hover::after {
-  @apply w-full;
+.nav-link[aria-current="page"] {
+  color: var(--color-text-primary);
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
+  font-weight: 700;
 }
 
-/* Icon button */
+/* Category pills follow Adwaita's .pill button: a tinted fill derived from the
+   label colour, so one rule works on any surface in either theme. Upstream pills
+   are filled, not outlined (_buttons.scss, $button_color family). */
+.adw-category-pill {
+  color: var(--color-text-secondary);
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
+  transition: background-color 100ms ease-out;
+}
+
+.adw-category-pill:hover {
+  color: var(--color-text-primary);
+  background-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.adw-category-pill:active {
+  background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+/* Semantic text and component classes — CSP forbids inline styles, so these replace
+   the style="..." attributes removed from templates. Each class encodes a distinct
+   declaration-set that inline styles specified. */
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.skip-link {
+  border-radius: var(--radius-button);
+  background-color: var(--adw-accent);
+  color: var(--adw-accent-fg);
+}
+
+.category-tag {
+  background-color: var(--card-shade-color);
+  color: var(--color-text-secondary);
+}
+
+.tag-pill {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--adw-border);
+}
+
+.bg-card-shade {
+  background-color: var(--card-shade-color);
+}
+
+.border-subtle {
+  border-color: var(--adw-border);
+}
+
+/* Icon button — square, flat, circular hover wash */
 .icon-btn {
   /* Do not set display here; let utilities like inline-flex and md:hidden control visibility */
-  @apply items-center justify-center rounded-md p-2 text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 backdrop-blur transition-colors;
+  @apply items-center justify-center p-2 transition-colors;
+  border-radius: var(--radius-button);
+  color: var(--color-text-secondary);
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.icon-btn:hover {
+  color: var(--color-text-primary);
+  background-color: color-mix(in srgb, currentColor 7%, transparent);
+}
+
+/* Headerbar — flat surface with a single hairline bottom border */
+.headerbar {
+  background-color: var(--adw-headerbar-bg);
+  border-bottom: 1px solid var(--adw-border);
+  transition: box-shadow 200ms ease;
+}
+
+@supports (animation-timeline: scroll()) {
+  .headerbar {
+    animation: headerbar-raise linear both;
+    animation-timeline: scroll();
+    animation-range: 0 4rem;
+  }
+}
+
+@keyframes headerbar-raise {
+  from {
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0%);
+  }
+  to {
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+  }
 }
 
 /* Enhanced accessible focus styles */
@@ -258,7 +573,6 @@ a[href="#main"]:focus-visible {
 
 /* Theme transitions (enabled only after first paint to avoid FOUC) */
 @media (prefers-reduced-motion: no-preference) {
-
   .ui-ready body,
   .ui-ready .card,
   .ui-ready .prose,
@@ -311,11 +625,35 @@ aside h3 {
   -webkit-mask-clip: content-box;
   mask-clip: content-box;
   -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 8px, #000 calc(100% - 8px), transparent),
-    linear-gradient(to bottom, transparent, #000 8px, #000 calc(100% - 8px), transparent);
+    linear-gradient(
+      to right,
+      transparent,
+      #000 8px,
+      #000 calc(100% - 8px),
+      transparent
+    ),
+    linear-gradient(
+      to bottom,
+      transparent,
+      #000 8px,
+      #000 calc(100% - 8px),
+      transparent
+    );
   mask-image:
-    linear-gradient(to right, transparent, #000 8px, #000 calc(100% - 8px), transparent),
-    linear-gradient(to bottom, transparent, #000 8px, #000 calc(100% - 8px), transparent);
+    linear-gradient(
+      to right,
+      transparent,
+      #000 8px,
+      #000 calc(100% - 8px),
+      transparent
+    ),
+    linear-gradient(
+      to bottom,
+      transparent,
+      #000 8px,
+      #000 calc(100% - 8px),
+      transparent
+    );
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }

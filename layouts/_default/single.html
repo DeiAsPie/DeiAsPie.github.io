@@ -11,17 +11,21 @@
     $.Scratch.Get "back" }} {{ if $back }}
     <p class="mb-4"><a class="nav-link" href="{{ $back }}">← Back to all</a></p>
     {{ end }} {{ if .Params.link }}
-    <a class="btn" href="{{ .Params.link }}" target="_blank" rel="noopener"
+    <a
+      class="btn"
+      href="{{ .Params.link }}"
+      target="_blank"
+      rel="noopener noreferrer"
       >Visit Website</a
     >
     {{ end }}
     <div class="mt-3 flex flex-wrap gap-2">
       {{ range .Params.categories }}<a
-        class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2 py-1 rounded"
+        class="text-xs px-2 py-1 rounded-full category-tag"
         href='{{ (printf "/categories/%s/" (urlize .)) | relURL }}'
         >{{ . }}</a
       >{{ end }} {{ range .Params.tags }}<a
-        class="text-xs bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-2 py-1 rounded border border-slate-200 dark:border-slate-800"
+        class="text-xs px-2 py-1 rounded-full tag-pill"
         href='{{ (printf "/tags/%s/" (urlize .)) | relURL }}'
         >#{{ . }}</a
       >{{ end }}
@@ -34,25 +38,14 @@
   <nav class="mb-8 card" aria-label="Table of contents">
     <div class="card-body">
       <h2
-        class="text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300 mb-2"
+        class="text-sm font-semibold uppercase tracking-wide mb-2 text-secondary"
       >
         On this page
       </h2>
       <div class="toc">{{ .TableOfContents }}</div>
     </div>
   </nav>
-  {{ end }}
-
-  {{ partial "responsive-image.html" (dict
-    "Page" .
-    "Src" .Params.image
-    "Alt" (printf "%s image" .Title)
-    "Class" "w-full max-h-72 object-contain mb-6"
-    "Sizes" "(max-width: 900px) 100vw, 800px"
-    "Widths" (slice 320 480 640 800 1024)
-    "FetchPriority" "low"
-    "Loading" "lazy"
-  ) }}
+  {{ end }} {{ if ne .Params.image false }} {{ partial "responsive-image.html" (dict "Page" . "Src" .Params.image "Alt" (printf "%s image" .Title) "Class" "w-full max-h-72 object-contain mb-6" "Sizes" "(max-width: 900px) 100vw, 800px" "Widths" (slice 320 480 640 800 1024) "FetchPriority" "low" "Loading" "lazy" ) }} {{ end }}
 
   <div class="prose prose-slate dark:prose-invert max-w-none">
     {{ .Content }}

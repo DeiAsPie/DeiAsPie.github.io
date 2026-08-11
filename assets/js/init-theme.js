@@ -15,7 +15,7 @@
     // Reacting to a later OS theme change is not a first-paint concern:
     // init-ui.js owns that listener and also syncs the toggle button's
     // accessible state, which this script cannot do.
-  } catch (e) {
+  } catch (_e) {
     document.documentElement.classList.add("dark");
   }
 })();
