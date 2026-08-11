@@ -162,22 +162,22 @@
       "z-50"
     ],
     "ids": [
-      "-critical-rule",
       "TableOfContents",
       "connect-with-me",
+      "core-security-rule",
+      "desktop-vs-mobile-security",
+      "general-guidelines",
       "hey-there-im-deiaspie-",
-      "important-guidelines",
       "main",
       "mobile-menu",
       "mobile-menu-toggle",
+      "my-core-rule",
       "my-mission",
-      "my-philosophy",
-      "platform-priorities",
+      "software--tool-recommendations",
       "theme-toggle",
-      "what-i-recommend",
+      "what-i-look-for",
       "what-youll-find-here",
-      "why-privacy-matters",
-      "your-digital-shield-arsenal-"
+      "why-privacy-matters"
     ]
   }
 }

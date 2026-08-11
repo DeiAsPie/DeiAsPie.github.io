@@ -6,7 +6,7 @@ tags: ["password-manager", "cloud", "sync", "privacy"]
 
 image_alt: "Official Proton Pass logo - secure and encrypted password manager"
 description: "Secure your digital identity with Proton Pass. An end-to-end encrypted password manager with cross-platform sync, secure notes, and alias integration."
-summary: "Proton Pass — a privacy-focused password manager from Proton that offers end-to-end encryption and cross-platform sync."
+summary: "Proton Pass: a privacy-focused password manager from Proton that offers end-to-end encryption and cross-platform sync."
 ---
 
 Proton Pass is a password manager built by Proton that emphasizes privacy and security. It provides end-to-end encryption for stored credentials, cross-device sync, password generation, and secure notes. Proton Pass integrates with Proton’s ecosystem and follows Proton’s privacy-forward policies.

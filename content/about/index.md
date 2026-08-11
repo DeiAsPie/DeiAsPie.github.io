@@ -1,50 +1,47 @@
 ---
 title: "About"
 url: "/about/"
-description: "Learn about DeiAsPie's mission to empower individuals with privacy-focused tools and knowledge for digital sovereignty in the age of surveillance."
+description: "Privacy-focused software recommendations and practical security guidance by DeiAsPie."
 date: 2024-01-01
 image: false
 ---
 
-Hi, I'm DeiAsPie. This is my corner of the web where I share privacy-focused tools, services, and knowledge that can help you reclaim your digital sovereignty.
+Hi, I'm DeiAsPie. This is my corner of the web where I share privacy-focused tools, services, and practical notes to help protect your digital footprint.
 
 ## My Mission
 
-In an era where surveillance capitalism dominates and our personal data is treated as commodity, I believe in empowering individuals with knowledge and tools to protect their privacy and security. This site curates battle-tested alternatives to mainstream services that respect your rights and put you back in control.
+Personal data is routinely tracked, collected, and sold. I publish alternatives to mainstream software that respect user privacy and give you control over your devices.
 
 ## Why Privacy Matters
 
-Privacy isn't about having something to hide - it's about having something to protect. Your thoughts, your relationships, your personal growth, and your right to be yourself without constant monitoring and manipulation.
+Privacy isn't about having something to hide: it's about protecting your personal life, your relationships, and your independence online.
 
-As Edward Snowden said: _Arguing that you don't care about the right to privacy because you have nothing to hide, is no different than saying you don't care about free speech because you have nothing to say._
+As Edward Snowden put it: _Arguing that you don't care about the right to privacy because you have nothing to hide, is no different than saying you don't care about free speech because you have nothing to say._
 
-## What I Recommend
+## What I Look For
 
-Every tool and service featured here has been carefully evaluated based on:
+Software recommended here generally meets these criteria:
 
-- **Privacy by design** - Built with user privacy as a core principle
-- **Open source** when possible - Transparency through code
-- **No tracking** - Services that don't spy on their users
-- **Strong encryption** - Your data should be yours alone
-- **Decentralization** - Avoiding single points of failure and control
+- Privacy first: built without user tracking or telemetry
+- Open source code where possible for public inspection
+- Strong end-to-end encryption for stored and transmitted data
+- Active maintenance and prompt security patches
 
-## My Philosophy
+## My Core Rule
 
-**DO NOT USE A DEVICE IN ABSENCE OF REGULAR UPDATES**
+**DO NOT USE A DEVICE THAT IS NO LONGER RECEIVING REGULAR SECURITY UPDATES.**
 
-Security is a process, not a product. The recommendations here prioritize tools that are actively maintained, regularly updated, and have strong security track records.
-
-I believe in making privacy accessible. You don't need to be a security expert to protect yourself - you just need the right tools and guidance.
+Security is an ongoing habit, not a static product. You don't need to be a security researcher to stay safe online, just disciplined about updates and careful about which tools you trust.
 
 ## Connect With Me
 
 {{< signal-qr alt="Signal QR (DeiAsPie.101)" caption="Scan to add me on Signal (preferred)." >}}
 
 - **[Signal (preferred)](https://signal.me/#eu/wnMYTNtNQ3FetbthOQzkOGQKtqWJU5Bb5LHHmmhdo3-i9Ts59hlI1pxu1pZGr2rN)**
-- [LBRY/Odysee Tech Blog 📜](https://open.lbry.com/@DeiAsPieBlog:f) — Detailed guides and tutorials
-- [LBRY/Odysee Tech Videos 🎬](https://open.lbry.com/@DeiAsPie:1) — Video reviews and walkthroughs
-- [LBRY/Odysee Mind Space 🧠](https://open.lbry.com/@DeiAsPieMindSpace:7) — Thoughts on digital freedom
-- [GitHub 🐙](https://github.com/DeiAsPie) — Open source contributions
-- [LinkedIn](https://linkedin.com/in/DeiAsPie) — Professional profile
+- [LBRY/Odysee Tech Blog 📜](https://open.lbry.com/@DeiAsPieBlog:f): Guides and tutorials
+- [LBRY/Odysee Tech Videos 🎬](https://open.lbry.com/@DeiAsPie:1): Video reviews and walkthroughs
+- [LBRY/Odysee Mind Space 🧠](https://open.lbry.com/@DeiAsPieMindSpace:7): Thoughts on privacy and technology
+- [GitHub 🐙](https://github.com/DeiAsPie): Code repositories and contributions
+- [LinkedIn](https://linkedin.com/in/DeiAsPie): Professional profile
 
-_I keep things honest and practical. If it's recommended here, I've used it and believe it's worth your time and trust._
+_I keep things practical. If a tool is listed here, I've tested it and found it reliable._

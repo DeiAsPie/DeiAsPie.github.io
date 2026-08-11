@@ -6,7 +6,7 @@ tags: ["2fa", "password-manager", "authenticator", "privacy"]
 
 image_alt: "Official Proton Authenticator logo - secure two-factor authentication app"
 description: "Secure your accounts with Proton Authenticator. A privacy-first tool for TOTP 2FA and passwordless sign-ins with end-to-end encryption from Proton."
-summary: "Proton Authenticator — a privacy-conscious two-factor authenticator app from Proton for TOTP and passwordless sign-ins."
+summary: "Proton Authenticator: a privacy-conscious two-factor authenticator app from Proton for TOTP and passwordless sign-ins."
 ---
 
 Proton Authenticator is a standalone authenticator app from Proton that supports TOTP (Time-based One-Time Passwords) and modern passwordless authentication flows. It is designed to work well with Proton accounts and other services that support standard 2FA mechanisms.
