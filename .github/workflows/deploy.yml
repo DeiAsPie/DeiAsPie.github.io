@@ -3,6 +3,8 @@ name: Build and Deploy (Hugo + Tailwind)
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '0 */12 * * *'
   workflow_dispatch:
 
 permissions:
