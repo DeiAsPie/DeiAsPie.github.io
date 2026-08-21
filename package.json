@@ -1,18 +1,16 @@
 {
   "devDependencies": {
-    "@biomejs/biome": "^2.5.8",
-    "@commitlint/cli": "^20.1.0",
-    "@commitlint/config-conventional": "^20.0.0",
-    "@playwright/test": "^1.55.1",
-    "@tailwindcss/cli": "^4.1.16",
-    "axe-core": "^4.11.1",
+    "@biomejs/biome": "^2.5.9",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/cli": "^4.3.3",
+    "axe-core": "^4.13.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "^17.3.0",
     "markdownlint-cli2": "^0.23.2",
-    "prettier": "^3.6.2",
-    "prettier-plugin-go-template": "^0.0.15",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.3.3"
   },
   "lint-staged": {
     "*.{js,mjs,cjs,ts,tsx,jsx,json,jsonc,css}": "biome check --write --no-errors-on-unmatched"
@@ -25,8 +23,7 @@
     "axe": "AXE_URLS='http://localhost:8080/' node scripts/run_axe.mjs",
     "build": "hugo --minify --gc",
     "build:css": "tailwindcss -i ./assets/css/main.css -o ./assets/gen/tailwind.css --minify",
-    "dev": "hugo server --disableFastRender",
-    "format": "prettier --write .",
+    "dev": "hugo --minify --gc && hugo server --disableFastRender --ignoreCache --noHTTPCache",
     "lint": "biome check .",
     "lint:content": "node scripts/check_content_quality.js",
     "lint:content:report": "node scripts/check_content_quality.js --report",

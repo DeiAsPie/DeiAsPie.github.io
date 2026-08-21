@@ -46,22 +46,17 @@ function getFilesToLint(dirPath) {
     return files;
   }
 
-  function walkDirectory(currentPath) {
-    const items = fs.readdirSync(currentPath);
+  const items = fs.readdirSync(dirPath, { recursive: true });
 
-    for (const item of items) {
-      const fullPath = path.join(currentPath, item);
-      const stat = fs.statSync(fullPath);
+  for (const item of items) {
+    const fullPath = path.join(dirPath, item);
+    const stat = fs.statSync(fullPath);
 
-      if (stat.isDirectory()) {
-        walkDirectory(fullPath);
-      } else if (shouldLintFile(fullPath)) {
-        files.push(fullPath);
-      }
+    if (stat.isFile() && shouldLintFile(fullPath)) {
+      files.push(fullPath);
     }
   }
 
-  walkDirectory(dirPath);
   return files;
 }
 
@@ -458,10 +453,3 @@ function main() {
 if (require.main === module) {
   main();
 }
-
-module.exports = {
-  lintFile,
-  checkHeadingHierarchy,
-  checkImageAltText,
-  checkInternalLinks,
-};

@@ -8,11 +8,10 @@ Dark mode is the default. Use the Theme toggle in the header to switch; your cho
 
 ## ✨ Features
 
-- **🚀 Performance**: AVIF/WebP images, lazy loading, service worker caching, prefetching
+- **🚀 Performance**: WebP images with responsive srcsets, lazy loading, speculation-rules prefetching
 - **♿ Accessibility**: WCAG 2.2 compliant, ARIA best practices, keyboard navigation, screen reader optimized
 - **🔒 Security**: Content Security Policy, Subresource Integrity, secure Hugo configuration
 - **🎨 Modern Stack**: Hugo + Tailwind CSS v4, responsive design, dark mode support
-- **📦 PWA Ready**: Service worker, offline support, installable
 - **🧪 Well-tested**: Playwright E2E, Axe accessibility audits, Lighthouse performance checks
 
 ## Local development

@@ -26,7 +26,6 @@ def run_build() -> None:
     try:
         subprocess.run(["npm", "run", "build"], check=True, capture_output=True)
     except subprocess.CalledProcessError as e:
-        e.stderr.decode()
         sys.exit(1)
 
 def get_used_classes() -> set[str]:

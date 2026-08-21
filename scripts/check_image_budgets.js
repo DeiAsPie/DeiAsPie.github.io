@@ -32,18 +32,12 @@ const SUPPORTED_EXTENSIONS = [
 
 // Directory-specific budgets (in KiB)
 const BUDGET_OVERRIDES = new Map([
-  ["static/courses", 1200], // Courses have more images, allow higher budget
-  ["courses", 1200], // Alternative path mapping
   ["static/images", 400],
   ["default", 400],
 ]);
 
 // Content directories to analyze
-const CONTENT_DIRS = [
-  "content/recommendations",
-  "static/images",
-  "static/courses",
-];
+const CONTENT_DIRS = ["content/recommendations", "static/images"];
 
 /**
  * Get file size in KiB
@@ -81,25 +75,20 @@ function findImagesInDirectory(dirPath) {
     return images;
   }
 
-  function walkDirectory(currentPath) {
-    const items = fs.readdirSync(currentPath);
+  const items = fs.readdirSync(dirPath, { recursive: true });
 
-    for (const item of items) {
-      const fullPath = path.join(currentPath, item);
-      const stat = fs.statSync(fullPath);
+  for (const item of items) {
+    const fullPath = path.join(dirPath, item);
+    const stat = fs.statSync(fullPath);
 
-      if (stat.isDirectory()) {
-        walkDirectory(fullPath);
-      } else if (isImageFile(fullPath)) {
-        images.push({
-          path: fullPath,
-          size: getFileSizeKib(fullPath),
-        });
-      }
+    if (stat.isFile() && isImageFile(fullPath)) {
+      images.push({
+        path: fullPath,
+        size: getFileSizeKib(fullPath),
+      });
     }
   }
 
-  walkDirectory(dirPath);
   return images;
 }
 
@@ -304,10 +293,3 @@ function main() {
 if (require.main === module) {
   main();
 }
-
-module.exports = {
-  findImagesInDirectory,
-  groupImagesByBundle,
-  getFileSizeKib,
-  getBudgetForBundle,
-};

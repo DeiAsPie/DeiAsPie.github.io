@@ -3,7 +3,7 @@ with $p.Title }}{{ $title = . }}{{ end -}} {{- $alt := .Alt -}} {{- if not $alt
 -}} {{- $alt = printf "%s image" $title -}} {{- end -}} {{- $class := .Class |
 default "" -}} {{- $fetchPriority := .FetchPriority | default "auto" -}} {{-
 $loading := .Loading | default "lazy" -}} {{- $sizes := .Sizes | default "100vw"
--}} {{- $preload := .Preload | default false -}} {{- $widths := .Widths |
+-}} {{- $widths := .Widths |
 default (slice 320 480 640 800 1024) -}} {{- $paramWidth := .Width | default 0
 -}} {{- $paramHeight := .Height | default 0 -}} {{- $isRemote := false -}} {{-
 if and $src (or (hasPrefix $src "http://") (hasPrefix $src "https://")) -}} {{-
@@ -86,14 +86,4 @@ there is one block to maintain. Anything else is a raster resource and gets the
       fetchpriority="{{ $fetchPriority }}"
     />
   </picture>
-
-  {{- if $preload }}
-  <link
-    rel="preload"
-    as="image"
-    href="{{ $fallback.RelPermalink }}"
-    imagesrcset='{{ if gt (len $webpSet) 0 }}{{ delimit $webpSet "," }}{{ end }}'
-    imagesizes="{{ $sizes }}"
-  />
-  {{- end -}} {{- end -}}
-</picture>
+  {{- end -}}

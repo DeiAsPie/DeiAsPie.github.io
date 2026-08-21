@@ -371,7 +371,21 @@ body {
 }
 
 .card-media {
-  @apply flex flex-1 items-center justify-center p-4;
+  @apply flex flex-1 items-center justify-center p-4 min-h-[160px];
+}
+
+/* Responsive grid for Homepage sections (Privacy Tools & Odysee):
+   - Mobile (< 640px): 1 column, top 3 cards vertical (cards 4-6 hidden)
+   - Tablet (640px - 1023px): 2 columns, 6 cards (3 full rows of 2)
+   - Desktop (>= 1024px): 3 columns, 6 cards (2 full rows of 3) */
+.homepage-card-grid > :nth-child(n + 4) {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .homepage-card-grid > :nth-child(n + 4) {
+    display: flex;
+  }
 }
 
 .card-body {

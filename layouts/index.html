@@ -10,12 +10,13 @@
     <h2 class="title-2">Latest Privacy Tools</h2>
     <a class="btn flat" href='{{ "/recommendations/" | relURL }}'>View all →</a>
   </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 homepage-card-grid">
     {{ $recs := (where .Site.RegularPages "Section" "recommendations") }} {{/*
     filter out the courses sub-section to avoid duplicates */}} {{ $recs = where
     $recs "CurrentSection.RelPermalink" "ne" "/recommendations/courses/" }} {{
-    range first 6 ($recs.ByDate.Reverse) }} {{ partial "card.html" . }} {{ else
-    }}
+    range first 6 ($recs.ByDate.Reverse) }}
+    {{ partial "card.html" . }}
+    {{ else }}
     <p class="text-secondary">
       No recommendations yet. Add some in <code>content/recommendations/</code>.
     </p>
@@ -28,7 +29,7 @@
   <div class="flex items-center justify-between mb-5">
     <h2 class="title-2">Latest on Odysee</h2>
   </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 homepage-card-grid">
     {{ range $odyseeItems }} {{ partial "odysee-card.html" . }} {{ end }}
   </div>
 </section>

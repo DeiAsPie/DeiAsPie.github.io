@@ -45,7 +45,7 @@
       <div class="toc">{{ .TableOfContents }}</div>
     </div>
   </nav>
-  {{ end }} {{ if ne .Params.image false }} {{ partial "responsive-image.html" (dict "Page" . "Src" .Params.image "Alt" (printf "%s image" .Title) "Class" "w-full max-h-72 object-contain mb-6" "Sizes" "(max-width: 900px) 100vw, 800px" "Widths" (slice 320 480 640 800 1024) "FetchPriority" "low" "Loading" "lazy" ) }} {{ end }}
+  {{ end }} {{ if ne .Params.image false }} {{ partial "responsive-image.html" (dict "Page" . "Src" .Params.image "Alt" (.Params.image_alt | default (printf "%s image" .Title)) "Class" "w-full max-h-72 object-contain mb-6" "Sizes" "(max-width: 900px) 100vw, 800px" "Widths" (slice 320 480 640 800 1024) "FetchPriority" "low" "Loading" "lazy" ) }} {{ end }}
 
   <div class="prose prose-slate dark:prose-invert max-w-none">
     {{ .Content }}
