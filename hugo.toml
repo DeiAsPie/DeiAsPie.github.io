@@ -37,8 +37,9 @@ prefetch = ["/recommendations/", "/recommendations/courses/"]
 channels = ["@DeiAsPieBlog:f", "@DeiAsPie:1", "@DeiAsPieMindSpace:7"]
 
 [params.social]
-github = "DeiAsPie"
-twitter = "Dei_As_Pie"
+signal = "https://signal.me/#eu/wnMYTNtNQ3FetbthOQzkOGQKtqWJU5Bb5LHHmmhdo3-i9Ts59hlI1pxu1pZGr2rN"
+github = "https://github.com/DeiAsPie"
+linkedin = "https://linkedin.com/in/DeiAsPie"
 
 [imaging]
 # Optimize image processing - Hugo best practices

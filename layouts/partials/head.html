@@ -33,17 +33,6 @@ default .Site.Params.description | default .Site.Title | plainify | htmlEscape
 }} {{ $ogimg = ($first.Permalink) }} {{ else }} {{ $ogimg =
 ("/images/og-default.png" | absURL) }} {{ end }} {{ end }}
 <meta property="og:image" content="{{ $ogimg }}" />
-{{ with .Site.Params.social.twitter }}
-<meta name="twitter:site" content="@{{ . }}" />
-<meta name="twitter:creator" content="@{{ . }}" />
-{{ end }}
-<meta name="twitter:card" content="summary_large_image" />
-<meta
-  name="twitter:title"
-  content="{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}"
-/>
-<meta name="twitter:description" content="{{ $desc }}" />
-<meta name="twitter:image" content="{{ $ogimg }}" />
 <link
   rel="alternate"
   type="application/rss+xml"

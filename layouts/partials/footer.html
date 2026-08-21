@@ -6,18 +6,16 @@
     <p>© {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
     <div class="flex items-center gap-4">
       <a class="nav-link" href="{{ .Site.BaseURL }}index.xml">RSS</a>
-      {{ range $name, $val := .Site.Params.social }} {{ $url := "" }} {{ if eq
-      $name "github" }}{{ $url = printf "https://github.com/%s" $val }} {{ else
-      if eq $name "twitter" }}{{ $url = printf "https://twitter.com/%s" $val }}
-      {{ end }} {{ if $url }}
+      {{ $labels := dict "signal" "Signal" "github" "GitHub" "linkedin"
+      "LinkedIn" }} {{ range $name, $url := .Site.Params.social }}
       <a
         class="nav-link"
         href="{{ $url }}"
         target="_blank"
         rel="noopener noreferrer"
-        >{{ $name | humanize }}</a
+        >{{ index $labels $name | default ($name | humanize) }}</a
       >
-      {{ end }} {{ end }}
+      {{ end }}
     </div>
   </div>
   </div>

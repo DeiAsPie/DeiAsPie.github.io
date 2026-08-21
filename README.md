@@ -196,7 +196,7 @@ Do not commit build artifacts. Git ignores:
 
 ### Dynamic Meta Descriptions
 
-`head.html` now derives the `<meta name="description">`, Open Graph, and Twitter description using this fallback chain:
+`head.html` now derives the `<meta name="description">` and Open Graph description using this fallback chain:
 
 1. `params.description` (page front matter)
 2. `params.summary`
