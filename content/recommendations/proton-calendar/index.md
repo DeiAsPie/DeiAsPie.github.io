@@ -7,19 +7,17 @@ tags: ["calendar", "encryption", "privacy", "scheduling"]
 link: "https://proton.me/calendar/"
 
 image_alt: "Official Proton Calendar logo - end-to-end encrypted calendar service"
-description: "Manage your schedule privately with Proton Calendar. Features end-to-end encryption, event sharing, and seamless integration with the Proton ecosystem."
+description: "End-to-end encrypted calendar for Proton users, on web and mobile. Free tier covers 3 calendars, paid plans up to 25 with sharing."
 summary: "Encrypted calendar service with automatic end-to-end encryption of all data."
 ---
 
-Proton Calendar, an encrypted calendar service, is accessible to Proton users through web or mobile applications.
+Proton Calendar is an encrypted calendar service available as a web or mobile app for Proton users.
 
 **Key Features:**
 
-- Automatic end-to-end encryption of all data
-- Sharing capabilities with other Proton users
-- Import/export options for migrating from other services
-- Free-tier users can manage three calendars
-- Paid subscribers have access to up to 25 calendars
-- Enhanced sharing features exclusively available to paid subscribers
-
-**Integration:** Works seamlessly with other Proton services like Proton Mail and Proton Drive.
+- Automatic end-to-end encryption
+- Event sharing with other Proton users
+- Import/export for migrating from other services
+- Free tier: 3 calendars
+- Paid tier: up to 25 calendars
+- Enhanced sharing for paid users

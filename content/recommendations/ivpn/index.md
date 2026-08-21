@@ -6,20 +6,20 @@ categories: ["VPN", "Privacy", "Security"]
 tags: ["vpn", "privacy", "no-logs", "gibraltar", "audited"]
 link: "https://www.ivpn.net/"
 
-image_alt: "IVPN logo - Private and secure VPN service"
-description: "Secure your internet with IVPN, an audited VPN service based in Gibraltar. Features open-source clients, multi-hop connections, and anonymous payment methods."
-summary: "Audited VPN service with cryptocurrency support and open-source clients."
+image_alt: "IVPN logo"
+description: "IVPN is a VPN service based in Gibraltar with open-source clients, independent security audits, and cryptocurrency payment options."
+summary: "Audited VPN service with open-source clients and no-logs policy."
 ---
 
-IVPN is a VPN service offered by Privatus Limited based in Gibraltar. Privatus Limited has been independently audited by cure53 and has undergone a no-logging audit and a comprehensive pentest report.
+IVPN is a VPN service by Privatus Limited, based in Gibraltar. Cure53 has conducted independent security audits and no-logging verification.
 
-**Key Features:**
+Features:
 
-- Accept Bitcoin, Monero, and Cash as payment methods
-- All clients are open source
-- Independently audited for security and no-logs policy
-- No personal information required
-- Multi-hop VPN connections available
-- Anti-tracker feature built-in
+- Open-source clients
+- Independently audited (security and no-logs)
+- Bitcoin, Monero, and cash payment options
+- No personal information needed
+- Multi-hop VPN connections
+- Anti-tracker built-in
 
-**Transparency:** Regular transparency reports and third-party security audits demonstrate their commitment to privacy.
+IVPN publishes regular transparency reports and undergoes third-party audits.

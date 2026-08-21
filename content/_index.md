@@ -22,7 +22,7 @@ When everything from your birth certificate to your personal notes is digitized,
 
 ---
 
-## What You'll Find Here
+## What you'll find here
 
 This site collects alternatives to mainstream software and online services. Each page includes:
 
@@ -30,9 +30,8 @@ This site collects alternatives to mainstream software and online services. Each
 - Basic setup notes
 - Direct links to official downloads and source repositories
 
-## Connect With Me
+## Connect with me
 
 - **[Tech Blog 📜](https://open.lbry.com/@DeiAsPieBlog:f)**: Articles and walkthroughs
 - **[Tech Videos 🎬](https://open.lbry.com/@DeiAsPie:1)**: Video guides and software reviews
 - **[Mind Space 🧠](https://open.lbry.com/@DeiAsPieMindSpace:7)**: Thoughts on software freedom and digital privacy
-- **[GitHub 🐙](https://github.com/DeiAsPie)**: Open source projects

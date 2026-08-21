@@ -7,7 +7,7 @@ tags: ["youtube", "privacy", "android", "soundcloud", "bandcamp", "peertube"]
 link: "https://newpipe.net/"
 
 image_alt: "NewPipe logo - Lightweight YouTube client for Android"
-description: "Enjoy YouTube, SoundCloud, and Bandcamp without tracking using NewPipe. A privacy-focused, open-source Android app for background playback and downloads."
+description: "Open-source Android app for YouTube, SoundCloud, and Bandcamp without tracking. Supports background playback and downloads."
 summary: "Open-source Android app for YouTube, SoundCloud, and other platforms without tracking."
 ---
 

@@ -7,10 +7,10 @@ tags: ["course"]
 area: "Economics"
 link: "https://youtube.com/playlist?list=PL6EF60E1027E1A10B&si=Ql4rVYrYxtXQhOcg"
 video: "https://youtube.com/playlist?list=PL6EF60E1027E1A10B&si=Ql4rVYrYxtXQhOcg"
-description: "Master strategic decision-making with Yale's Game Theory course. Learn Nash equilibrium, signaling, and credibility through real-world applications and theory."
-image_alt: "Yale University seal - the official mark of Yale University, a world-renowned private Ivy League research university."
-summary: "An intro to game theory covering dominance, backward induction, Nash equilibrium, credibility, and signaling, with real-world examples."
+description: "Yale's Game Theory course covering Nash equilibrium, signaling, credibility, backward induction, and real-world applications."
+image_alt: "Yale University seal"
+summary: "Game theory fundamentals: dominance, backward induction, Nash equilibrium, credibility, and signaling."
 aliases: ["/recommendations/game-theory-with-ben-polak/"]
 ---
 
-A foundational series from Yale University that demystifies strategic interaction and rational choice. Great for CS, economics, and decision-making.
+Yale's game theory series with Ben Polak. Covers strategic interaction, rational choice, and practical examples. Relevant to computer science, economics, and decision-making.

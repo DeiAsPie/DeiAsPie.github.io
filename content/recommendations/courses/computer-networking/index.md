@@ -6,8 +6,8 @@ categories: ["Courses"]
 tags: ["course"]
 link: "https://cs144.stanford.edu/"
 video: "https://redirect.invidious.io/watch?v=qAFI-2I7wPE&list=PLoCMsyE1cvdWKsLVyf6cPwCLDIZnOj0NS"
-description: "Gain a deep understanding of networking protocols with Stanford's CS144. Explore TCP/IP, sockets, and the architecture of the modern internet through hands-on labs."
-image_alt: "Stanford University logo - the official emblem of Stanford University, a global center for learning and innovation."
+description: "Stanford's CS144: networking protocols, TCP/IP, sockets, and internet architecture through hands-on labs."
+image_alt: "Stanford University logo"
 summary: "Introduction to Computer Networking"
 aliases: ["/recommendations/computer-networking/"]
 ---

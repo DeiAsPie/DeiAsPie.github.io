@@ -5,8 +5,8 @@ categories: ["Recommendations", "Maps"]
 tags: ["maps", "privacy", "mobile"]
 
 image_alt: "Organic Maps logo - Privacy-focused offline navigation app"
-description: "Navigate privately with Organic Maps, an offline-first GPS app based on OpenStreetMap. Features turn-by-turn navigation for hikers, cyclists, and drivers."
-summary: "Organic Maps: offline, privacy-first maps and navigation built on OpenStreetMap data."
+description: "Offline maps and navigation based on OpenStreetMap with turn-by-turn routing for hikers, cyclists, and drivers, no tracking, and no ads."
+summary: "Offline maps and navigation built on OpenStreetMap data."
 ---
 
 Organic Maps is an open-source, community-developed map and navigation app focused on privacy and offline use. It provides worldwide offline maps from OpenStreetMap, turn-by-turn navigation, hiking and cycling routes, and voice guidance without tracking, ads, or forced accounts.

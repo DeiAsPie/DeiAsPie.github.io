@@ -6,20 +6,20 @@ categories: ["Note Taking", "Privacy", "Productivity"]
 tags: ["notes", "markdown", "sync", "open-source", "encryption"]
 link: "https://joplinapp.org/"
 
-image_alt: "Joplin logo - Open-source encrypted note-taking application"
-description: "Joplin is a privacy-first, open-source note-taking app with end-to-end encryption. Sync your Markdown notes across devices via Nextcloud, Dropbox, and more."
-summary: "Open-source note-taking app with end-to-end encryption and Markdown support."
+image_alt: "Joplin logo"
+description: "Joplin is an open-source note-taking app with end-to-end encryption and Markdown support. Syncs via Nextcloud, Dropbox, and other services."
+summary: "Open-source note-taking with end-to-end encryption and flexible sync options."
 ---
 
-Joplin is a free, open-source, and fully-featured note-taking and to-do application which can handle a large number of markdown notes organized into notebooks and tags.
+Joplin is an open-source note-taking app with end-to-end encryption. Organize notes with notebooks and tags, write in Markdown.
 
-**Key Features:**
+Features:
 
 - End-to-end encryption for all notes
-- Markdown support with live preview
-- Synchronization through Nextcloud, Dropbox, and more
-- Easy import from Evernote and plain-text notes
-- Web clipper browser extension
-- Cross-platform: Windows, macOS, Linux, iOS, Android
+- Markdown with live preview
+- Sync via Nextcloud, Dropbox, and others
+- Import from Evernote or plain text
+- Web clipper extension
+- Windows, macOS, Linux, iOS, Android
 
-**Privacy:** Your notes are encrypted locally before being synchronized, ensuring only you can read them.
+Notes encrypt on your device before syncing, only you can read them.

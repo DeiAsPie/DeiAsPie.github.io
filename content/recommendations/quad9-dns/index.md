@@ -7,19 +7,18 @@ tags: ["dns", "privacy", "security", "malware-blocking", "switzerland"]
 link: "https://www.quad9.net/"
 
 image_alt: "Official Quad9 DNS logo - secure and private recursive DNS resolver"
-description: "Enhance your internet privacy and security with Quad9 DNS. A Swiss non-profit service that blocks malicious domains without logging your personal data."
+description: "Free DNS from a Swiss non-profit that blocks malicious domains. Zero logging, with DNS over HTTPS, DNS over TLS, and QNAME minimization."
 summary: "Privacy-focused DNS service operated by a Swiss non-profit foundation."
 ---
 
-Quad9 is a free service that replaces your default ISP or enterprise Domain Name Server (DNS) configuration. They have a strict Zero-logging policy offering DNS over HTTPS (DoH) and DNS over TLS (DoT), with QNAME minimization.
+Quad9 is a free DNS service operated as a non-profit from Zurich, Switzerland. It blocks malicious domains without logging user data.
 
 **Key Features:**
 
-- **Only global public resolver operated not-for-profit, in the public benefit**
-- Headquartered in Zurich, Switzerland
-- Subject to Swiss privacy law (protection extends worldwide)
-- **Only global recursive resolver not subject to United States law**
+- Operates as a global public resolver not-for-profit
 - Blocks malicious domains automatically
 - No logging of personal data
-
-**Privacy Protection:** The Swiss government extends privacy law protection to Quad9's users throughout the world, regardless of citizenship or country of residence.
+- Offers DNS over HTTPS (DoH) and DNS over TLS (DoT)
+- QNAME minimization
+- Subject to Swiss privacy law, not US law
+- Swiss privacy protections apply to all users worldwide regardless of citizenship

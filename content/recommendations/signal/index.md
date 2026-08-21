@@ -7,18 +7,18 @@ tags: ["messaging", "end-to-end-encryption", "privacy", "secure"]
 link: "https://www.signal.org/"
 
 image_alt: "Official Signal logo - end-to-end encrypted messenger"
-description: "Communicate securely with Signal, the gold standard for private messaging. Enjoy end-to-end encrypted calls and messages without tracking or data mining."
-summary: "The gold standard for private messaging with military-grade encryption."
+description: "Free, open-source messenger from the Signal Messenger LLC nonprofit. End-to-end encrypted messages, voice and video calls, no tracking."
+summary: "End-to-end encrypted messaging with voice and video calling."
 ---
 
-Signal is a mobile app developed by Signal Messenger LLC. Supported by **a 501c3 nonprofit organization**. The app provides instant messaging, as well as voice, and video calling. All communications are end-to-end encrypted unless you choose to send as SMS.
+Signal is a messaging app developed by Signal Messenger LLC and supported by a 501(c)(3) nonprofit. It offers instant messaging, voice, and video calling. Everything is end-to-end encrypted unless you choose to send as SMS.
 
 **Key Features:**
 
-- Protocol is the gold standard for encryption
-- Has been independently audited
-- Now supports User Names for communications without exchanging phone numbers
-- Requires phone number but easy to begin with
-- Completely free and open-source
+- End-to-end encrypted messages and calls
+- Independently audited
+- Usernames option (communicate without sharing phone numbers)
+- Phone number required to start
+- Free and open-source
 
-**Security:** Its protocol is used by many other messaging apps including WhatsApp, but Signal remains the most secure implementation.
+**Protocol:** Signal's protocol is widely used by other apps including WhatsApp. Signal's implementation is widely considered a strong reference for encrypted messaging.

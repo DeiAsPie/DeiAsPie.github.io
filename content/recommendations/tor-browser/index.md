@@ -7,11 +7,11 @@ tags: ["browser", "tor", "anonymity", "privacy", "onion"]
 link: "https://www.torproject.org/"
 
 image_alt: "Official Tor Browser logo - anonymous web browsing"
-description: "Experience true anonymity online with Tor Browser. Protect yourself against tracking, surveillance, and censorship by browsing through the Tor network."
-summary: "The ultimate privacy browser for anonymous web browsing through the Tor network."
+description: "Browser that routes traffic through the Tor network, with three security levels, fingerprinting protection, and access to .onion services."
+summary: "Browser for anonymous web browsing through the Tor network."
 ---
 
-Tor Browser is the choice if you need anonymity. This browser provides you with access to the Tor Bridges and Tor Network, along with extensions that can be automatically configured to fit its three security levels - **Standard, Safer and Safest**.
+Tor Browser routes traffic through the Tor network for anonymity. It provides access to Tor bridges and onion services with three configurable security levels: Standard, Safer, and Safest.
 
 **Key Features:**
 
