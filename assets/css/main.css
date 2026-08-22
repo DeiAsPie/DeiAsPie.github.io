@@ -54,6 +54,12 @@
 
   --color-destructive: #e01b24;
 
+  /* Semantic color tokens derived from CSS custom properties defined in :root/.dark */
+  --color-secondary: var(--color-text-secondary);
+  --color-tertiary: var(--color-text-tertiary);
+  --color-subtle: var(--adw-border);
+  --color-card-shade: var(--card-shade-color);
+
   /* Adwaita geometry from libadwaita 1.10.rc stylesheet sources:
      $button_radius: 9px, $card_radius: 12px. The 15px popover/dialog/window
      radii are omitted — this site has no popovers, dialogs, or window chrome. */
@@ -487,14 +493,6 @@ img.card-img {
    the style="..." attributes removed from templates. Each class encodes a distinct
    declaration-set that inline styles specified. */
 
-.text-secondary {
-  color: var(--color-text-secondary);
-}
-
-.text-tertiary {
-  color: var(--color-text-tertiary);
-}
-
 .text-primary {
   color: var(--color-text-primary);
 }
@@ -514,14 +512,6 @@ img.card-img {
   background-color: transparent;
   color: var(--color-text-secondary);
   border: 1px solid var(--adw-border);
-}
-
-.bg-card-shade {
-  background-color: var(--card-shade-color);
-}
-
-.border-subtle {
-  border-color: var(--adw-border);
 }
 
 /* Icon button — square, flat, circular hover wash */
