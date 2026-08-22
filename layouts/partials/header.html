@@ -35,12 +35,12 @@
         id="theme-toggle"
         type="button"
         class="icon-btn inline-flex"
-        aria-label="Toggle theme"
-        aria-pressed="false"
+        aria-label="Theme: Auto"
       >
-        <!-- Sun icon (shown in light) -->
+        <!-- Sun icon (light preference) -->
         <svg
-          class="h-5 w-5 dark:hidden"
+          class="h-5 w-5 hidden"
+          data-theme-icon="light"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -54,9 +54,10 @@
           />
           <circle cx="12" cy="12" r="4" />
         </svg>
-        <!-- Moon icon (shown in dark) -->
+        <!-- Moon icon (dark preference) -->
         <svg
-          class="h-5 w-5 hidden dark:inline"
+          class="h-5 w-5 hidden"
+          data-theme-icon="dark"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -67,6 +68,23 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+          />
+        </svg>
+        <!-- Monitor icon (auto preference) -->
+        <svg
+          class="h-5 w-5"
+          data-theme-icon="auto"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8 21h8M12 17v4"
           />
         </svg>
         <span class="sr-only">Theme</span>

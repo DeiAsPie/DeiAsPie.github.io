@@ -4,6 +4,7 @@ url: "/about/"
 description: "Privacy-focused software recommendations and practical security guidance by DeiAsPie."
 date: 2024-01-01
 image: false
+toc: false
 ---
 
 Hi, I'm DeiAsPie. This is my corner of the web where I share privacy-focused tools, services, and practical notes to help protect your digital footprint.
@@ -20,12 +21,6 @@ Software recommended here generally meets these criteria:
 - Open source code where possible for public inspection
 - Strong end-to-end encryption for stored and transmitted data
 - Active maintenance and prompt security patches
-
-## My core rule
-
-**DO NOT USE A DEVICE THAT IS NO LONGER RECEIVING REGULAR SECURITY UPDATES.**
-
-Security is an ongoing habit, not a static product. You don't need to be a security researcher to stay safe online, just disciplined about updates and careful about which tools you trust.
 
 ## Connect with me
 

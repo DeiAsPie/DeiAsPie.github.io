@@ -93,11 +93,19 @@
 
     function syncState() {
       var pref = getPref();
-      var isDark = document.documentElement.classList.contains("dark");
       var labelText = label(pref);
-      btn.setAttribute("aria-pressed", isDark ? "true" : "false");
       btn.setAttribute("title", labelText);
       btn.setAttribute("aria-label", labelText);
+
+      // Show only the SVG matching the current preference
+      var icons = btn.querySelectorAll("[data-theme-icon]");
+      icons.forEach(function (icon) {
+        if (icon.getAttribute("data-theme-icon") === pref) {
+          icon.classList.remove("hidden");
+        } else {
+          icon.classList.add("hidden");
+        }
+      });
     }
 
     var mql = window.matchMedia("(prefers-color-scheme: dark)");
