@@ -35,19 +35,4 @@
 </section>
 {{ end }}
 
-<section>
-  <h2 class="title-2 mb-5">Browse by Category</h2>
-  <div class="flex flex-wrap gap-3">
-    {{ range $name, $term := .Site.Taxonomies.categories }}
-    <a
-      class="px-3 py-2 rounded-full adw-category-pill"
-      href='{{ (printf "/categories/%s/" (urlize $name) | relURL) }}'
-      >{{ $name }}
-      <span class="text-tertiary">({{ len $term }})</span></a
-    >
-    {{ else }}
-    <p class="text-secondary">No categories yet.</p>
-    {{ end }}
-  </div>
-</section>
 {{ end }}
