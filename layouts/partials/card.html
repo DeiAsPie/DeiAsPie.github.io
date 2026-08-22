@@ -3,7 +3,7 @@
     <div class="card-media">
       {{- partial "responsive-image.html" (dict "Page" . "Src" .Params.image "Alt" (.Params.image_alt | default "") "Class" "card-img" "Loading" "lazy" "FetchPriority" "low" "Width" 200 "Height" 200 "Widths" (slice 200 320 400) "Sizes" "(max-width: 480px) 50vw, 200px") -}}
     </div>
-    <div class="card-body flex flex-col justify-between flex-1">
+    <div class="card-body flex flex-col">
       <div>
         <h3 class="card-title">{{ .Title }}</h3>
         {{ if .Params.summary }}
