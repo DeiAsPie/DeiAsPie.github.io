@@ -28,7 +28,7 @@ there is one block to maintain. Anything else is a raster resource and gets the
   {{- if or (eq $ext "svg") (eq $ext "svg+xml") -}} {{- $simpleSrc =
   $res.RelPermalink -}} {{- end -}} {{- end -}} {{- if $simpleSrc -}}
   <img
-    class="img-feather {{ $class }}"
+    class="{{ $class }}"
     src="{{ $simpleSrc }}"
     alt="{{ $alt | htmlEscape }}"
     {{-
@@ -76,7 +76,7 @@ there is one block to maintain. Anything else is a raster resource and gets the
     <source srcset='{{ delimit $origSet "," }}' sizes="{{ $sizes }}" />
     {{- end }}
     <img
-      class="img-feather {{ $class }}"
+      class="{{ $class }}"
       src="{{ $fallback.RelPermalink }}"
       alt="{{ $alt | htmlEscape }}"
       width="{{ $fallback.Width }}"

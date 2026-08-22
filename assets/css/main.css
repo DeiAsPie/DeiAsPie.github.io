@@ -626,52 +626,6 @@ aside h3 {
   font-size: clamp(1.125rem, 1.5vw, 1.5rem);
 }
 
-/* Feather image edges so they dissolve into the page instead of ending on a
-   hard line. Two gradients intersected cover all four sides at once. The fade
-   is a fixed 8px rather than a percentage: a feather consumes whatever sits at
-   the edge, and on a wide wordmark a percentage was eating the first and last
-   glyphs. */
-.img-feather {
-  /* Anchor the gradients to the content box so an image's own padding is not
-     what gets faded. */
-  -webkit-mask-origin: content-box;
-  mask-origin: content-box;
-  -webkit-mask-clip: content-box;
-  mask-clip: content-box;
-  -webkit-mask-image:
-    linear-gradient(
-      to right,
-      transparent,
-      #000 8px,
-      #000 calc(100% - 8px),
-      transparent
-    ),
-    linear-gradient(
-      to bottom,
-      transparent,
-      #000 8px,
-      #000 calc(100% - 8px),
-      transparent
-    );
-  mask-image:
-    linear-gradient(
-      to right,
-      transparent,
-      #000 8px,
-      #000 calc(100% - 8px),
-      transparent
-    ),
-    linear-gradient(
-      to bottom,
-      transparent,
-      #000 8px,
-      #000 calc(100% - 8px),
-      transparent
-    );
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
-}
-
 /* Mobile menu dialog: reset the UA modal defaults (centred, auto-margined,
    bordered) so the menu still reads as the dropdown under the header. `top` is
    set from JS to the header's measured bottom edge, since the header is
