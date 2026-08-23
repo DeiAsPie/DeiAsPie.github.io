@@ -4,7 +4,7 @@ date: 2025-08-13
 draft: false
 categories: ["Email", "Privacy"]
 tags: ["email", "encryption", "privacy", "switzerland"]
-link: "https://protonmail.com/"
+link: "https://proton.me/mail"
 
 image_alt: "Official Proton Mail logo - secure and encrypted email service"
 description: "Email service from Geneva, Switzerland since 2013 with end-to-end encryption for all emails, a free 500 MB plan, email aliases, and no tracking or data mining."

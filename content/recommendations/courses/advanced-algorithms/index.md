@@ -5,7 +5,7 @@ draft: false
 categories: ["Courses"]
 tags: ["course"]
 area: "Computer Science"
-link: "https://people.seas.harvard.edu/~minilek/cs224/fall14/index.html"
+link: "https://www.youtube.com/playlist?list=PL2SOU6wwxB0uP4rJgf5ayhHWgw7akUWSf"
 video: "https://redirect.invidious.io/playlist?list=PL2SOU6wwxB0uP4rJgf5ayhHWgw7akUWSf"
 description: "Harvard's Advanced Algorithms course covering streaming algorithms, dimensionality reduction, and advanced data structures."
 image_alt: "Harvard University shield"

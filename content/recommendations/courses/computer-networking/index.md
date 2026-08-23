@@ -4,7 +4,7 @@ date: 2024-01-06
 draft: false
 categories: ["Courses"]
 tags: ["course"]
-link: "https://cs144.stanford.edu/"
+link: "https://web.stanford.edu/class/cs144/"
 video: "https://redirect.invidious.io/watch?v=qAFI-2I7wPE&list=PLoCMsyE1cvdWKsLVyf6cPwCLDIZnOj0NS"
 description: "Stanford's CS144: networking protocols, TCP/IP, sockets, and internet architecture through hands-on labs."
 image_alt: "Stanford University logo"

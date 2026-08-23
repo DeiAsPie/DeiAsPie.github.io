@@ -4,7 +4,7 @@ date: 2025-08-13
 draft: false
 categories: ["Operating System", "Linux", "Desktop"]
 tags: ["linux", "beginner-friendly", "desktop", "open-source"]
-link: "https://getfedora.org/"
+link: "https://fedoraproject.org/"
 
 image_alt: "Fedora Linux logo"
 description: "Fedora is a community Linux distribution sponsored by Red Hat. It uses Flatpak, follows a semi-rolling release cycle, and releases new versions every 6 months."
@@ -19,4 +19,4 @@ Features:
 - Strong emphasis on free and open-source software
 - A good starting point if you're coming from Windows or macOS
 
-Immutable variants: [Fedora Silverblue](https://silverblue.fedoraproject.org/) (GNOME-based) and [Fedora Kinoite](https://kinoite.fedoraproject.org/) (KDE-based) use immutable filesystems and container workflows. These prevent unintended system breakage.
+Immutable variants: [Fedora Silverblue](https://fedoraproject.org/atomic-desktops/silverblue/) (GNOME-based) and [Fedora Kinoite](https://fedoraproject.org/atomic-desktops/kinoite/) (KDE-based) use immutable filesystems and container workflows. These prevent unintended system breakage.
