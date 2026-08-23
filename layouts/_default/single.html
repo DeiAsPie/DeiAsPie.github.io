@@ -33,8 +33,8 @@
   </header>
 
   {{/* Optional on-page Table of Contents for long articles */}} {{ $tocEnabled
-  := cond (isset .Params "toc") (.Params.toc) true }} {{ if and $tocEnabled (ne
-  .TableOfContents "") }}
+  := cond (isset .Params "toc") (.Params.toc) true }} {{ if and $tocEnabled (strings.Contains
+  .TableOfContents "<li") }}
   <nav class="mb-8 card" aria-label="Table of contents">
     <div class="card-body">
       <h2
