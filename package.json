@@ -29,6 +29,7 @@
     "build": "hugo --minify --gc",
     "build:css": "tailwindcss -i ./assets/css/main.css -o ./assets/gen/tailwind.css --minify",
     "dev": "hugo --minify --gc && hugo server --disableFastRender --ignoreCache --noHTTPCache",
+    "lint:markdown": "markdownlint-cli2 \"**/*.md\"",
     "lint": "biome check .",
     "lint:content": "node scripts/check_content_quality.js",
     "prebuild": "npm run build:css",
