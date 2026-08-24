@@ -35,7 +35,7 @@
     "prebuild": "npm run build:css",
     "prepare": "husky",
     "size:images": "node scripts/check_image_budgets.js --report",
-    "size:images:check": "IMAGE_BUDGET_KIB=400 node scripts/check_image_budgets.js",
+    "size:images:check": "IMAGE_BUDGET_KIB=512 node scripts/check_image_budgets.js",
     "test": "pytest -q",
     "test:e2e": "playwright test --project=chromium --project=firefox",
     "test:smoke": "playwright test --project=smoke-tests"

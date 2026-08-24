@@ -129,16 +129,17 @@ function groupImagesByBundle(images) {
 /**
  * Get budget for a specific bundle
  * @param {string} bundleName
+ * @param {number} defaultBudget
  * @returns {number}
  */
-function getBudgetForBundle(bundleName) {
+function getBudgetForBundle(bundleName, defaultBudget) {
   // Exact match lookup
   if (BUDGET_OVERRIDES.has(bundleName)) {
     return BUDGET_OVERRIDES.get(bundleName);
   }
 
-  // Default fallback
-  return BUDGET_OVERRIDES.get("default") || DEFAULT_BUDGET_KIB;
+  // Use provided default or fall back to hardcoded default
+  return defaultBudget || DEFAULT_BUDGET_KIB;
 }
 
 /**
@@ -146,7 +147,7 @@ function getBudgetForBundle(bundleName) {
  * @param {Map} bundles
  * @param {number} defaultBudget
  */
-function generateReport(bundles, _defaultBudget) {
+function generateReport(bundles, defaultBudget) {
   console.log(`\n📊 Image Budget Report\n`);
   console.log(
     "Bundle".padEnd(30) +
@@ -170,7 +171,7 @@ function generateReport(bundles, _defaultBudget) {
 
   for (const [bundleName, images] of sortedBundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
-    const bundleBudget = getBudgetForBundle(bundleName);
+    const bundleBudget = getBudgetForBundle(bundleName, defaultBudget);
     const exceeds = bundleTotalSize > bundleBudget;
     const status = exceeds ? "⚠️  OVER" : "✅ OK";
 
@@ -258,7 +259,7 @@ function main() {
 
   for (const [bundleName, images] of bundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
-    const bundleBudget = getBudgetForBundle(bundleName);
+    const bundleBudget = getBudgetForBundle(bundleName, budget);
 
     if (bundleTotalSize > bundleBudget + 0.01) {
       // Small tolerance for floating point
