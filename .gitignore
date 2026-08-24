@@ -11,7 +11,6 @@
 # Build artifacts
 css-size-kib.txt
 css-budget-kib.txt
-css-baseline-kib.txt
 hugo_stats.json
 
 # Audit artifacts & reports
