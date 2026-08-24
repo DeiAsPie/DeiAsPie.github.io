@@ -29,4 +29,3 @@ This site collects alternatives to mainstream software and online services. Each
 - Why the tool is useful for privacy
 - Basic setup notes
 - Direct links to official downloads and source repositories
-
