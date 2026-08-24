@@ -16,13 +16,26 @@ Dark mode is the default. Use the Theme toggle in the header to switch; your cho
 
 ## Local development
 
-Prereqs: Hugo Extended v0.151.0+ and Node.js 20+
+Prereqs: [mise](https://mise.jdx.dev), or Hugo Extended 0.162.1 and Node.js 22.
+
+Using mise (recommended):
 
 ```fish
+# mise installs node, hugo-extended, and python from mise.toml
+mise install
+
 # install deps
 npm install
 
 # run dev server
+hugo server -D
+```
+
+Without mise:
+
+```fish
+# Ensure node 22 and hugo-extended 0.162.1 are installed separately
+npm install
 hugo server -D
 ```
 
@@ -170,7 +183,7 @@ Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` br
 
 CI notes:
 
-- Uses Hugo Extended v0.148.2 in the Actions workflow for consistent image-processing features.
+- Uses Hugo Extended 0.162.1 (pinned in mise.toml) for consistent image-processing features.
 - Publishes a `.nojekyll` file to prevent GitHub Pages from altering output.
 - Old URLs are preserved using `aliases` in front matter; keep aliases when renaming/moving content.
 

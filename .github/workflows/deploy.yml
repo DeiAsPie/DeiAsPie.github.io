@@ -21,24 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node
-        uses: actions/setup-node@v5
+      - name: Install tools via mise
+        uses: jdx/mise-action@v4
         with:
-          node-version: "22"
-          cache: "npm"
-
-      - name: Cache Hugo
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/hugo
-          key: ${{ runner.os }}-hugo-${{ hashFiles('**/hugo.toml') }}
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: "0.162.1"
-          extended: true
+          cache: true
 
       - name: Install deps
         run: npm ci
