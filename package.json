@@ -15,6 +15,11 @@
   "lint-staged": {
     "*.{js,mjs,cjs,ts,tsx,jsx,json,jsonc,css}": "biome check --write --no-errors-on-unmatched"
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "name": "DeiAsPie.github.io",
   "private": true,
   "scripts": {
