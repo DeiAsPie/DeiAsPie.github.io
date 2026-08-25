@@ -7,20 +7,18 @@ tags: ["vpn", "privacy", "no-logs", "sweden", "anonymous"]
 link: "https://mullvad.net/en/"
 
 image_alt: "Mullvad VPN logo - Privacy-focused VPN with anonymous accounts"
-description: "Experience true privacy with Mullvad VPN. Anonymous account creation, no-logs policy, audited security, and a flat €5/month pricing model for everyone."
+description: "Swedish VPN running since 2009. Flat 5 euro a month, independently audited no-logs policy, and anonymous signup with no email, paid in cash or crypto."
 summary: "Privacy-focused VPN with anonymous account creation and cryptocurrency payments."
 ---
 
-Mullvad is a fast and inexpensive VPN with a serious focus on transparency and security. They have been in operation since 2009. Mullvad is based in Sweden.
+Mullvad operates a VPN service with a focus on transparency and security. Founded in 2009, it's based in Sweden.
 
 **Key Features:**
 
-- **Highly Recommended** for privacy
 - Fixed pricing: €5/month for everyone
 - No personal information required for account creation
 - Accepts Bitcoin, cash, bank wire, credit card, PayPal, and Swish
 - No logs policy independently audited
 - Open-source clients
 - WireGuard and OpenVPN support
-
-**Unique Features:** Account numbers are randomly generated - no email or personal information required.
+- Account numbers are randomly generated

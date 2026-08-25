@@ -1,0 +1,82 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**/*.js",
+      "**/*.mjs",
+      "**/*.cjs",
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.jsx",
+      "**/*.json",
+      "**/*.jsonc",
+      "**/*.css",
+      "!assets/gen",
+      "!package-lock.json",
+      "!hugo_stats.json"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "complexity": {
+        "useArrowFunction": "off"
+      },
+      "correctness": {
+        "noInnerDeclarations": "off"
+      },
+      "style": {
+        "noDescendingSpecificity": "off"
+      }
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["tests/**", "playwright.config.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    }
+  ]
+}

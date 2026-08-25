@@ -49,7 +49,7 @@
           return stored;
         }
         return "auto";
-      } catch (e) {
+      } catch (_e) {
         return "auto";
       }
     }
@@ -60,7 +60,7 @@
     function setPref(value) {
       try {
         localStorage.setItem("theme", value);
-      } catch (e) {}
+      } catch (_e) {}
     }
 
     /**
@@ -93,11 +93,19 @@
 
     function syncState() {
       var pref = getPref();
-      var isDark = document.documentElement.classList.contains("dark");
       var labelText = label(pref);
-      btn.setAttribute("aria-pressed", isDark ? "true" : "false");
       btn.setAttribute("title", labelText);
       btn.setAttribute("aria-label", labelText);
+
+      // Show only the SVG matching the current preference
+      var icons = btn.querySelectorAll("[data-theme-icon]");
+      icons.forEach(function (icon) {
+        if (icon.getAttribute("data-theme-icon") === pref) {
+          icon.classList.remove("hidden");
+        } else {
+          icon.classList.add("hidden");
+        }
+      });
     }
 
     var mql = window.matchMedia("(prefers-color-scheme: dark)");
@@ -129,7 +137,7 @@
   function setupMobileMenu(toggle, menu) {
     // Type guard: menu must be a dialog for showModal/close
     if (!(menu instanceof HTMLDialogElement)) {
-      console.warn('Mobile menu is not a <dialog> element');
+      console.warn("Mobile menu is not a <dialog> element");
       return;
     }
 
@@ -140,7 +148,7 @@
       toggle.focus();
 
       // Announce to screen readers
-      announceToScreenReader('Menu closed');
+      announceToScreenReader("Menu closed");
     }
 
     function open() {
@@ -149,7 +157,7 @@
       // bottom edge to keep the dropdown where it has always appeared.
       var header = toggle.closest("header");
       if (header) {
-        menu.style.top = header.getBoundingClientRect().bottom + "px";
+        menu.style.top = `${header.getBoundingClientRect().bottom}px`;
       }
 
       menu.showModal();

@@ -20,10 +20,10 @@ if (!chromePath) {
     try {
       const { chromium } = await import("playwright");
       chromePath = chromium.executablePath();
-    } catch (e) {
+    } catch (_e) {
       console.error("Failed to resolve Playwright Chromium executable path");
     }
-  } catch (e) {
+  } catch (_e) {
     console.error("Failed to install Playwright Chromium");
   }
 }
@@ -59,7 +59,7 @@ if (chromePath) {
       JSON.stringify(cfg, null, 2),
     );
     cfgPath = "ci/lighthouserc.with.chrome.json";
-  } catch (e) {
+  } catch (_e) {
     // fallback to original cfgPath
   }
 }
@@ -73,7 +73,7 @@ try {
     stdio: "inherit",
     env,
   });
-} catch (e) {
+} catch (_e) {
   console.error("Lighthouse CI failed");
   process.exit(1);
 }

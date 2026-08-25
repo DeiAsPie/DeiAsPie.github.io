@@ -7,19 +7,17 @@ tags: ["vpn", "privacy", "free-tier", "switzerland", "proton"]
 link: "https://protonvpn.com/"
 
 image_alt: "Official Proton VPN logo - privacy-focused virtual private network"
-description: "Browse the web privately with Proton VPN. High-speed Swiss VPN with a strict no-logs policy, Secure Core routing, and a reliable free tier for everyone."
+description: "Swiss VPN running since 2016, with a no-logs policy, Secure Core routing, and Tor over VPN. Free tier covers 3 countries on 1 device, unmetered."
 summary: "Swiss-based VPN with a limited free tier and premium features."
 ---
 
-ProtonVPN has been in operation since 2016. ProtonVPN is based in Switzerland and offers a limited free pricing tier, as well as premium options.
+ProtonVPN is a VPN service based in Switzerland, operating since 2016 with free and paid options.
 
 **Key Features:**
 
-- Free tier available (limited servers and bandwidth)
-- Based in Switzerland with strong privacy laws
 - No-logs policy
 - Secure Core routing through privacy-friendly countries
 - Tor over VPN support
-- Integration with other Proton services
-
-**Free Tier:** Includes unlimited bandwidth but limited to 3 countries and single device connection.
+- Works with Proton's other services
+- Free tier: unlimited bandwidth, 3 countries, 1 device
+- Paid tier: more servers and devices

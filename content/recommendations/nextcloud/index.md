@@ -7,11 +7,11 @@ tags: ["cloud", "self-hosted", "files", "collaboration", "open-source"]
 link: "https://nextcloud.com/"
 
 image_alt: "Nextcloud logo - Self-hosted productivity and cloud platform"
-description: "Build your own private cloud with Nextcloud. A self-hosted platform for secure file storage, collaboration, video calls, and end-to-end encrypted sync."
+description: "Self-hosted cloud platform for file storage, collaboration, video calls, and office suite that runs on your own server with optional end-to-end encryption."
 summary: "Self-hosted cloud platform with file storage, office suite, and collaboration tools."
 ---
 
-Nextcloud is a suite of free and open-source client-server software for creating your own file hosting services on a private server you control or using others who do. It also comes with end-to-end encryption (E2EE).
+Nextcloud is a free, open-source suite for file hosting on a server you control. It includes end-to-end encryption (E2EE), office suite integration, and collaboration tools.
 
 **Key Features:**
 

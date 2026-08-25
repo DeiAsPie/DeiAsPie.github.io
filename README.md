@@ -8,22 +8,34 @@ Dark mode is the default. Use the Theme toggle in the header to switch; your cho
 
 ## ✨ Features
 
-- **🚀 Performance**: AVIF/WebP images, lazy loading, service worker caching, prefetching
+- **🚀 Performance**: WebP images with responsive srcsets, lazy loading, speculation-rules prefetching
 - **♿ Accessibility**: WCAG 2.2 compliant, ARIA best practices, keyboard navigation, screen reader optimized
 - **🔒 Security**: Content Security Policy, Subresource Integrity, secure Hugo configuration
 - **🎨 Modern Stack**: Hugo + Tailwind CSS v4, responsive design, dark mode support
-- **📦 PWA Ready**: Service worker, offline support, installable
 - **🧪 Well-tested**: Playwright E2E, Axe accessibility audits, Lighthouse performance checks
 
 ## Local development
 
-Prereqs: Hugo Extended v0.151.0+ and Node.js 20+
+Prereqs: [mise](https://mise.jdx.dev), or Hugo Extended 0.162.1 and Node.js 22.
+
+Using mise (recommended):
 
 ```fish
+# mise installs node, hugo-extended, and python from mise.toml
+mise install
+
 # install deps
 npm install
 
 # run dev server
+hugo server -D
+```
+
+Without mise:
+
+```fish
+# Ensure node 22 and hugo-extended 0.162.1 are installed separately
+npm install
 hugo server -D
 ```
 
@@ -171,7 +183,7 @@ Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` br
 
 CI notes:
 
-- Uses Hugo Extended v0.148.2 in the Actions workflow for consistent image-processing features.
+- Uses Hugo Extended 0.162.1 (pinned in mise.toml) for consistent image-processing features.
 - Publishes a `.nojekyll` file to prevent GitHub Pages from altering output.
 - Old URLs are preserved using `aliases` in front matter; keep aliases when renaming/moving content.
 
@@ -197,7 +209,7 @@ Do not commit build artifacts. Git ignores:
 
 ### Dynamic Meta Descriptions
 
-`head.html` now derives the `<meta name="description">`, Open Graph, and Twitter description using this fallback chain:
+`head.html` now derives the `<meta name="description">` and Open Graph description using this fallback chain:
 
 1. `params.description` (page front matter)
 2. `params.summary`
@@ -283,7 +295,10 @@ The smoke tests stay in CI deliberately: the pre-push hook only protects the mac
 Goldmark is configured with `unsafe = true` (raw HTML allowed). We mitigate via a meta CSP in report-only mode first:
 
 ```html
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint"
+/>
 ```
 
 To enforce later, progressively remove `'unsafe-inline'` by moving inline scripts/styles to external files and relaxing directives for required external services (fonts, analytics) as needed.

@@ -1,37 +1,33 @@
 ---
 title: "Privacy & Security Recommendations"
-description: "A battle-tested archive of privacy-focused tools and services. Find secure alternatives to mainstream platforms and protect your digital footprint."
+description: "Recommended privacy-focused tools, secure alternatives to mainstream platforms, and practical security notes."
 date: 2024-01-01
 ---
 
-# Your Digital Shield Arsenal 🔰
+# Software and tool recommendations
 
-Welcome to the complete archive of privacy-focused tools and services I recommend. These are battle-tested alternatives to mainstream services that respect your rights and put you back in control.
+This section lists software and services I recommend for privacy and security. These options prioritize open-source code, end-to-end encryption, and zero user tracking.
 
-## Important Guidelines
+## General guidelines
 
-**In General:**
+- Avoid public social media platforms. When messaging is necessary, use end-to-end encrypted messengers.
+- Do not post personal information online that cannot be permanently deleted later.
+- Use a password manager to generate unique, strong passwords for every account.
+- Turn on device encryption and keep lock screens enabled.
+- Avoid plugging unfamiliar USB drives or peripherals into your computer.
+- Turn off Bluetooth and Wi-Fi when not in use, or use Airplane mode when offline.
+- Grant minimal app permissions on your mobile devices and network.
 
-- **Stay away from social media.** When really necessary, use a private messenger suggested below.
-- If you can't remove it later, then don't put it online.
-- **Avoid unauthorized access:**
-  - Use a password manager to set strong and complex passwords
-  - Use encryption whenever possible
-  - Don't leave your devices unattended
-  - Don't plug in random stuff in your devices
-  - Disable Bluetooth, WiFi, etc, when not required. Turn on Airplane mode as much as possible
-  - Be very stingy with the permissions you grant to users or apps on your network or devices
+## Desktop vs. mobile security
 
-## Platform Priorities
+Desktop operating systems were historically [not designed with strict app sandboxing](https://blog.cryptographyengineering.com/2017/03/05/secure-computing-for-journalists/). For sensitive activities, stick to updated mobile operating systems with modern application sandboxing.
 
-**Desktop vs Mobile:** Desktop operating systems were [not designed with security in mind](https://blog.cryptographyengineering.com/2017/03/05/secure-computing-for-journalists/), so **try avoiding desktops as much as possible and stick to an updated mobile device** preferably running one of the OS recommended here.
+Avoid installing unofficial custom ROMs solely to remove pre-installed software, as unlocking the bootloader compromises Android's verified boot security model. Use hardened operating systems like GrapheneOS or stick to stock firmware receiving regular vendor updates.
 
-**Custom ROMs Warning:** Don't fall for flashing custom ROMs just for the sake of De-Googling your Android device as doing so would seriously ruin your Security and thus, your Privacy. Use the recommended operating system here or stick to the stock ROM being updated regularly.
+## Core security rule
 
-## ⚠️ Critical Rule
-
-**DO NOT USE A DEVICE IN ABSENCE OF REGULAR UPDATES**
+**DO NOT USE A DEVICE THAT IS NO LONGER RECEIVING REGULAR SECURITY UPDATES.**
 
 ---
 
-Use the categories and tags below to filter recommendations by your specific needs. Each recommendation includes detailed explanations, setup guidance, and links to official sources.
+Filter recommendations below by category or tag. Each listing details the software's privacy model, features, and official project links.

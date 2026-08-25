@@ -1,6 +1,6 @@
 baseURL = "https://deiaspie.github.io/"
 title = "DeiAsPie - Privacy & Security Recommendations"
-languageCode = "en-us"
+locale = "en-us"
 summaryLength = 24
 enableRobotsTXT = true
 cleanDestinationDir = true
@@ -33,9 +33,13 @@ description = "Curated privacy-focused tools and services for digital sovereignt
 author = "DeiAsPie"
 prefetch = ["/recommendations/", "/recommendations/courses/"]
 
+[params.odysee]
+channels = ["@DeiAsPieBlog:f", "@DeiAsPie:1", "@DeiAsPieMindSpace:7"]
+
 [params.social]
-github = "DeiAsPie"
-twitter = "Dei_As_Pie"
+signal = "https://signal.me/#eu/wnMYTNtNQ3FetbthOQzkOGQKtqWJU5Bb5LHHmmhdo3-i9Ts59hlI1pxu1pZGr2rN"
+github = "https://github.com/DeiAsPie"
+linkedin = "https://linkedin.com/in/DeiAsPie"
 
 [imaging]
 # Optimize image processing - Hugo best practices
@@ -63,7 +67,7 @@ resampleFilter = 'lanczos'
   [security.http]
     # Allow specific domains for resources.GetRemote
     methods = ['GET', 'HEAD']
-    urls = []
+    urls = ['^https://odysee\.com/.*$']
 
 [caches]
   [caches.images]

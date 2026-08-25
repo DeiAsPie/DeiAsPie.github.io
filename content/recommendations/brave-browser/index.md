@@ -6,20 +6,20 @@ categories: ["Browser", "Privacy", "Security"]
 tags: ["browser", "privacy", "ad-blocking", "chromium", "rewards"]
 link: "https://brave.com/"
 
-image_alt: "Official Brave Browser logo - privacy-focused web browser with built-in blocking"
-description: "Brave Browser offers fast, private browsing with built-in ad and tracker blocking. Built on Chromium for full compatibility with Chrome extensions."
-summary: "Chromium-based browser with built-in ad/tracker blocking and privacy features."
+image_alt: "Brave Browser logo"
+description: "Brave is a Chromium-based browser with built-in ad and tracker blocking, Tor mode, and full extension compatibility."
+summary: "Chromium browser with built-in ad/tracker blocking and Tor support."
 ---
 
-Brave Browser has some of the best privacy defaults and includes a built-in content blocker. Brave is built upon the Chromium web browser project, so it should feel familiar and have minimal website compatibility issues.
+Brave blocks ads and trackers by default. Built on Chromium, it maintains compatibility with existing websites and Chrome extensions.
 
-**Key Features:**
+Features:
 
 - Blocks ads and trackers by default
-- Built on Chromium for compatibility
-- Brave Shields for enhanced privacy protection
+- Brave Shields for privacy control
+- Tor mode in private windows
+- HTTPS Everywhere
 - Optional Brave Rewards system
-- Tor browsing mode in private windows
-- HTTPS Everywhere built-in
+- Chromium-based for compatibility
 
-**Recommended for:** Users who want privacy without sacrificing website compatibility, especially for banking and other services that require identification.
+Good for users wanting privacy without losing site compatibility.

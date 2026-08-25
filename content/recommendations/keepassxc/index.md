@@ -6,20 +6,21 @@ categories: ["Password Manager", "Security", "Offline"]
 tags: ["password-manager", "offline", "open-source", "2fa", "local"]
 link: "https://keepassxc.org/"
 
-image_alt: "KeePassXC logo - Secure offline password manager"
-description: "Take full control of your passwords with KeePassXC, a secure offline password manager. Features AES-256 encryption, cross-platform support, and 2FA capabilities."
-summary: "Offline password manager with complete control over your data."
+image_alt: "KeePassXC logo"
+description: "KeePassXC is an offline password manager with AES-256 encryption, 2FA/TOTP support, and cross-platform availability."
+summary: "Offline password manager with AES-256 encryption and 2FA support."
 ---
 
-KeePass is a free open source password manager. Passwords can be stored in an encrypted database on your device, which can be unlocked with one master key.
+KeePassXC is a free, open-source password manager. Store encrypted passwords on your device, unlock them with a master key.
 
-**Key Features:**
+Features:
 
-- Completely offline - you control your data
-- Strong encryption with AES-256
-- Can also be used for 2FA/TOTP codes
-- Cross-platform: Windows, macOS, Linux
-- Mobile apps: KeePassDX (Android), Strongbox (iOS)
-- No subscription fees - completely free
+- Offline only, data stays on your device
+- AES-256 encryption
+- 2FA/TOTP code support
+- Windows, macOS, Linux
+- Mobile: KeePassDX (Android), Strongbox (iOS)
+- No subscription
+- Completely free
 
-**Perfect for:** Users who want complete control over their password data and don't mind managing their own backups.
+You manage your own backups. No syncing to cloud services.

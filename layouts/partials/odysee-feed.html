@@ -1,0 +1,45 @@
+{{/* Partial: odysee-feed.html Fetches RSS feeds for Odysee channels defined in
+site.Params.odysee.channels, extracts, normalizes, sorts by pubDate desc, and
+returns top 6 items. */}} {{ $allItems := slice }} {{ $channels :=
+site.Params.odysee.channels | default slice }} {{ $cacheKey := now.Format
+"2006-01-02-15" }} {{ range $handle := $channels }} {{ $url := printf
+"https://odysee.com/$/rss/%s" $handle }} {{ $opts := dict "key" (printf "%s-%s"
+$handle $cacheKey) }} {{ $res := "" }} {{ $tryRemote := try (resources.GetRemote
+$url $opts) }} {{ if $tryRemote.Err }} {{ warnf "Odysee fetch error for channel %s: %s" $handle $tryRemote.Err }} {{ else if $tryRemote.Value }} {{ $res =
+$tryRemote.Value }} {{ end }} {{ if $res }} {{ $content := $res.Content }} {{ if
+$content }} {{ $xmlData := dict }} {{ $tryUnmarshal := try (transform.Unmarshal
+$content) }} {{ if $tryUnmarshal.Err }} {{ warnf "Odysee XML unmarshal error for channel %s: %s" $handle $tryUnmarshal.Err }} {{ else if $tryUnmarshal.Value }}
+{{ $xmlData = $tryUnmarshal.Value }} {{ end }} {{ $channel := index $xmlData
+"channel" | default (index (index $xmlData "rss" | default dict) "channel") }}
+{{ if $channel }} {{ $rawItems := index $channel "item" }} {{ $itemList := slice
+}} {{ if reflect.IsSlice $rawItems }} {{ $itemList = $rawItems }} {{ else if
+$rawItems }} {{ $itemList = slice $rawItems }} {{ end }} {{ range $item :=
+$itemList }} {{/* Extract title (handle both string and slice) */}} {{ $title :=
+"" }} {{ $rawTitle := index $item "title" }} {{ if reflect.IsSlice $rawTitle }}
+{{ $title = index $rawTitle 0 }} {{ else if $rawTitle }} {{ $title = $rawTitle
+}} {{ end }} {{/* Extract link (handle string/slice) */}} {{ $link := "" }} {{
+$rawLink := index $item "link" }} {{ if reflect.IsSlice $rawLink }} {{ $link =
+index $rawLink 0 }} {{ else if $rawLink }} {{ $link = $rawLink }} {{ end }} {{
+$pubDateStr := index $item "pubDate" | default "" }} {{/* Validation: missing
+title, link, pubDate, or unsafe scheme */}} {{ $isHttp := or (hasPrefix $link
+"http://") (hasPrefix $link "https://") }} {{ if and $title $link $pubDateStr
+$isHttp }} {{ $parsedDate := "" }} {{ $tryTime := try (time.AsTime $pubDateStr)
+}} {{ if $tryTime.Err }} {{ warnf "Odysee pubDate parse error for channel %s item %q: %s" $handle $title $tryTime.Err }} {{ else if $tryTime.Value }} {{
+$parsedDate = $tryTime.Value }} {{ end }} {{ if $parsedDate }} {{/* Thumbnail
+extraction: check image and itunes:image */}} {{ $imageObj := index $item
+"image" | default (index $item "itunes:image") }} {{ $thumb := "" }} {{ if
+reflect.IsMap $imageObj }} {{ $thumb = index $imageObj "-href" | default (index
+$imageObj "href" | default (index $imageObj "_href" | default "")) }} {{ else if
+reflect.IsSlice $imageObj }} {{ $firstImg := index $imageObj 0 }} {{ if
+reflect.IsMap $firstImg }} {{ $thumb = index $firstImg "-href" | default (index
+$firstImg "href" | default "") }} {{ else if eq (printf "%T" $firstImg) "string"
+}} {{ $thumb = $firstImg }} {{ end }} {{ else if eq (printf "%T" $imageObj)
+"string" }} {{ $thumb = $imageObj }} {{ end }} {{/* Validate thumbnail URL
+scheme if present */}} {{ if and $thumb (not (or (hasPrefix $thumb "http://")
+(hasPrefix $thumb "https://"))) }} {{ $thumb = "" }} {{ end }} {{ $normalized :=
+dict "title" $title "link" $link "pubDate" $parsedDate "pubDateUnix"
+$parsedDate.Unix "thumbnail" $thumb "channel" $handle }} {{ $allItems =
+$allItems | append $normalized }} {{ end }} {{ end }} {{ end }} {{ end }} {{ end
+}} {{ end }} {{ end }} {{/* Sort descending by pubDateUnix */}} {{ $sorted :=
+sort $allItems "pubDateUnix" "desc" }} {{/* Limit to top 6 items */}} {{ return
+(first 6 $sorted) }}

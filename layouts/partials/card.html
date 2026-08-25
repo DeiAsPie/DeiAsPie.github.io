@@ -1,34 +1,25 @@
-<article class="card">
+<article class="card activatable">
   <a href="{{ .RelPermalink }}" class="card-link">
     <div class="card-media">
-      {{- partial "responsive-image.html" (dict
-        "Page" .
-        "Src" .Params.image
-        "Alt" (default (printf "%s logo" .Title) .Params.image_alt)
-        "Class" "card-img"
-        "Loading" "lazy"
-        "FetchPriority" "low"
-        "Width" 200
-        "Height" 200
-        "Widths" (slice 200 320 400)
-        "Sizes" "(max-width: 480px) 50vw, 200px"
-      ) -}}
+      {{- partial "responsive-image.html" (dict "Page" . "Src" .Params.image "Alt" (.Params.image_alt | default "") "Class" "card-img" "Loading" "lazy" "FetchPriority" "low" "Width" 200 "Height" 200 "Widths" (slice 200 320 400) "Sizes" "(max-width: 480px) 50vw, 200px") -}}
     </div>
-    <div class="card-body">
-      <h3 class="card-title">{{ .Title }}</h3>
-      {{ if .Params.summary }}
-      <p class="text-slate-600 dark:text-slate-300">{{ .Params.summary }}</p>
-      {{ else if .Summary }}
-      <p class="text-slate-600 dark:text-slate-300">{{ .Summary }}</p>
-      {{ end }}
-      <div class="mt-3 flex flex-wrap gap-2">
-        {{ range .Params.categories }}<span
-          class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2 py-1 rounded"
+    <div class="card-body flex flex-col">
+      <div>
+        <h3 class="card-title">{{ .Title }}</h3>
+        {{ if .Params.summary }}
+        <p class="text-secondary line-clamp-2">{{ .Params.summary }}</p>
+        {{ else if .Summary }}
+        <p class="text-secondary line-clamp-2">{{ .Summary }}</p>
+        {{ end }}
+      </div>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        {{ with .Params.categories }}{{ range first 1 . }}<span
+          class="text-xs px-2 py-0.5 rounded-full category-tag"
           >{{ . }}</span
-        >{{ end }} {{ range .Params.tags }}<span
-          class="text-xs bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 px-2 py-1 rounded border border-slate-200 dark:border-slate-800"
+        >{{ end }}{{ end }} {{ with .Params.tags }}{{ range first 3 . }}<span
+          class="text-xs px-2 py-0.5 rounded-full tag-pill"
           >#{{ . }}</span
-        >{{ end }}
+        >{{ end }}{{ end }}
       </div>
     </div>
   </a>

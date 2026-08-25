@@ -9,20 +9,14 @@ jobs:
     name: Build, test, and audit
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    strategy:
-      matrix:
-        node-version: [22.x]
-        python-version: ["3.13"]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node
-        uses: actions/setup-node@v5
+      - name: Install tools via mise
+        uses: jdx/mise-action@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
+          cache: true
 
       - name: Install Node dependencies
         shell: bash
@@ -32,12 +26,6 @@ jobs:
           else
             npm install
           fi
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: "latest"
-          extended: true
 
       - name: Build site (production)
         run: npm run build
@@ -56,11 +44,6 @@ jobs:
 
       - name: Lint JavaScript
         run: npm run lint
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Install pytest
         run: |

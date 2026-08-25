@@ -20,11 +20,15 @@
  *   CSS_FILE — override path to CSS file (default: assets/gen/tailwind.css)
  *   CSS_BASELINE_FILE — override path to baseline file (default: css-baseline-kib.txt)
  */
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
-const cssPath = process.env.CSS_FILE || path.resolve(__dirname, "..", "assets", "gen", "tailwind.css");
-const baselinePath = process.env.CSS_BASELINE_FILE || path.resolve(__dirname, "..", "css-baseline-kib.txt");
+const cssPath =
+  process.env.CSS_FILE ||
+  path.resolve(__dirname, "..", "assets", "gen", "tailwind.css");
+const baselinePath =
+  process.env.CSS_BASELINE_FILE ||
+  path.resolve(__dirname, "..", "css-baseline-kib.txt");
 
 if (!fs.existsSync(cssPath)) {
   console.error(
@@ -40,7 +44,7 @@ if (process.argv.includes("--print")) {
   if (process.argv.includes("--bytes")) {
     process.stdout.write(String(bytes));
   } else {
-    process.stdout.write(kib.toFixed(1) + " KiB");
+    process.stdout.write(`${kib.toFixed(1)} KiB`);
   }
   process.exit(0);
 }
@@ -50,13 +54,13 @@ let budget;
 const budgetStr = process.env.CSS_BUDGET_KIB;
 if (budgetStr) {
   budget = parseFloat(budgetStr);
-  if (isNaN(budget)) {
+  if (Number.isNaN(budget)) {
     console.error(`Invalid CSS_BUDGET_KIB '${budgetStr}'.`);
     process.exit(2);
   }
 } else if (fs.existsSync(baselinePath)) {
   const baseline = parseFloat(fs.readFileSync(baselinePath, "utf-8").trim());
-  if (isNaN(baseline) || baseline < 0) {
+  if (Number.isNaN(baseline) || baseline < 0) {
     console.error(
       `Malformed baseline in ${baselinePath}: must be a non-negative number.`,
     );

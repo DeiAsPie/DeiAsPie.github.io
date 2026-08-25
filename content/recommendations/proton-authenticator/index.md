@@ -5,18 +5,18 @@ categories: ["Authenticator", "Security"]
 tags: ["2fa", "password-manager", "authenticator", "privacy"]
 
 image_alt: "Official Proton Authenticator logo - secure two-factor authentication app"
-description: "Secure your accounts with Proton Authenticator. A privacy-first tool for TOTP 2FA and passwordless sign-ins with end-to-end encryption from Proton."
-summary: "Proton Authenticator — a privacy-conscious two-factor authenticator app from Proton for TOTP and passwordless sign-ins."
+description: "Two-factor authenticator from Proton supporting TOTP, passwordless authentication with passkeys, cross-device sync, and end-to-end encryption."
+summary: "Two-factor authenticator app from Proton for TOTP and passwordless sign-ins."
 ---
 
-Proton Authenticator is a standalone authenticator app from Proton that supports TOTP (Time-based One-Time Passwords) and modern passwordless authentication flows. It is designed to work well with Proton accounts and other services that support standard 2FA mechanisms.
+Proton Authenticator is a 2FA app from Proton that supports TOTP and passwordless authentication. It works with Proton accounts and other services supporting standard 2FA.
 
 Features
 
 - TOTP for two-factor authentication
-- Passwordless/Passkeys support where available
-- Cross-device sync through Proton (if enabled)
-- Simple, privacy-focused UI and secure storage of secrets
+- Passwordless/passkeys support
+- Cross-device sync through Proton (optional)
+- End-to-end encrypted
 
 Links
 
@@ -25,4 +25,4 @@ Links
 
 Notes
 
-Authenticator apps add a strong layer of security over passwords alone. If you use Proton services, Proton Authenticator integrates smoothly; otherwise standard TOTP apps like Authy, FreeOTP, or Aegis are good alternatives depending on your threat model and need for backups/sync.
+2FA apps add a second factor beyond passwords. If using Proton services, Proton Authenticator integrates with your account. Alternatives like Authy, FreeOTP, or Aegis work with any service and may offer syncing or backup options depending on your threat model.

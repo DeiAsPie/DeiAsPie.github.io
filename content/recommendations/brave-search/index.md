@@ -6,21 +6,19 @@ categories: ["Search Engine", "Privacy"]
 tags: ["search", "privacy", "independent-index", "brave"]
 link: "https://search.brave.com/"
 
-image_alt: "Official Brave Search logo - independent and private search engine index"
-description: "Brave Search is an independent search engine with its own index. Experience private, unbiased search results without the tracking of big tech engines."
-summary: "Independent search engine by Brave with its own index and privacy focus."
+image_alt: "Brave Search logo"
+description: "Brave Search is an independent search engine with its own index, no personal tracking, and open-source code."
+summary: "Independent search engine with its own index and no tracking."
 ---
 
-Brave Search is an independently indexed search engine by Brave that is optimized against Google. The company is based in the USA.
+Brave Search has its own independent index, not powered by Google or Bing. Based in the USA.
 
-**Key Features:**
+Features:
 
-- Independent search index (not relying on Google or Bing)
-- Default search engine in Brave Browser
+- Independent search index
 - No personal information tracking
-- Anonymous usage metrics (can be disabled)
-- Developed by the same team behind Brave Browser
+- Anonymous usage metrics included by default (can be disabled)
+- Default search engine in Brave Browser
+- Developed by Brave
 
-**Recommendation:** It's recommended that you disable Anonymous usage metrics from settings as it is enabled by default.
-
-**Privacy:** Brave states that no personally identifiable information is collected. Other metrics that are processed including your IP, are disposed of and not retained.
+Note: Disable anonymous usage metrics in settings if you want to reduce data collection entirely. Brave discards IP addresses and metrics; they don't retain them.

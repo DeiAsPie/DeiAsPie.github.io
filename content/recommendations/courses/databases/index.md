@@ -7,10 +7,10 @@ tags: ["course"]
 area: "Data"
 link: "https://cs186berkeley.net/"
 video: "https://redirect.invidious.io/user/CS186Berkeley/videos"
-description: "Master database system design with UC Berkeley's CS186. Covers SQL, relational algebra, transactions, and the internal architecture of modern database engines."
-image_alt: "UC Berkeley logo - the official mark of the University of California, Berkeley, a world-leading public research university."
+description: "UC Berkeley's CS186: SQL, relational algebra, transactions, and database engine architecture."
+image_alt: "UC Berkeley logo"
 summary: "Introduction to Databases"
 aliases: ["/recommendations/databases/"]
 ---
 
-Covers relational algebra, SQL, transactions, and systems design from Berkeley’s renowned CS186.
+Covers relational algebra, SQL, transactions, and systems design from Berkeley's CS186.

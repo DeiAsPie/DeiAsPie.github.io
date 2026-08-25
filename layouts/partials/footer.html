@@ -1,19 +1,22 @@
 <footer
-  class="py-10 border-t border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-300"
+  class="py-10 border-t text-sm text-secondary border-subtle"
 >
-  <div class="flex items-center justify-between py-4">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-6xl">
+    <div class="flex items-center justify-between py-4">
     <p>© {{ now.Year }} {{ .Site.Params.author }}. All rights reserved.</p>
     <div class="flex items-center gap-4">
       <a class="nav-link" href="{{ .Site.BaseURL }}index.xml">RSS</a>
-      {{ range $name, $val := .Site.Params.social }}
-        {{ $url := "" }}
-        {{ if eq $name "github" }}{{ $url = printf "https://github.com/%s" $val }}
-        {{ else if eq $name "twitter" }}{{ $url = printf "https://twitter.com/%s" $val }}
-        {{ end }}
-        {{ if $url }}
-          <a class="nav-link" href="{{ $url }}" target="_blank" rel="noopener">{{ $name | humanize }}</a>
-        {{ end }}
+      {{ $labels := dict "signal" "Signal" "github" "GitHub" "linkedin"
+      "LinkedIn" }} {{ range $name, $url := .Site.Params.social }}
+      <a
+        class="nav-link"
+        href="{{ $url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        >{{ index $labels $name | default ($name | humanize) }}</a
+      >
       {{ end }}
     </div>
+  </div>
   </div>
 </footer>
