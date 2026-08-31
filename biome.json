@@ -18,7 +18,8 @@
       "**/*.css",
       "!assets/gen",
       "!package-lock.json",
-      "!hugo_stats.json"
+      "!hugo_stats.json",
+      "!.release-please-manifest.json"
     ]
   },
   "formatter": {
