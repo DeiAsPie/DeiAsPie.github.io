@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.1...DeiAsPie.github.io-v3.2.2) (2026-08-31)
+
+
+### Bug Fixes
+
+* restore release-please automation ([#59](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/59)) ([74d9174](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/74d91746b83a2b1c74b7493d9c8ffcbc7066ca40))
+
 ## [3.2.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.0...DeiAsPie.github.io-v3.2.1) (2026-03-28)
 
 ### Miscellaneous Chores
