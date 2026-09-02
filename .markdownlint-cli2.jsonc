@@ -6,6 +6,10 @@
     "CHANGELOG.md",
     // Gitignored: agent tool state and planning artifacts, not repo content.
     ".serena",
-    "docs"
+    "docs",
+    // Gitignored Playwright output. A failing test writes error-context.md
+    // files here, which would otherwise fail the lint and mask the real failure.
+    "test-results",
+    "playwright-report"
   ]
 }
