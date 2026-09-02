@@ -58,9 +58,11 @@ export default defineConfig({
       testIgnore: /.*\.smoke\.spec\.ts/,
       use: { ...devices["Desktop Firefox"] },
     },
-    // WebKit requires system dependencies on Linux
-    // See docs/PLAYWRIGHT_WEBKIT_SETUP.md for setup instructions
-    // Uncomment below to enable WebKit testing:
+    // WebKit is deliberately disabled. Its Linux system libraries (libicu74,
+    // libjpeg-turbo8) are Debian/Ubuntu packages that Playwright cannot install
+    // on this Fedora host, so every WebKit test fails at browserType.launch.
+    // Chromium and Firefox cover the rendering differences this site cares about.
+    // To enable: install the deps, then uncomment.
     // {
     //   name: 'webkit',
     //   testIgnore: /.*\.smoke\.spec\.ts/,
