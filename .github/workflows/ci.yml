@@ -53,15 +53,19 @@ jobs:
       - name: Run tests
         run: pytest -q
 
-      # Lighthouse and axe run in the .husky/pre-push hook, not here. They need
-      # a real browser, and the runner images disable unprivileged user
-      # namespaces, so Chrome aborts with "No usable sandbox!". Playwright
-      # manages its own server, so no manual http-server is needed.
+      # Playwright manages its own server for the smoke tests. The audit step
+      # below serves public/ itself, because Lighthouse and axe run against the
+      # built output rather than a Hugo dev server.
       - name: Install Playwright browsers
         run: npx playwright install chromium
 
       - name: Run Playwright smoke tests
         run: npm run test:smoke
+
+      # Same script the pre-push hook runs. run_lighthouse.mjs passes
+      # --no-sandbox, which is what the runner images require.
+      - name: Run Lighthouse and axe audits
+        run: sh scripts/audit.sh
 
       - name: Upload build artifact (public)
         uses: actions/upload-artifact@v4

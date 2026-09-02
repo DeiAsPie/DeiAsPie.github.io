@@ -1,10 +1,9 @@
-# Pre-push runs all non-Playwright CI checks locally before push, plus Lighthouse
-# and axe which CI cannot run due to browser sandbox constraints.
+# Pre-push runs all non-Playwright CI checks locally before push, so failures
+# surface here rather than after a push.
 #
-# Lighthouse and axe both need a real browser. Running them on GitHub meant
-# downloading ~280 MB of Chromium on every push, and the runner images disable
-# unprivileged user namespaces, so Chrome aborts with "No usable sandbox!".
-# Locally the browser is already on disk and the sandbox works.
+# Lighthouse and axe run via scripts/audit.sh, the same script CI calls. They are
+# no longer local-only: run_lighthouse.mjs passes --no-sandbox, which is what the
+# GitHub runner images need.
 #
 # The gate blocks the push on failure and has no bypass. CI still runs all checks
 # including the Playwright smoke tests (which this hook excludes—too slow for a
@@ -20,26 +19,4 @@ npm run lint:markdown
 npm run lint
 pytest -q
 
-PORT=8080
-
-npx http-server public -p "$PORT" --silent &
-SERVER_PID=$!
-trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
-
-for _ in $(seq 1 20); do
-  if curl -sSf "http://localhost:$PORT" >/dev/null 2>&1; then
-    break
-  fi
-  sleep 0.5
-done
-
-if ! curl -sSf "http://localhost:$PORT" >/dev/null 2>&1; then
-  echo "pre-push: static server did not come up on port $PORT" >&2
-  exit 1
-fi
-
-BASE="http://localhost:$PORT"
-URLS="$BASE/,$BASE/about/,$BASE/recommendations/"
-
-LH_URLS="$URLS" node scripts/run_lighthouse.mjs
-AXE_URLS="$URLS" node scripts/run_axe.mjs
+sh scripts/audit.sh

@@ -5,10 +5,10 @@ site.Params.odysee.channels | default slice }} {{ $cacheKey := now.Format
 "2006-01-02-15" }} {{ range $handle := $channels }} {{ $url := printf
 "https://odysee.com/$/rss/%s" $handle }} {{ $opts := dict "key" (printf "%s-%s"
 $handle $cacheKey) }} {{ $res := "" }} {{ $tryRemote := try (resources.GetRemote
-$url $opts) }} {{ if $tryRemote.Err }} {{ warnf "Odysee fetch error for channel %s: %s" $handle $tryRemote.Err }} {{ else if $tryRemote.Value }} {{ $res =
+$url $opts) }} {{ if $tryRemote.Err }} {{ errorf "Odysee fetch error for channel %s: %s" $handle $tryRemote.Err }} {{ else if $tryRemote.Value }} {{ $res =
 $tryRemote.Value }} {{ end }} {{ if $res }} {{ $content := $res.Content }} {{ if
 $content }} {{ $xmlData := dict }} {{ $tryUnmarshal := try (transform.Unmarshal
-$content) }} {{ if $tryUnmarshal.Err }} {{ warnf "Odysee XML unmarshal error for channel %s: %s" $handle $tryUnmarshal.Err }} {{ else if $tryUnmarshal.Value }}
+$content) }} {{ if $tryUnmarshal.Err }} {{ errorf "Odysee XML unmarshal error for channel %s: %s" $handle $tryUnmarshal.Err }} {{ else if $tryUnmarshal.Value }}
 {{ $xmlData = $tryUnmarshal.Value }} {{ end }} {{ $channel := index $xmlData
 "channel" | default (index (index $xmlData "rss" | default dict) "channel") }}
 {{ if $channel }} {{ $rawItems := index $channel "item" }} {{ $itemList := slice
@@ -24,7 +24,7 @@ $pubDateStr := index $item "pubDate" | default "" }} {{/* Validation: missing
 title, link, pubDate, or unsafe scheme */}} {{ $isHttp := or (hasPrefix $link
 "http://") (hasPrefix $link "https://") }} {{ if and $title $link $pubDateStr
 $isHttp }} {{ $parsedDate := "" }} {{ $tryTime := try (time.AsTime $pubDateStr)
-}} {{ if $tryTime.Err }} {{ warnf "Odysee pubDate parse error for channel %s item %q: %s" $handle $title $tryTime.Err }} {{ else if $tryTime.Value }} {{
+}} {{ if $tryTime.Err }} {{ errorf "Odysee pubDate parse error for channel %s item %q: %s" $handle $title $tryTime.Err }} {{ else if $tryTime.Value }} {{
 $parsedDate = $tryTime.Value }} {{ end }} {{ if $parsedDate }} {{/* Thumbnail
 extraction: check image and itunes:image */}} {{ $imageObj := index $item
 "image" | default (index $item "itunes:image") }} {{ $thumb := "" }} {{ if
