@@ -52,9 +52,12 @@ if (chromePath) {
     // disabled (Ubuntu 23.10+ under AppArmor, most containers, GitHub's
     // runner images). Without it Chrome aborts with "No usable sandbox!"
     // before the debugging port ever opens.
-    // Launcher flags live on collect, not collect.settings: lhci only forwards
-    // ci.collect.chromeFlags (a space-separated string) to ChromeLauncher.
-    cfg.ci.collect.chromeFlags = "--headless=new --no-sandbox";
+    // Must be a space-separated string: lhci concatenates this value with
+    // " --headless=new", so an array turns into "a,b --headless=new" and every
+    // flag but the last is lost. Losing --no-sandbox makes Chrome abort with
+    // "No usable sandbox!" wherever unprivileged user namespaces are disabled
+    // (Ubuntu 23.10+ under AppArmor, most containers, GitHub's runner images).
+    cfg.ci.collect.settings.chromeFlags = "--no-sandbox";
     fs.mkdirSync("ci", { recursive: true });
     fs.writeFileSync(
       "ci/lighthouserc.with.chrome.json",
