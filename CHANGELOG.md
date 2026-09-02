@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.3](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.2...DeiAsPie.github.io-v3.2.3) (2026-09-02)
+
+
+### Bug Fixes
+
+* resolve low hanging issues ([#61](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/61)) ([53e19cf](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/53e19cfbdbf3f0cf74fea8e7dde3ddda11e72f45))
+
 ## [3.2.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.1...DeiAsPie.github.io-v3.2.2) (2026-08-31)
 
 
