@@ -64,9 +64,13 @@ class TestDocTruth(unittest.TestCase):
             self.ci_workflow_text,
             ".github/workflows/ci.yml must execute scripts/audit.sh",
         )
-        ci_tail = self.readme_text.split(
-            "### On every push and pull request (`.github/workflows/ci.yml`)"
-        )[1]
+        heading = "### On every push and pull request (`.github/workflows/ci.yml`)"
+        self.assertIn(
+            heading,
+            self.readme_text,
+            f"README.md must contain heading '{heading}'",
+        )
+        ci_tail = self.readme_text.split(heading)[1]
         ci_section = re.split(r"(?m)^#{1,3}\s+", ci_tail)[0]
         self.assertIn(
             "scripts/audit.sh",

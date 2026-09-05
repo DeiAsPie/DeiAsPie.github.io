@@ -1,7 +1,9 @@
 import json
 import pathlib
 import re
+import shutil
 import subprocess
+import tempfile
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -36,28 +38,83 @@ class TestSeoJsonLd(unittest.TestCase):
         self.assertRegex(article["datePublished"], r"^\d{4}-\d{2}-\d{2}$")
         self.assertRegex(article["dateModified"], r"^\d{4}-\d{2}-\d{2}$")
 
-    def test_datemodified_precedence_logic(self):
-        """Verify template precedence logic: max(reviewDate, fallbackMod) when both present."""
-        def resolve_date_modified(review_date: str, fallback_mod: str) -> str:
-            if review_date and fallback_mod:
-                return review_date if review_date > fallback_mod else fallback_mod
-            return review_date or fallback_mod
+    def test_hugo_rendering_datemodified_precedence(self):
+        """Verify Hugo template renders Article JSON-LD dateModified reflecting max(lastReviewed, lastmod)."""
+        fixture_dir = ROOT / "content" / "recommendations" / "_test_review_sample"
+        fixture_dir.mkdir(parents=True, exist_ok=True)
+        fixture_file = fixture_dir / "index.md"
 
-        # Case 1: Review date is newer than content modification date
-        self.assertEqual(
-            resolve_date_modified("2026-08-01", "2025-01-01"),
-            "2026-08-01",
-        )
-        # Case 2: Content modification date is newer than review date (avoids backdating)
-        self.assertEqual(
-            resolve_date_modified("2025-06-01", "2026-01-15"),
-            "2026-01-15",
-        )
-        # Case 3: Only review date present
-        self.assertEqual(resolve_date_modified("2026-08-01", ""), "2026-08-01")
-        # Case 4: Only fallback date present
-        self.assertEqual(resolve_date_modified("", "2025-08-13"), "2025-08-13")
+        try:
+            # Case 1: lastReviewed is newer than lastmod -> dateModified should be lastReviewed
+            fixture_file.write_text(
+                "---\n"
+                "title: Test Review Sample\n"
+                "date: 2025-01-01\n"
+                "lastmod: 2025-06-01\n"
+                "lastReviewed: 2026-08-01\n"
+                "description: Test fixture\n"
+                "---\n"
+                "# Test Review Sample\n",
+                encoding="utf-8",
+            )
+            with tempfile.TemporaryDirectory() as tmp_dest:
+                subprocess.run(
+                    ["hugo", "--minify", "-d", tmp_dest],
+                    cwd=ROOT,
+                    check=True,
+                    capture_output=True,
+                )
+                rendered_file = pathlib.Path(tmp_dest) / "recommendations" / "_test_review_sample" / "index.html"
+                self.assertTrue(rendered_file.exists(), "Hugo must render fixture page")
+                content = rendered_file.read_text(encoding="utf-8")
+                match = re.search(r'<script type=["\']?application/ld\+json["\']?>(.*?)</script>', content, re.DOTALL)
+                self.assertIsNotNone(match, "Rendered page must contain JSON-LD script")
+                data = json.loads(match.group(1))
+                articles = [item for item in data.get("@graph", []) if item.get("@type") == "Article"]
+                self.assertEqual(len(articles), 1, "Must contain exactly one Article object")
+                self.assertEqual(
+                    articles[0]["dateModified"],
+                    "2026-08-01",
+                    "dateModified should use lastReviewed when it is newer than lastmod",
+                )
+
+            # Case 2: lastmod is newer than lastReviewed -> dateModified should be lastmod (avoids backdating)
+            fixture_file.write_text(
+                "---\n"
+                "title: Test Review Sample\n"
+                "date: 2025-01-01\n"
+                "lastmod: 2026-09-01\n"
+                "lastReviewed: 2026-08-01\n"
+                "description: Test fixture\n"
+                "---\n"
+                "# Test Review Sample\n",
+                encoding="utf-8",
+            )
+            with tempfile.TemporaryDirectory() as tmp_dest:
+                subprocess.run(
+                    ["hugo", "--minify", "-d", tmp_dest],
+                    cwd=ROOT,
+                    check=True,
+                    capture_output=True,
+                )
+                rendered_file = pathlib.Path(tmp_dest) / "recommendations" / "_test_review_sample" / "index.html"
+                self.assertTrue(rendered_file.exists(), "Hugo must render fixture page")
+                content = rendered_file.read_text(encoding="utf-8")
+                match = re.search(r'<script type=["\']?application/ld\+json["\']?>(.*?)</script>', content, re.DOTALL)
+                self.assertIsNotNone(match, "Rendered page must contain JSON-LD script")
+                data = json.loads(match.group(1))
+                articles = [item for item in data.get("@graph", []) if item.get("@type") == "Article"]
+                self.assertEqual(len(articles), 1, "Must contain exactly one Article object")
+                self.assertEqual(
+                    articles[0]["dateModified"],
+                    "2026-09-01",
+                    "dateModified should use lastmod when it is newer than lastReviewed (avoiding backdating)",
+                )
+        finally:
+            if fixture_dir.exists():
+                shutil.rmtree(fixture_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":
     unittest.main()
+

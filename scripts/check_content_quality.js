@@ -291,7 +291,7 @@ function resolveInternalLink(url, baseDir) {
  * @param {Object} frontMatter
  * @returns {Object[]}
  */
-function checkFrontMatter(frontMatter) {
+function checkFrontMatter(frontMatter, rawContent = "") {
   const issues = [];
 
   for (const required of REQUIRED_FRONTMATTER) {
@@ -320,7 +320,28 @@ function checkFrontMatter(frontMatter) {
   const rawReviewDate = frontMatter.lastReviewed ?? frontMatter.lastreviewed;
   if (rawReviewDate !== undefined && rawReviewDate !== null) {
     let isValid = false;
-    if (rawReviewDate instanceof Date) {
+
+    // Check if raw front matter text contains lastReviewed to detect YAML Date coercion rollover
+    let rawDateText = null;
+    if (rawContent) {
+      const match = rawContent.match(
+        /(?:^|\n)\s*last[rR]eviewed:\s*([^\r\n#]+)/,
+      );
+      if (match) {
+        rawDateText = match[1].trim().replace(/^['"]|['"]$/g, "");
+      }
+    }
+
+    if (rawDateText) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(rawDateText)) {
+        const [year, month, day] = rawDateText.split("-").map(Number);
+        const d = new Date(Date.UTC(year, month - 1, day));
+        isValid =
+          d.getUTCFullYear() === year &&
+          d.getUTCMonth() === month - 1 &&
+          d.getUTCDate() === day;
+      }
+    } else if (rawReviewDate instanceof Date) {
       isValid = !Number.isNaN(rawReviewDate.getTime());
     } else if (typeof rawReviewDate === "string") {
       if (/^\d{4}-\d{2}-\d{2}$/.test(rawReviewDate)) {
@@ -364,7 +385,7 @@ function lintFile(filePath) {
 
   // Check front matter (only for markdown files)
   if (path.extname(filePath) === ".md") {
-    issues.push(...checkFrontMatter(parsed.frontMatter));
+    issues.push(...checkFrontMatter(parsed.frontMatter, parsed.raw));
   }
 
   // Check content

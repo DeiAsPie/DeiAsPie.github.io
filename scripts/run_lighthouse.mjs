@@ -71,16 +71,21 @@ try {
   process.exit(1);
 }
 
+const collectTimeout =
+  Number(process.env.LHCI_TIMEOUT_MS) || Math.max(360000, urls.length * 60000);
+
 try {
   execSync(`npx -y @lhci/cli collect --config=${cfgPath}`, {
     stdio: "inherit",
     env,
+    timeout: collectTimeout,
   });
   execSync(`npx -y @lhci/cli assert --config=${cfgPath}`, {
     stdio: "inherit",
     env,
+    timeout: 120000,
   });
-} catch (_e) {
-  console.error("Lighthouse CI failed");
-  process.exit(1);
+} catch (err) {
+  console.error("Lighthouse CI failed:", err.message || err);
+  process.exit(err.status || 1);
 }

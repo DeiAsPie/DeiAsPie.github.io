@@ -28,10 +28,15 @@ fi
 BASE="http://localhost:$PORT"
 URLS="$BASE/,$BASE/about/,$BASE/recommendations/"
 
+AUDIT_SEED="${AUDIT_SEED:-$(git rev-parse HEAD 2>/dev/null || date +%Y%m%d)}"
+
 # Rotational sampling of 3-5 leaf recommendation pages
 SAMPLED_URLS=$(python3 -c '
 import glob, os, random, sys
 base_url = sys.argv[1]
+seed = sys.argv[2] if len(sys.argv) > 2 else os.environ.get("AUDIT_SEED", "")
+if seed:
+    random.seed(seed)
 rec_dir = "public/recommendations"
 files = glob.glob(os.path.join(rec_dir, "**", "index.html"), recursive=True)
 excluded = {
@@ -52,13 +57,15 @@ for p in files:
         continue
     leaf_paths.append(p)
 
+leaf_paths.sort()
+
 if leaf_paths:
     k = min(len(leaf_paths), random.randint(3, 5))
     selected = random.sample(leaf_paths, k)
     clean_base = base_url.rstrip("/")
     urls = [clean_base + "/" + os.path.relpath(os.path.dirname(p), "public").strip("/") + "/" for p in selected]
     print(",".join(urls))
-' "$BASE")
+' "$BASE" "$AUDIT_SEED")
 
 if [ -n "$SAMPLED_URLS" ]; then
   URLS="$URLS,$SAMPLED_URLS"

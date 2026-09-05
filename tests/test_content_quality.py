@@ -31,6 +31,38 @@ class TestContentQualityDateValidation(unittest.TestCase):
         self.assertEqual(len(res["valid1"]), 0)
         self.assertEqual(len(res["valid2"]), 0)
 
+    def test_unquoted_yaml_date_rollover_rejection(self):
+        """Unquoted invalid YAML dates (coerced to Date by matter) must be rejected."""
+        script = """
+        const fs = require('fs');
+        const path = require('path');
+        const os = require('os');
+        const { lintFile } = require('./scripts/check_content_quality.js');
+
+        const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'cq-test-'));
+        const filePath = path.join(tmpDir, 'test.md');
+        fs.writeFileSync(filePath, `---
+title: Test Unquoted Date
+date: 2026-01-01
+lastReviewed: 2026-02-31
+---
+# Test Heading
+Valid content here with [valid link](/recommendations/).
+`);
+
+        try {
+            const result = lintFile(filePath);
+            const dateIssues = result.issues.filter(i => i.type === 'frontmatter' && i.message.includes('lastReviewed'));
+            console.log(JSON.stringify({ dateIssues }));
+        } finally {
+            fs.rmSync(tmpDir, { recursive: true, force: true });
+        }
+        """
+        proc = subprocess.run(["node", "-e", script], cwd=ROOT, capture_output=True, text=True, check=True)
+        res = json.loads(proc.stdout)
+        self.assertEqual(len(res["dateIssues"]), 1, "Unquoted 2026-02-31 must be rejected as invalid calendar date")
+        self.assertIn("Invalid lastReviewed date format", res["dateIssues"][0]["message"])
+
 
 if __name__ == "__main__":
     unittest.main()

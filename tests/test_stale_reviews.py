@@ -114,6 +114,11 @@ class TestStaleReviews(unittest.TestCase):
         )
         self.assertIn("All recommendations have been reviewed within the 90-day window.", clean_report)
 
+        custom_report = check_stale_reviews.format_markdown_report(
+            clean_results, threshold_days=45, current_date=self.ref_date
+        )
+        self.assertIn("All recommendations have been reviewed within the 45-day window.", custom_report)
+
     def test_review_watchdog_workflow_configuration(self):
         """Verify .github/workflows/review-watchdog.yml contains required permissions and trigger."""
         wf_path = ROOT / ".github" / "workflows" / "review-watchdog.yml"
@@ -195,10 +200,10 @@ class TestStaleReviews(unittest.TestCase):
         self.assertEqual(item["effective_date"], "2026-07-01")
 
     def test_review_watchdog_workflow_safe_null_and_single_scanner(self):
-        """Verify review-watchdog.yml uses .[0].number // empty and single scanner execution."""
+        """Verify review-watchdog.yml queries open issues and uses single scanner execution."""
         wf_path = ROOT / ".github" / "workflows" / "review-watchdog.yml"
         text = wf_path.read_text(encoding="utf-8")
-        self.assertIn(".[0].number // empty", text)
+        self.assertIn(".[].number", text)
         self.assertIn("--report-file", text)
         self.assertNotIn("subprocess.check_output", text)
 

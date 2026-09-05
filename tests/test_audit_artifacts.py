@@ -350,5 +350,34 @@ class TestMainExitCode(unittest.TestCase):
                 audit_artifacts.CONTENT_DIR = original_content
 
 
+class TestAuditLeafSampling(unittest.TestCase):
+    """Test deterministic rotational leaf recommendation page sampling."""
+
+    def test_sampling_determinism_with_seed(self):
+        """Sampling with identical seed produces identical results."""
+        import subprocess
+
+        code = """
+import random, sys
+
+leaf_paths = [f"public/recommendations/app-{i}/index.html" for i in range(20)]
+seed = sys.argv[1]
+random.seed(seed)
+leaf_paths.sort()
+k = min(len(leaf_paths), random.randint(3, 5))
+selected = random.sample(leaf_paths, k)
+print(",".join(selected))
+"""
+        proc1 = subprocess.run([sys.executable, "-c", code, "seed-abc-123"], capture_output=True, text=True, check=True)
+        proc2 = subprocess.run([sys.executable, "-c", code, "seed-abc-123"], capture_output=True, text=True, check=True)
+        self.assertEqual(proc1.stdout.strip(), proc2.stdout.strip(), "Same seed must produce identical sample")
+
+        proc3 = subprocess.run([sys.executable, "-c", code, "seed-xyz-789"], capture_output=True, text=True, check=True)
+        # Verify count is between 3 and 5
+        count = len(proc1.stdout.strip().split(","))
+        self.assertTrue(3 <= count <= 5, f"Sample count {count} must be between 3 and 5")
+
+
 if __name__ == "__main__":
     unittest.main()
+

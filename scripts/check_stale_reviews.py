@@ -148,7 +148,7 @@ def format_markdown_report(results, threshold_days: int, current_date: datetime.
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Scan recommendation pages for stale review dates (> 90 days)."
+        description="Scan recommendation pages for stale review dates."
     )
     parser.add_argument(
         "--days",
