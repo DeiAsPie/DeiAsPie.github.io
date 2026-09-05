@@ -1,4 +1,5 @@
 import datetime
+import json
 import pathlib
 import sys
 import tempfile
@@ -123,6 +124,83 @@ class TestStaleReviews(unittest.TestCase):
         self.assertIn("cron: '0 8 * * 1'", text)
         self.assertIn("workflow_dispatch:", text)
         self.assertIn("review-overdue", text)
+
+    def test_cli_report_file_with_json(self):
+        """Verify CLI --report-file writes markdown report while --json outputs JSON to stdout."""
+        import subprocess
+
+        self._create_bundle(
+            "cli-tool",
+            "---\ntitle: CLI Tool\ndate: 2025-01-01\n---\nBody text\n",
+        )
+        report_file = self.rec_dir / "output_report.md"
+        cmd = [
+            sys.executable,
+            str(ROOT / "scripts" / "check_stale_reviews.py"),
+            "--content-dir",
+            str(self.rec_dir),
+            "--reference-date",
+            self.ref_date.isoformat(),
+            "--report-file",
+            str(report_file),
+            "--json",
+        ]
+        proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        self.assertTrue(report_file.exists(), "--report-file must be created")
+        report_text = report_file.read_text(encoding="utf-8")
+        self.assertIn("Recommendation Review Watchdog Report", report_text)
+        self.assertIn("`cli-tool`", report_text)
+
+        data = json.loads(proc.stdout)
+        self.assertEqual(data["total_scanned"], 1)
+        self.assertEqual(data["overdue_count"], 1)
+
+    def test_lowercase_lastreviewed_key(self):
+        """Verify lowercase 'lastreviewed:' key is recognized identically to 'lastReviewed:'."""
+        self._create_bundle(
+            "lowercase-tool",
+            "---\ntitle: Lowercase Tool\ndate: 2024-01-01\nlastreviewed: 2026-08-15\n---\nBody text\n",
+        )
+        results = check_stale_reviews.scan_recommendations(
+            self.rec_dir, current_date=self.ref_date, threshold_days=90
+        )
+        self.assertEqual(len(results), 1)
+        item = results[0]
+        self.assertEqual(item["source_field"], "lastReviewed")
+        self.assertEqual(item["effective_date"], "2026-08-15")
+        self.assertFalse(item["is_overdue"])
+
+    def test_invalid_date_logs_warning_and_falls_back(self):
+        """Verify invalid calendar date in lastReviewed logs warning and falls back to publish date."""
+        import io
+
+        self._create_bundle(
+            "invalid-date-tool",
+            "---\ntitle: Invalid Date Tool\ndate: 2026-07-01\nlastReviewed: 2026-02-31\n---\nBody text\n",
+        )
+        old_stderr = sys.stderr
+        sys.stderr = io.StringIO()
+        try:
+            results = check_stale_reviews.scan_recommendations(
+                self.rec_dir, current_date=self.ref_date, threshold_days=90
+            )
+            stderr_val = sys.stderr.getvalue()
+        finally:
+            sys.stderr = old_stderr
+
+        self.assertIn("Warning: invalid date", stderr_val)
+        self.assertEqual(len(results), 1)
+        item = results[0]
+        self.assertEqual(item["source_field"], "date")
+        self.assertEqual(item["effective_date"], "2026-07-01")
+
+    def test_review_watchdog_workflow_safe_null_and_single_scanner(self):
+        """Verify review-watchdog.yml uses .[0].number // empty and single scanner execution."""
+        wf_path = ROOT / ".github" / "workflows" / "review-watchdog.yml"
+        text = wf_path.read_text(encoding="utf-8")
+        self.assertIn(".[0].number // empty", text)
+        self.assertIn("--report-file", text)
+        self.assertNotIn("subprocess.check_output", text)
 
 
 if __name__ == "__main__":

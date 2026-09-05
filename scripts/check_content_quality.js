@@ -317,24 +317,27 @@ function checkFrontMatter(frontMatter) {
   }
 
   // Check optional lastReviewed date format
-  if (
-    frontMatter.lastReviewed !== undefined &&
-    frontMatter.lastReviewed !== null
-  ) {
+  const rawReviewDate = frontMatter.lastReviewed ?? frontMatter.lastreviewed;
+  if (rawReviewDate !== undefined && rawReviewDate !== null) {
     let isValid = false;
-    if (frontMatter.lastReviewed instanceof Date) {
-      isValid = !Number.isNaN(frontMatter.lastReviewed.getTime());
-    } else if (typeof frontMatter.lastReviewed === "string") {
-      isValid =
-        /^\d{4}-\d{2}-\d{2}$/.test(frontMatter.lastReviewed) &&
-        !Number.isNaN(new Date(frontMatter.lastReviewed).getTime());
+    if (rawReviewDate instanceof Date) {
+      isValid = !Number.isNaN(rawReviewDate.getTime());
+    } else if (typeof rawReviewDate === "string") {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(rawReviewDate)) {
+        const [year, month, day] = rawReviewDate.split("-").map(Number);
+        const d = new Date(Date.UTC(year, month - 1, day));
+        isValid =
+          d.getUTCFullYear() === year &&
+          d.getUTCMonth() === month - 1 &&
+          d.getUTCDate() === day;
+      }
     }
     if (!isValid) {
       issues.push({
         type: "frontmatter",
         severity: "error",
         message:
-          "Invalid lastReviewed date format in front matter (expected YYYY-MM-DD)",
+          "Invalid lastReviewed date format in front matter (expected valid calendar date YYYY-MM-DD)",
       });
     }
   }
@@ -476,3 +479,8 @@ function main() {
 if (require.main === module) {
   main();
 }
+
+module.exports = {
+  checkFrontMatter,
+  lintFile,
+};

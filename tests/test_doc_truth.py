@@ -1,4 +1,5 @@
 import pathlib
+import re
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -63,9 +64,10 @@ class TestDocTruth(unittest.TestCase):
             self.ci_workflow_text,
             ".github/workflows/ci.yml must execute scripts/audit.sh",
         )
-        ci_section = self.readme_text.split(
+        ci_tail = self.readme_text.split(
             "### On every push and pull request (`.github/workflows/ci.yml`)"
-        )[1].split("## CSP rollout")[0]
+        )[1]
+        ci_section = re.split(r"(?m)^#{1,3}\s+", ci_tail)[0]
         self.assertIn(
             "scripts/audit.sh",
             ci_section,

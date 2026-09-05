@@ -39,13 +39,14 @@ def parse_frontmatter_dates(file_path: pathlib.Path):
         stripped = line.strip()
         if stripped == "---":
             break
-        if stripped.startswith("lastReviewed:"):
-            val = stripped[len("lastReviewed:") :].strip().strip("\"'")
+        lower = stripped.lower()
+        if lower.startswith("lastreviewed:"):
+            val = stripped.split(":", 1)[1].strip().strip("\"'")
             m = DATE_PATTERN.search(val)
             if m:
                 last_reviewed = m.group(1)
-        elif stripped.startswith("date:"):
-            val = stripped[len("date:") :].strip().strip("\"'")
+        elif lower.startswith("date:"):
+            val = stripped.split(":", 1)[1].strip().strip("\"'")
             m = DATE_PATTERN.search(val)
             if m:
                 publish_date = m.group(1)
@@ -73,7 +74,16 @@ def scan_recommendations(rec_dir: pathlib.Path, current_date: datetime.date, thr
         try:
             effective_date = datetime.date.fromisoformat(effective_date_str)
         except ValueError:
-            continue
+            print(f"Warning: invalid date '{effective_date_str}' in {file_path}", file=sys.stderr)
+            if source_field == "lastReviewed" and publish_date:
+                try:
+                    effective_date = datetime.date.fromisoformat(publish_date)
+                    source_field = "date"
+                    effective_date_str = publish_date
+                except ValueError:
+                    continue
+            else:
+                continue
 
         days_elapsed = (current_date - effective_date).days
         is_overdue = days_elapsed > threshold_days
@@ -163,6 +173,12 @@ def main():
         default=None,
         help="Override content directory path for testing",
     )
+    parser.add_argument(
+        "--report-file",
+        type=str,
+        default=None,
+        help="Path to write the formatted markdown report to",
+    )
 
     args = parser.parse_args()
 
@@ -179,6 +195,10 @@ def main():
 
     results = scan_recommendations(rec_dir, current_date=current_date, threshold_days=args.days)
     overdue = [r for r in results if r["is_overdue"]]
+
+    if args.report_file:
+        report_content = format_markdown_report(results, threshold_days=args.days, current_date=current_date)
+        pathlib.Path(args.report_file).write_text(report_content, encoding="utf-8")
 
     if args.json:
         payload = {

@@ -45,9 +45,7 @@ try {
   const cfg = JSON.parse(raw);
   cfg.ci = cfg.ci || {};
   cfg.ci.collect = cfg.ci.collect || {};
-  if (urls.length > 0) {
-    cfg.ci.collect.url = urls;
-  }
+  cfg.ci.collect.url = urls;
   if (chromePath) {
     cfg.ci.collect.settings = cfg.ci.collect.settings || {};
     cfg.ci.collect.settings.chromePath = chromePath;
@@ -68,8 +66,9 @@ try {
     JSON.stringify(cfg, null, 2),
   );
   cfgPath = "ci/lighthouserc.with.chrome.json";
-} catch (_e) {
-  // fallback to original cfgPath
+} catch (err) {
+  console.error("Failed to generate Lighthouse CI config:", err);
+  process.exit(1);
 }
 
 try {
