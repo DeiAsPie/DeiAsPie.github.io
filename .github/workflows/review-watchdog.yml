@@ -1,0 +1,56 @@
+name: Review Watchdog
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    name: Scan recommendation review freshness
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Scan recommendations and update tracking issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/check_stale_reviews.py --days 90 > stale_report.md
+          cat stale_report.md
+
+          OVERDUE_COUNT=$(python3 -c "import json, subprocess; res = subprocess.check_output(['python3', 'scripts/check_stale_reviews.py', '--days', '90', '--json']); print(json.loads(res)['overdue_count'])")
+          echo "Overdue count: $OVERDUE_COUNT"
+
+          # Ensure label exists
+          gh label create review-overdue --description "Tracks overdue recommendation reviews" --color "d73a4a" --force 2>/dev/null || true
+
+          EXISTING_ISSUE=$(gh issue list --label review-overdue --state open --json number --jq '.[0].number')
+
+          if [ "$OVERDUE_COUNT" -gt 0 ]; then
+            if [ -n "$EXISTING_ISSUE" ]; then
+              echo "Updating existing issue #$EXISTING_ISSUE..."
+              gh issue edit "$EXISTING_ISSUE" --title "Recommendation Review Overdue" --body-file stale_report.md
+            else
+              echo "Creating new tracking issue..."
+              gh issue create --title "Recommendation Review Overdue" --label "review-overdue" --body-file stale_report.md
+            fi
+          else
+            if [ -n "$EXISTING_ISSUE" ]; then
+              echo "Closing resolved issue #$EXISTING_ISSUE..."
+              gh issue close "$EXISTING_ISSUE" --comment "All recommendations have been reviewed within the 90-day window."
+            else
+              echo "Zero overdue recommendations and no open tracking issue."
+            fi
+          fi

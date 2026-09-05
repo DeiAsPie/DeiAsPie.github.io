@@ -268,13 +268,11 @@ Main and mobile navigation `<nav>` elements include `aria-label`. Active menu li
 
 ## Verification: what runs where
 
-Verification is split by cost. Anything needing a real browser runs locally; everything else runs on GitHub.
+Verification runs both locally and in CI to guarantee quality before deployment.
 
 ### Before every push (`.husky/pre-push`)
 
-Lighthouse and Axe run against a local production build of the whole site. The hook blocks the push if either fails, and has no bypass.
-
-These moved out of CI for two reasons: each run downloaded roughly 280 MB of Chromium, and GitHub's runner images disable unprivileged user namespaces, so Chrome aborts with `No usable sandbox!` before the debugging port opens. Locally the browser is already cached and the sandbox works.
+Lighthouse and Axe run against a local production build of the site via `scripts/audit.sh`. The hook blocks the push if either fails, and has no bypass.
 
 Blocking thresholds: Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90, set in `ci/lighthouserc.json`. Axe fails on serious or critical violations only. Reports land in `ci/lighthouse/` and `ci/axe/`, both gitignored.
 
@@ -286,13 +284,13 @@ sh .husky/pre-push
 
 ### On every push and pull request (`.github/workflows/ci.yml`)
 
-Build, ESLint, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, and the Playwright smoke tests.
+Build, ESLint, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, the Playwright smoke tests, and the Lighthouse and axe audits (`scripts/audit.sh`).
 
-The smoke tests stay in CI deliberately: the pre-push hook only protects the machine it is installed on, so PRs from a fresh clone or from Dependabot still get browser-level verification of the critical journeys.
+CI passes `--no-sandbox` to Chromium within the runner environment, ensuring automated accessibility and performance checks execute reliably on every PR.
 
 ## CSP rollout
 
-Goldmark is configured with `unsafe = true` (raw HTML allowed). We mitigate via a meta CSP in report-only mode first:
+Goldmark is configured with `unsafe = false` for improved security; raw HTML in markdown is disallowed and shortcodes are used instead when custom markup is required. A meta CSP in report-only mode provides defense-in-depth:
 
 ```html
 <meta
@@ -305,7 +303,7 @@ To enforce later, progressively remove `'unsafe-inline'` by moving inline script
 
 ## Images and LCP preloading
 
-- `layouts/partials/responsive-image.html` generates AVIF/WebP with width/height, lazy by default.
+- `layouts/partials/responsive-image.html` generates responsive WebP images with width/height, lazy by default.
 - Set `Preload=true` for hero images to emit `<link rel="preload" as="image">` and consider `FetchPriority` = `high`.
 
 ## Badges & Versions

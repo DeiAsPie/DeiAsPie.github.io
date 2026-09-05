@@ -316,6 +316,29 @@ function checkFrontMatter(frontMatter) {
     }
   }
 
+  // Check optional lastReviewed date format
+  if (
+    frontMatter.lastReviewed !== undefined &&
+    frontMatter.lastReviewed !== null
+  ) {
+    let isValid = false;
+    if (frontMatter.lastReviewed instanceof Date) {
+      isValid = !Number.isNaN(frontMatter.lastReviewed.getTime());
+    } else if (typeof frontMatter.lastReviewed === "string") {
+      isValid =
+        /^\d{4}-\d{2}-\d{2}$/.test(frontMatter.lastReviewed) &&
+        !Number.isNaN(new Date(frontMatter.lastReviewed).getTime());
+    }
+    if (!isValid) {
+      issues.push({
+        type: "frontmatter",
+        severity: "error",
+        message:
+          "Invalid lastReviewed date format in front matter (expected YYYY-MM-DD)",
+      });
+    }
+  }
+
   return issues;
 }
 
