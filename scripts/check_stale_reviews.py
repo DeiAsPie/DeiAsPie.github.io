@@ -123,7 +123,7 @@ def format_markdown_report(results, threshold_days: int, current_date: datetime.
     ]
 
     if overdue_count == 0:
-        lines.append("All recommendations have been reviewed within the 90-day window.")
+        lines.append(f"All recommendations have been reviewed within the {threshold_days}-day window.")
         return "\n".join(lines) + "\n"
 
     lines.extend([
