@@ -206,6 +206,10 @@ class TestStaleReviews(unittest.TestCase):
         self.assertIn(".[].number", text)
         self.assertIn("--report-file", text)
         self.assertNotIn("subprocess.check_output", text)
+        self.assertIn("THRESHOLD_DAYS: 90", text)
+        self.assertIn('--days "$THRESHOLD_DAYS"', text)
+        self.assertIn("within the ${THRESHOLD_DAYS}-day window.", text)
+        self.assertIn("sort -n", text)
 
 
 if __name__ == "__main__":

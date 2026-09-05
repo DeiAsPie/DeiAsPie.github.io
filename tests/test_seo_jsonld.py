@@ -1,3 +1,4 @@
+import atexit
 import json
 import pathlib
 import re
@@ -8,14 +9,28 @@ import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PUBLIC_DIR = ROOT / "public"
+FIXTURE_DIR = ROOT / "content" / "recommendations" / "_test_review_sample"
+
+
+def _cleanup_fixture():
+    if FIXTURE_DIR.exists():
+        shutil.rmtree(FIXTURE_DIR, ignore_errors=True)
+
+
+atexit.register(_cleanup_fixture)
 
 
 class TestSeoJsonLd(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        _cleanup_fixture()
         # Ensure site is built
         if not (PUBLIC_DIR / "recommendations" / "bitwarden" / "index.html").exists():
             subprocess.run(["hugo", "--minify"], cwd=ROOT, check=True, capture_output=True)
+
+    @classmethod
+    def tearDownClass(cls):
+        _cleanup_fixture()
 
     def test_bitwarden_article_jsonld(self):
         """Verify recommendation page outputs valid Article JSON-LD with dateModified."""
@@ -40,9 +55,8 @@ class TestSeoJsonLd(unittest.TestCase):
 
     def test_hugo_rendering_datemodified_precedence(self):
         """Verify Hugo template renders Article JSON-LD dateModified reflecting max(lastReviewed, lastmod)."""
-        fixture_dir = ROOT / "content" / "recommendations" / "_test_review_sample"
-        fixture_dir.mkdir(parents=True, exist_ok=True)
-        fixture_file = fixture_dir / "index.md"
+        FIXTURE_DIR.mkdir(parents=True, exist_ok=True)
+        fixture_file = FIXTURE_DIR / "index.md"
 
         try:
             # Case 1: lastReviewed is newer than lastmod -> dateModified should be lastReviewed
@@ -111,8 +125,7 @@ class TestSeoJsonLd(unittest.TestCase):
                     "dateModified should use lastmod when it is newer than lastReviewed (avoiding backdating)",
                 )
         finally:
-            if fixture_dir.exists():
-                shutil.rmtree(fixture_dir, ignore_errors=True)
+            _cleanup_fixture()
 
 
 if __name__ == "__main__":

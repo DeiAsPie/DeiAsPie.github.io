@@ -26,8 +26,9 @@ jobs:
       - name: Scan recommendations and update tracking issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          THRESHOLD_DAYS: 90
         run: |
-          python3 scripts/check_stale_reviews.py --days 90 --json --report-file stale_report.md > stale_report.json
+          python3 scripts/check_stale_reviews.py --days "$THRESHOLD_DAYS" --json --report-file stale_report.md > stale_report.json
           cat stale_report.md
 
           OVERDUE_COUNT=$(jq '.overdue_count' stale_report.json)
@@ -36,7 +37,7 @@ jobs:
           # Ensure label exists
           gh label create review-overdue --description "Tracks overdue recommendation reviews" --color "d73a4a" --force 2>/dev/null || true
 
-          EXISTING_ISSUES=$(gh issue list --label review-overdue --state open --json number --jq '.[].number')
+          EXISTING_ISSUES=$(gh issue list --label review-overdue --state open --json number --jq '.[].number' | sort -n)
 
           if [ "$OVERDUE_COUNT" -gt 0 ]; then
             FIRST_ISSUE=$(echo "$EXISTING_ISSUES" | head -n 1)
@@ -57,7 +58,7 @@ jobs:
             if [ -n "$EXISTING_ISSUES" ]; then
               for ISSUE in $EXISTING_ISSUES; do
                 echo "Closing resolved issue #$ISSUE..."
-                gh issue close "$ISSUE" --comment "All recommendations have been reviewed within the 90-day window."
+                gh issue close "$ISSUE" --comment "All recommendations have been reviewed within the ${THRESHOLD_DAYS}-day window."
               done
             else
               echo "Zero overdue recommendations and no open tracking issue."
