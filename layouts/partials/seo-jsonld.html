@@ -32,10 +32,18 @@ likely a course page (path contains /recommendations/courses/) */}} {{ $isCourse
 {{ $article := dict "@type" "Article" "headline" (.Title | default $siteTitle |
 plainify) "description" $desc "mainEntityOfPage" (dict "@type" "WebPage" "@id"
 $permalink) "author" (dict "@type" "Organization" "name" $siteTitle) "publisher"
-(dict "@type" "Organization" "name" $siteTitle) "url" $permalink }} {{ with
-.PublishDate }}{{ $article = merge $article (dict "datePublished" (.Format
-"2006-01-02")) }}{{ end }} {{ with .Lastmod }}{{ $article = merge $article (dict
-"dateModified" (.Format "2006-01-02")) }}{{ end }} {{ if .IsNode }} {{/*
+(dict "@type" "Organization" "name" $siteTitle) "url" $permalink }} {{ with .PublishDate }}{{ $article = merge $article (dict "datePublished" (.Format "2006-01-02")) }}{{ end }}
+{{ $reviewDate := "" }}
+{{ with .Params.lastReviewed }}{{ $reviewDate = dateFormat "2006-01-02" . }}{{ end }}
+{{ $fallbackMod := "" }}
+{{ with .Lastmod }}{{ $fallbackMod = .Format "2006-01-02" }}{{ else with .Date }}{{ $fallbackMod = .Format "2006-01-02" }}{{ end }}
+{{ $dateModified := "" }}
+{{ if and $reviewDate $fallbackMod }}
+  {{ if gt $reviewDate $fallbackMod }}{{ $dateModified = $reviewDate }}{{ else }}{{ $dateModified = $fallbackMod }}{{ end }}
+{{ else }}
+  {{ $dateModified = or $reviewDate $fallbackMod }}
+{{ end }}
+{{ with $dateModified }}{{ $article = merge $article (dict "dateModified" .) }}{{ end }} {{ if .IsNode }} {{/*
 List/Section/Taxonomy page: emit ItemList + CollectionPage */}} {{ $items :=
 slice }} {{ range .Pages }} {{ $items = $items | append (dict "@type" "ListItem"
 "position" (len $items | add 1) "url" .Permalink "name" (.Title | plainify)) }}

@@ -1,0 +1,66 @@
+name: Review Watchdog
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    name: Scan recommendation review freshness
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Scan recommendations and update tracking issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          THRESHOLD_DAYS: 90
+        run: |
+          python3 scripts/check_stale_reviews.py --days "$THRESHOLD_DAYS" --json --report-file stale_report.md > stale_report.json
+          cat stale_report.md
+
+          OVERDUE_COUNT=$(jq '.overdue_count' stale_report.json)
+          echo "Overdue count: $OVERDUE_COUNT"
+
+          # Ensure label exists
+          gh label create review-overdue --description "Tracks overdue recommendation reviews" --color "d73a4a" --force 2>/dev/null || true
+
+          EXISTING_ISSUES=$(gh issue list --label review-overdue --state open --json number --jq '.[].number' | sort -n)
+
+          if [ "$OVERDUE_COUNT" -gt 0 ]; then
+            FIRST_ISSUE=$(echo "$EXISTING_ISSUES" | head -n 1)
+            if [ -n "$FIRST_ISSUE" ]; then
+              echo "Updating existing issue #$FIRST_ISSUE..."
+              gh issue edit "$FIRST_ISSUE" --title "Recommendation Review Overdue" --body-file stale_report.md
+              for DUP in $(echo "$EXISTING_ISSUES" | tail -n +2); do
+                if [ -n "$DUP" ]; then
+                  echo "Closing duplicate tracking issue #$DUP..."
+                  gh issue close "$DUP" --comment "Closed in favor of #$FIRST_ISSUE."
+                fi
+              done
+            else
+              echo "Creating new tracking issue..."
+              gh issue create --title "Recommendation Review Overdue" --label "review-overdue" --body-file stale_report.md
+            fi
+          else
+            if [ -n "$EXISTING_ISSUES" ]; then
+              for ISSUE in $EXISTING_ISSUES; do
+                echo "Closing resolved issue #$ISSUE..."
+                gh issue close "$ISSUE" --comment "All recommendations have been reviewed within the ${THRESHOLD_DAYS}-day window."
+              done
+            else
+              echo "Zero overdue recommendations and no open tracking issue."
+            fi
+          fi
