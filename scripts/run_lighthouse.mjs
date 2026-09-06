@@ -38,14 +38,15 @@ if (chromePath) {
   console.error(`[lhci] Using Chrome at: ${chromePath}`);
 }
 
-// Write a temporary config that injects chromePath for collect.settings
+// Write a temporary config that injects chromePath and LH_URLS for collect
 let cfgPath = "ci/lighthouserc.json";
-if (chromePath) {
-  try {
-    const raw = fs.readFileSync("ci/lighthouserc.json", "utf8");
-    const cfg = JSON.parse(raw);
-    cfg.ci = cfg.ci || {};
-    cfg.ci.collect = cfg.ci.collect || {};
+try {
+  const raw = fs.readFileSync("ci/lighthouserc.json", "utf8");
+  const cfg = JSON.parse(raw);
+  cfg.ci = cfg.ci || {};
+  cfg.ci.collect = cfg.ci.collect || {};
+  cfg.ci.collect.url = urls;
+  if (chromePath) {
     cfg.ci.collect.settings = cfg.ci.collect.settings || {};
     cfg.ci.collect.settings.chromePath = chromePath;
     // --no-sandbox is required wherever unprivileged user namespaces are
@@ -58,27 +59,33 @@ if (chromePath) {
     // "No usable sandbox!" wherever unprivileged user namespaces are disabled
     // (Ubuntu 23.10+ under AppArmor, most containers, GitHub's runner images).
     cfg.ci.collect.settings.chromeFlags = "--no-sandbox";
-    fs.mkdirSync("ci", { recursive: true });
-    fs.writeFileSync(
-      "ci/lighthouserc.with.chrome.json",
-      JSON.stringify(cfg, null, 2),
-    );
-    cfgPath = "ci/lighthouserc.with.chrome.json";
-  } catch (_e) {
-    // fallback to original cfgPath
   }
+  fs.mkdirSync("ci", { recursive: true });
+  fs.writeFileSync(
+    "ci/lighthouserc.with.chrome.json",
+    JSON.stringify(cfg, null, 2),
+  );
+  cfgPath = "ci/lighthouserc.with.chrome.json";
+} catch (err) {
+  console.error("Failed to generate Lighthouse CI config:", err);
+  process.exit(1);
 }
+
+const collectTimeout =
+  Number(process.env.LHCI_TIMEOUT_MS) || Math.max(360000, urls.length * 60000);
 
 try {
   execSync(`npx -y @lhci/cli collect --config=${cfgPath}`, {
     stdio: "inherit",
     env,
+    timeout: collectTimeout,
   });
   execSync(`npx -y @lhci/cli assert --config=${cfgPath}`, {
     stdio: "inherit",
     env,
+    timeout: 120000,
   });
-} catch (_e) {
-  console.error("Lighthouse CI failed");
-  process.exit(1);
+} catch (err) {
+  console.error("Lighthouse CI failed:", err.message || err);
+  process.exit(err.status || 1);
 }
