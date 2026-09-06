@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.3...DeiAsPie.github.io-v3.3.0) (2026-09-06)
+
+
+### Features
+
+* **quality:** implement quality and trust pipeline ([#63](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/63)) ([7bb8f05](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/7bb8f055d7285194883757765d42b46f2389f0cc))
+
 ## [3.2.3](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.2...DeiAsPie.github.io-v3.2.3) (2026-09-02)
 
 
