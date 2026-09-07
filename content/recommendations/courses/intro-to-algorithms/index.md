@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Algorithms"
-description: "Master fundamental algorithms and data structures with MIT's 6.006 course. Covers sorting, search, asymptotics, and problem-solving through classic OCW lectures."
+description: "MIT's 6.006 course on algorithms and data structures, covering sorting, search, asymptotics, and problem-solving."
 image_alt: "MIT OpenCourseWare Introduction to Algorithms logo"
 date: 2024-01-02
 draft: false

@@ -12,4 +12,4 @@ video: "https://youtube.com/playlist?list=PLi01XoE8jYogiDUfZ42gejQnVnQx0XPqw&si=
 summary: "Personal finance covering budgeting, debt management, and wealth-building habits."
 ---
 
-Clear, actionable lessons to build solid financial habits and confidence.
+Lessons on building financial habits.

@@ -13,8 +13,6 @@ summary: "Community Linux distribution with 6-month releases and recent software
 
 Fedora is a community-driven project sponsored by Red Hat (IBM subsidiary). It uses Flatpak as its primary package format, follows a semi-rolling release cycle with new versions every 6 months, and supports each release for one year.
 
-Features:
-
 - Recent software versions and latest Linux kernels
 - Strong emphasis on free and open-source software
 - A good starting point if you're coming from Windows or macOS

@@ -13,8 +13,6 @@ summary: "Browser for anonymous web browsing through the Tor network."
 
 Tor Browser routes traffic through the Tor network for anonymity. It provides access to Tor bridges and onion services with three configurable security levels: Standard, Safer, and Safest.
 
-**Key Features:**
-
 - Routes traffic through the Tor network for anonymity
 - Blocks trackers and ads by default
 - Three security levels for different threat models
@@ -22,4 +20,4 @@ Tor Browser routes traffic through the Tor network for anonymity. It provides ac
 - Fingerprinting protection
 - No tracking or data collection
 
-**Important:** You change any setting other than the three security levels at your own peril. The browser is pre-configured for maximum anonymity.
+Do not change any setting other than the three security levels. The browser is pre-configured for maximum anonymity.

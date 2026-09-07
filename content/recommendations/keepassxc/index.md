@@ -13,8 +13,6 @@ summary: "Offline password manager with AES-256 encryption and 2FA support."
 
 KeePassXC is a free, open-source password manager. Store encrypted passwords on your device, unlock them with a master key.
 
-Features:
-
 - Offline only, data stays on your device
 - AES-256 encryption
 - 2FA/TOTP code support

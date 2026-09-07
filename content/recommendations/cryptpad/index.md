@@ -23,8 +23,6 @@ Included applications:
 - Whiteboard
 - Polls
 
-Features:
-
 - Zero-knowledge encryption
 - Real-time collaboration with author colors
 - Chat and comment systems built-in

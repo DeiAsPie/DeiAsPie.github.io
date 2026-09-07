@@ -20,8 +20,6 @@ summary: "Decentralized video platform using BitTorrent and blockchain."
 
 LBRY is a decentralized video sharing network. It uses a BitTorrent-like network for content storage and a blockchain for indexing videos.
 
-Features:
-
 - Decentralized, with no central authority
 - Creators control and own their content
 - Direct creator-to-viewer payments

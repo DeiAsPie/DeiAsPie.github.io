@@ -7,13 +7,11 @@ tags: ["cloud", "encryption", "files", "proton", "privacy"]
 link: "https://proton.me/drive/"
 
 image_alt: "Official Proton Drive logo - secure and encrypted cloud storage"
-description: "End-to-end encrypted cloud storage from Proton based in Switzerland, offering cross-platform access with version history, file recovery, and a free tier."
+description: "End-to-end encrypted cloud storage from Proton based in Switzerland with cross-platform access, version history, file recovery, and a free tier."
 summary: "End-to-end encrypted cloud storage by the makers of Proton Mail."
 ---
 
-Proton Drive offers end-to-end encrypted file storage from Proton Mail's makers, based in Switzerland.
-
-**Key Features:**
+Proton Drive has end-to-end encrypted file storage from Proton Mail's makers, based in Switzerland.
 
 - End-to-end encryption
 - Cross-platform apps

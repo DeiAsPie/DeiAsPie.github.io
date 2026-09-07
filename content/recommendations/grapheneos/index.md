@@ -11,7 +11,7 @@ description: "GrapheneOS is a hardened Android-based mobile OS focused on privac
 summary: "Security-hardened Android-based OS for Pixel devices with privacy features."
 ---
 
-GrapheneOS is a hardened Android-based OS developed as a non-profit open-source project. It enhances Android's sandboxing, exploit mitigations, and permission model. Recent versions support **sandboxed Google Play Services**.
+GrapheneOS is a hardened Android-based OS developed as a non-profit open-source project. It strengthens Android's sandboxing, exploit mitigations, and permission model. Recent versions support sandboxed Google Play Services.
 
 Requires: Google Pixel device (latest models recommended).
 

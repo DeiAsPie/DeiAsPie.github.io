@@ -11,18 +11,16 @@ summary: "Two-factor authenticator app from Proton for TOTP and passwordless sig
 
 Proton Authenticator is a 2FA app from Proton that supports TOTP and passwordless authentication. It works with Proton accounts and other services supporting standard 2FA.
 
-Features
-
 - TOTP for two-factor authentication
 - Passwordless/passkeys support
 - Cross-device sync through Proton (optional)
 - End-to-end encrypted
 
-Links
+## Links
 
 - Proton Authenticator: <https://proton.me/authenticator>
 - Proton Pass (related): <https://proton.me/pass>
 
-Notes
+## Notes
 
 2FA apps add a second factor beyond passwords. If using Proton services, Proton Authenticator integrates with your account. Alternatives like Authy, FreeOTP, or Aegis work with any service and may offer syncing or backup options depending on your threat model.

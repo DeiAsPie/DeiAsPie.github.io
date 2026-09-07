@@ -13,8 +13,6 @@ summary: "Peer-to-peer file synchronization without cloud dependencies."
 
 Syncthing is an open-source peer-to-peer file sync tool for synchronizing files between devices over local networks or the internet.
 
-**Key Features:**
-
 - Peer-to-peer, no central server
 - No file size or number limits
 - Block Exchange Protocol with TLS encryption

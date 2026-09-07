@@ -6,13 +6,13 @@ A minimalist, fast personal site for sharing recommendations for tools, services
 
 Dark mode is the default. Use the Theme toggle in the header to switch; your choice is remembered in localStorage.
 
-## ✨ Features
+## Features
 
-- **🚀 Performance**: WebP images with responsive srcsets, lazy loading, speculation-rules prefetching
-- **♿ Accessibility**: WCAG 2.2 compliant, ARIA best practices, keyboard navigation, screen reader optimized
-- **🔒 Security**: Content Security Policy, Subresource Integrity, secure Hugo configuration
-- **🎨 Modern Stack**: Hugo + Tailwind CSS v4, responsive design, dark mode support
-- **🧪 Well-tested**: Playwright E2E, Axe accessibility audits, Lighthouse performance checks
+- WebP images with responsive srcsets, lazy loading, speculation-rules prefetching
+- WCAG 2.2 compliant, ARIA best practices, keyboard navigation, screen reader optimized
+- Content Security Policy, Subresource Integrity, secure Hugo configuration
+- Hugo + Tailwind CSS v4, responsive design, dark mode support
+- Playwright E2E, Axe accessibility audits, Lighthouse performance checks
 
 ## Local development
 
@@ -39,7 +39,7 @@ npm install
 hugo server -D
 ```
 
-## Content model (new flow)
+## Content model
 
 Preferred: page bundles with minimal front matter. Create a folder and an `index.md`:
 
@@ -66,20 +66,20 @@ link: "https://example.com"
 
 Key paths used by the site:
 
-- `content/` — Markdown content
-  - `content/recommendations/` — All recommendations
-  - `content/recommendations/courses/` — Courses hub. Each course is a page with an `area` for grouping
-  - `content/about/` — About page
-- `themes/curated/` — Theme templates and partials
-- `assets/css/main.css` — Tailwind entry and small component styles
-- `static/` — Images and static assets served as-is
+- `content/` - Markdown content
+  - `content/recommendations/` - All recommendations
+  - `content/recommendations/courses/` - Courses hub. Each course is a page with an `area` for grouping
+  - `content/about/` - About page
+- `themes/curated/` - Theme templates and partials
+- `assets/css/main.css` - Tailwind entry and small component styles
+- `static/` - Images and static assets served as-is
 
 ### Images
 
 - Preferred: page bundles. Place your image next to `index.md`; omit `image` in front matter to auto-pick the first local image. This keeps content portable and avoids path mismatches.
 - Legacy paths under `static/` still work, but new content should colocate images with the page.
 
-Responsive optimization (added):
+Responsive optimization:
 
 - Partial `responsive-image.html` auto-generates multiple widths (WebP + original) and emits `<picture>` with `srcset` & `sizes`.
 - Pages default widths: `320,480,640,800,1024`; cards: `200,320,400`.
@@ -121,7 +121,7 @@ Remove the param to revert to system fonts only.
 
 Self-host recommendation: download stylesheet & woff2 files, place in `static/fonts/`, add `@font-face` rules in `assets/css/fonts.css`, import from `main.css`.
 
-### Predictive Prefetch
+### Predictive prefetch
 
 Configure likely next pages to prefetch (speeds perceived navigation):
 
@@ -130,13 +130,13 @@ Configure likely next pages to prefetch (speeds perceived navigation):
 prefetch = ["/recommendations/", "/recommendations/courses/"]
 ```
 
-Output: `<link rel="prefetch" as="document">` for each path (except the current). A small script prefetches nav destinations on first hover/focus if supported. Keep list short (2–4) to avoid waste. Remove or empty to disable.
+Output: `<link rel="prefetch" as="document">` for each path (except the current). A small script prefetches nav destinations on first hover/focus if supported. Keep list short (2-4) to avoid waste. Remove or empty to disable.
 
 Future enhancements: home-only static prefetch, upgrade single target to `prerender`.
 
 ### Courses hierarchy (bundle-first)
 
-Each course is now a page bundle: `content/recommendations/courses/<slug>/index.md` plus an image file in the same folder. Courses render grouped by an `area` front matter field (Computer Science, Programming, Web Development, Systems, Security, Data, Economics, Finance, Other). Example:
+Each course is a page bundle: `content/recommendations/courses/<slug>/index.md` plus an image file in the same folder. Courses render grouped by an `area` front matter field (Computer Science, Programming, Web Development, Systems, Security, Data, Economics, Finance, Other). Example:
 
 ```yaml
 ---
@@ -160,7 +160,7 @@ Main navigation is defined in `hugo.toml` under `menu.main`. Edit there to add o
 - Add new recommendations as page bundles under `content/recommendations/`.
 - For Courses, set `area` for correct grouping on the Courses page.
 
-#### Resource Cache Maintenance
+#### Resource cache maintenance
 
 To speed up CI builds, this repository commits generated assets in `resources/_gen/`. Over time, or when upgrading the Hugo binary version, this cache may need purging to prevent format incompatibilities and bloat.
 
@@ -205,11 +205,11 @@ Do not commit build artifacts. Git ignores:
 - `public/` (Hugo output)
 - `resources/` (Hugo cache/pipeline)
 
-## SEO Enhancements
+## SEO
 
-### Dynamic Meta Descriptions
+### Dynamic meta descriptions
 
-`head.html` now derives the `<meta name="description">` and Open Graph description using this fallback chain:
+`head.html` derives the `<meta name="description">` and Open Graph description using this fallback chain:
 
 1. `params.description` (page front matter)
 2. `params.summary`
@@ -219,21 +219,21 @@ Do not commit build artifacts. Git ignores:
 
 Provide a concise `description` in front matter for best control. Leave blank to let Hugo synthesize one.
 
-### Structured Data (JSON-LD)
+### Structured data (JSON-LD)
 
-Added partial: `seo-jsonld.html` (auto-included for pages) emitting a Schema.org graph with:
+The `seo-jsonld.html` partial (auto-included for pages) emits a Schema.org graph with:
 
-- `Article` (every page) – `headline`, `description`, `author`/`publisher` as site title, publish/modified dates if present.
-- `Course` (pages under `/recommendations/courses/`) – `name`, `description`, `provider`.
-- `BreadcrumbList` – Home → section segments → current page.
+- `Article` (every page): `headline`, `description`, `author`/`publisher` as site title, publish/modified dates if present.
+- `Course` (pages under `/recommendations/courses/`): `name`, `description`, `provider`.
+- `BreadcrumbList`: Home → section segments → current page.
 
 Extending: add additional types (e.g. `SoftwareApplication`) by updating the partial with conditional detection logic.
 
-### Custom 404 Page
+### Custom 404 page
 
 `layouts/404.html` supplies a minimalist not-found page with helpful links (Home, Recommendations, Courses) and `noindex` to keep it out of search results.
 
-### Open Graph Images
+### Open Graph images
 
 OG image selection order:
 
@@ -241,7 +241,7 @@ OG image selection order:
 2. First page bundle image resource
 3. Fallback: `/favicon.svg`
 
-### Future SEO Ideas
+### Future SEO ideas
 
 - Add `lastReviewed` for frequently updated guides.
 - Add `SoftwareApplication` schema for tool-specific recommendation pages (fields: name, operatingSystem, applicationCategory, offers).
@@ -250,17 +250,17 @@ OG image selection order:
 
 ## Accessibility (A11y)
 
-### Enhanced Focus Styles
+### Focus styles
 
 Keyboard and assistive tech users benefit from clear focus indicators. The stylesheet adds a consistent `focus-visible` ring (`ring-2` + offset) across links, buttons, form inputs, nav items, and icon buttons. This avoids overriding the default outline for mouse users while offering strong contrast in both light and dark themes.
 
 Skip link (`#main`) receives a distinctive fuchsia ring for fast orientation when tabbing from the top of the page.
 
-### Navigation Landmarks & Current Page
+### Navigation landmarks and current page
 
-Main and mobile navigation `<nav>` elements include `aria-label`. Active menu links now get `aria-current="page"` for screen reader announcement of the current location.
+Main and mobile navigation `<nav>` elements include `aria-label`. Active menu links get `aria-current="page"` for screen reader announcement of the current location.
 
-### Further A11y Ideas
+### Further a11y ideas
 
 - Add `lang` attribute explicitly via a site param if multilingual variants are added.
 - Offer reduced motion preference (respect `prefers-reduced-motion`) for hover/transition-heavy elements.
@@ -268,7 +268,7 @@ Main and mobile navigation `<nav>` elements include `aria-label`. Active menu li
 
 ## Verification: what runs where
 
-Verification runs both locally and in CI to guarantee quality before deployment.
+Verification runs both locally and in CI before deployment.
 
 ### Before every push (`.husky/pre-push`)
 
@@ -286,7 +286,7 @@ sh .husky/pre-push
 
 Build, ESLint, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, the Playwright smoke tests, and the Lighthouse and axe audits (`scripts/audit.sh`).
 
-CI passes `--no-sandbox` to Chromium within the runner environment, ensuring automated accessibility and performance checks execute reliably on every PR.
+CI passes `--no-sandbox` to Chromium so the accessibility and performance checks run in the runner environment.
 
 ## CSP rollout
 
@@ -306,7 +306,7 @@ To enforce later, progressively remove `'unsafe-inline'` by moving inline script
 - `layouts/partials/responsive-image.html` generates responsive WebP images with width/height, lazy by default.
 - Set `Preload=true` for hero images to emit `<link rel="preload" as="image">` and consider `FetchPriority` = `high`.
 
-## Badges & Versions
+## Badges and versions
 
 Add the CI badge after the workflow is on default branch:
 

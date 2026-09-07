@@ -13,8 +13,6 @@ summary: "Audited VPN service with open-source clients and no-logs policy."
 
 IVPN is a VPN service by Privatus Limited, based in Gibraltar. Cure53 has conducted independent security audits and no-logging verification.
 
-Features:
-
 - Open-source clients
 - Independently audited (security and no-logs)
 - Bitcoin, Monero, and cash payment options
