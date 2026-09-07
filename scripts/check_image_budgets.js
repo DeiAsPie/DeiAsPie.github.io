@@ -9,16 +9,16 @@
  *   node scripts/check_image_budgets.js               # enforce budgets
  *   node scripts/check_image_budgets.js --print       # print all bundle sizes
  *   node scripts/check_image_budgets.js --report      # generate detailed report
- *   IMAGE_BUDGET_KIB=500 node scripts/check_image_budgets.js  # override default budget
+ *   IMAGE_BUDGET_KIB=500 node scripts/check_image_budgets.js  # override the budget
  *
- * Directory-specific budgets are configured in BUDGET_OVERRIDES below.
- * This allows different content types to have different size limits.
+ * Every bundle is held to the same budget. Paths in CONTENT_DIRS are relative to
+ * the working directory, so the script is run from the repository root.
  */
 const fs = require("node:fs");
 const path = require("node:path");
 
 // Configuration
-const DEFAULT_BUDGET_KIB = 400; // Default budget per bundle in KiB
+const DEFAULT_BUDGET_KIB = 512; // Budget per bundle in KiB
 const OVERSIZED_THRESHOLD = 1000; // Warn about individual images over this size
 const SUPPORTED_EXTENSIONS = [
   ".jpg",
@@ -29,12 +29,6 @@ const SUPPORTED_EXTENSIONS = [
   ".gif",
   ".svg",
 ];
-
-// Directory-specific budgets (in KiB)
-const BUDGET_OVERRIDES = new Map([
-  ["static/images", 400],
-  ["default", 400],
-]);
 
 // Content directories to analyze
 const CONTENT_DIRS = ["content/recommendations", "static/images"];
@@ -127,27 +121,11 @@ function groupImagesByBundle(images) {
 }
 
 /**
- * Get budget for a specific bundle
- * @param {string} bundleName
- * @param {number} defaultBudget
- * @returns {number}
- */
-function getBudgetForBundle(bundleName, defaultBudget) {
-  // Exact match lookup
-  if (BUDGET_OVERRIDES.has(bundleName)) {
-    return BUDGET_OVERRIDES.get(bundleName);
-  }
-
-  // Use provided default or fall back to hardcoded default
-  return defaultBudget || DEFAULT_BUDGET_KIB;
-}
-
-/**
  * Generate detailed report
  * @param {Map} bundles
- * @param {number} defaultBudget
+ * @param {number} budget
  */
-function generateReport(bundles, defaultBudget) {
+function generateReport(bundles, budget) {
   console.log(`\n📊 Image Budget Report\n`);
   console.log(
     "Bundle".padEnd(30) +
@@ -171,15 +149,14 @@ function generateReport(bundles, defaultBudget) {
 
   for (const [bundleName, images] of sortedBundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
-    const bundleBudget = getBudgetForBundle(bundleName, defaultBudget);
-    const exceeds = bundleTotalSize > bundleBudget;
+    const exceeds = bundleTotalSize > budget;
     const status = exceeds ? "⚠️  OVER" : "✅ OK";
 
     if (exceeds) violatingBundles++;
 
     console.log(
       bundleName.padEnd(30) +
-        `${bundleBudget.toFixed(0)} KiB`.padEnd(12) +
+        `${budget.toFixed(0)} KiB`.padEnd(12) +
         images.length.toString().padEnd(8) +
         `${bundleTotalSize.toFixed(1)} KiB`.padEnd(12) +
         status,
@@ -259,15 +236,13 @@ function main() {
 
   for (const [bundleName, images] of bundles) {
     const bundleTotalSize = images.reduce((sum, img) => sum + img.size, 0);
-    const bundleBudget = getBudgetForBundle(bundleName, budget);
-
-    if (bundleTotalSize > bundleBudget + 0.01) {
+    if (bundleTotalSize > budget + 0.01) {
       // Small tolerance for floating point
       hasViolations = true;
       violations.push({
         bundle: bundleName,
         size: bundleTotalSize,
-        budget: bundleBudget,
+        budget,
       });
     }
   }

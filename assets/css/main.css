@@ -471,24 +471,6 @@ img.card-img {
   font-weight: 700;
 }
 
-/* Category pills follow Adwaita's .pill button: a tinted fill derived from the
-   label colour, so one rule works on any surface in either theme. Upstream pills
-   are filled, not outlined (_buttons.scss, $button_color family). */
-.adw-category-pill {
-  color: var(--color-text-secondary);
-  background-color: color-mix(in srgb, currentColor 10%, transparent);
-  transition: background-color 100ms ease-out;
-}
-
-.adw-category-pill:hover {
-  color: var(--color-text-primary);
-  background-color: color-mix(in srgb, currentColor 15%, transparent);
-}
-
-.adw-category-pill:active {
-  background-color: color-mix(in srgb, currentColor 20%, transparent);
-}
-
 /* Semantic text and component classes — CSP forbids inline styles, so these replace
    the style="..." attributes removed from templates. Each class encodes a distinct
    declaration-set that inline styles specified. */
