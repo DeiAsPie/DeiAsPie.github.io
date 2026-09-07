@@ -29,7 +29,7 @@ taxonomy = ["HTML"]
 term = ["HTML"]
 
 [params]
-description = "Curated privacy-focused tools and services for digital sovereignty. Your guide to escaping surveillance capitalism."
+description = "Recommendations for privacy-focused tools and services."
 author = "DeiAsPie"
 prefetch = ["/recommendations/", "/recommendations/courses/"]
 

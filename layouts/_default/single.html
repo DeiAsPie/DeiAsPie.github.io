@@ -9,7 +9,7 @@
     ("/recommendations/courses/" | relURL) }} {{ else }} {{ $.Scratch.Set "back"
     ("/recommendations/" | relURL) }} {{ end }} {{ end }} {{ $back :=
     $.Scratch.Get "back" }} {{ if $back }}
-    <p class="mb-4"><a class="nav-link" href="{{ $back }}">← Back to all</a></p>
+    <p class="mb-4"><a class="nav-link" href="{{ $back }}">Back to all</a></p>
     {{ end }} {{ if .Params.link }}
     <a
       class="btn"

@@ -13,8 +13,6 @@ summary: "Encrypted email service based in Switzerland with strong privacy prote
 
 Proton Mail operates an encrypted email service from Geneva, Switzerland. Founded in 2013, it emphasizes privacy, encryption, and ease of use.
 
-**Key Features:**
-
 - End-to-end encryption for all emails
 - Free plan: 500 MB storage
 - Email aliases

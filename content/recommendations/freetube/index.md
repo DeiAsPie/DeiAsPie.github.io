@@ -13,8 +13,6 @@ summary: "Desktop YouTube client with ad blocking and local-only subscriptions."
 
 FreeTube is an open-source desktop YouTube client. Your subscriptions and playlists stay on your device, with no YouTube account needed.
 
-Features:
-
 - No ads (YouTube's ads are blocked by default)
 - Subscriptions stored locally
 - SponsorBlock integration for skipping sponsors
@@ -24,5 +22,3 @@ Features:
 - Proxy support for extra privacy
 
 Desktop only: Windows, macOS, Linux.
-
-Use this if you want YouTube without ads, tracking, or an account.

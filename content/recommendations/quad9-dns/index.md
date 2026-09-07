@@ -13,12 +13,10 @@ summary: "Privacy-focused DNS service operated by a Swiss non-profit foundation.
 
 Quad9 is a free DNS service operated as a non-profit from Zurich, Switzerland. It blocks malicious domains without logging user data.
 
-**Key Features:**
-
 - Operates as a global public resolver not-for-profit
 - Blocks malicious domains automatically
 - No logging of personal data
-- Offers DNS over HTTPS (DoH) and DNS over TLS (DoT)
+- Has DNS over HTTPS (DoH) and DNS over TLS (DoT)
 - QNAME minimization
 - Subject to Swiss privacy law, not US law
 - Swiss privacy protections apply to all users worldwide regardless of citizenship

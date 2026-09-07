@@ -13,8 +13,6 @@ summary: "Privacy-focused VPN with anonymous account creation and cryptocurrency
 
 Mullvad operates a VPN service with a focus on transparency and security. Founded in 2009, it's based in Sweden.
 
-**Key Features:**
-
 - Fixed pricing: €5/month for everyone
 - No personal information required for account creation
 - Accepts Bitcoin, cash, bank wire, credit card, PayPal, and Swish

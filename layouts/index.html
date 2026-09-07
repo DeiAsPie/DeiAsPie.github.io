@@ -7,8 +7,8 @@
 
 <section class="mb-12">
   <div class="flex items-center justify-between mb-5">
-    <h2 class="title-2">Latest Privacy Tools</h2>
-    <a class="btn flat" href='{{ "/recommendations/" | relURL }}'>View all →</a>
+    <h2 class="title-2">Latest privacy tools</h2>
+    <a class="btn flat" href='{{ "/recommendations/" | relURL }}'>View all</a>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 homepage-card-grid">
     {{ $recs := (where .Site.RegularPages "Section" "recommendations") }} {{/*

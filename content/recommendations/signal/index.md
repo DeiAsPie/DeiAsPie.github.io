@@ -11,9 +11,7 @@ description: "Free, open-source messenger from the Signal Messenger LLC nonprofi
 summary: "End-to-end encrypted messaging with voice and video calling."
 ---
 
-Signal is a messaging app developed by Signal Messenger LLC and supported by a 501(c)(3) nonprofit. It offers instant messaging, voice, and video calling. Everything is end-to-end encrypted unless you choose to send as SMS.
-
-**Key Features:**
+Signal is a messaging app developed by Signal Messenger LLC and supported by a 501(c)(3) nonprofit. It has instant messaging, voice, and video calling. Everything is end-to-end encrypted unless you choose to send as SMS.
 
 - End-to-end encrypted messages and calls
 - Independently audited
@@ -21,4 +19,4 @@ Signal is a messaging app developed by Signal Messenger LLC and supported by a 5
 - Phone number required to start
 - Free and open-source
 
-**Protocol:** Signal's protocol is widely used by other apps including WhatsApp. Signal's implementation is widely considered a strong reference for encrypted messaging.
+Signal's protocol is used by other apps including WhatsApp.

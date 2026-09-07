@@ -13,8 +13,6 @@ summary: "Swiss-based VPN with a limited free tier and premium features."
 
 ProtonVPN is a VPN service based in Switzerland, operating since 2016 with free and paid options.
 
-**Key Features:**
-
 - No-logs policy
 - Secure Core routing through privacy-friendly countries
 - Tor over VPN support

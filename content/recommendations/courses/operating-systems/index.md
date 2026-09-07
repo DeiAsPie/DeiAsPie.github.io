@@ -12,4 +12,4 @@ summary: "Introduction to Operating Systems by Berkeley"
 aliases: ["/recommendations/operating-systems/"]
 ---
 
-A rigorous course on OS principles: processes, concurrency, memory, filesystems, and distributed systems.
+Covers processes, concurrency, memory, filesystems, and distributed systems.

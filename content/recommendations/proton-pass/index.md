@@ -9,19 +9,17 @@ description: "Password manager from Proton. End-to-end encrypted, cross-platform
 summary: "Password manager from Proton with end-to-end encryption and cross-platform sync."
 ---
 
-Proton Pass is a password manager from Proton with end-to-end encryption for passwords and notes, cross-device sync, and integration with Proton's ecosystem.
-
-Features
+Proton Pass is a password manager from Proton with end-to-end encryption for passwords and notes, cross-device sync, and works with other Proton services.
 
 - End-to-end encryption for passwords and notes
 - Cross-platform apps and browser extensions
 - Password generator and secure sharing
 - Biometric unlock and local-only autofill options
 
-Links
+## Links
 
 - Proton Pass: <https://proton.me/pass>
 
-Notes
+## Notes
 
-Proton Pass has closed-source components but offers strong encryption and transparent privacy policies. Compare with other password managers; closed-source aspects may matter depending on your threat model.
+Proton Pass has closed-source components but has strong encryption and transparent privacy policies. Compare with other password managers; closed-source aspects may matter depending on your threat model.

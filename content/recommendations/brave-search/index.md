@@ -13,12 +13,10 @@ summary: "Independent search engine with its own index and no tracking."
 
 Brave Search has its own independent index, not powered by Google or Bing. Based in the USA.
 
-Features:
-
 - Independent search index
 - No personal information tracking
 - Anonymous usage metrics included by default (can be disabled)
 - Default search engine in Brave Browser
 - Developed by Brave
 
-Note: Disable anonymous usage metrics in settings if you want to reduce data collection entirely. Brave discards IP addresses and metrics; they don't retain them.
+Disable anonymous usage metrics in settings to reduce data collection further. Brave discards IP addresses and metrics rather than retaining them.

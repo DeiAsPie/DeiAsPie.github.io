@@ -13,8 +13,6 @@ summary: "Search engine with no tracking or personal data collection."
 
 DuckDuckGo is the default search engine for the Tor Browser. The company is based in the USA.
 
-Features:
-
 - No tracking or profiling
 - No search history storage
 - No personal information collected

@@ -7,9 +7,9 @@ tags: ["course"]
 area: "Security"
 link: "https://ocw.mit.edu/courses/media-arts-and-sciences/mas-s62-cryptocurrency-engineering-and-design-spring-2018/"
 video: "https://redirect.invidious.io/playlist?list=PLUl4u3cNGP61KHzhg3JIJdK08JLSlcLId"
-description: "Explore the technical foundations of blockchain with MIT's course on Cryptocurrency Engineering and Design. Covers consensus, smart contracts, and cryptoeconomics."
-image_alt: "MIT Media Lab logo - representing the interdisciplinary research laboratory at the Massachusetts Institute of Technology."
+description: "MIT's Cryptocurrency Engineering and Design course, covering consensus, smart contracts, and cryptoeconomics."
+image_alt: "MIT Media Lab logo"
 aliases: ["/recommendations/cryptocurrency-engineering-and-design/"]
 ---
 
-From consensus to smart contracts and cryptoeconomics; a rigorous look at crypto systems.
+Covers consensus, smart contracts, and cryptoeconomics.

@@ -4,7 +4,7 @@ description: "Personal recommendations for privacy-focused tools, secure softwar
 date: 2024-01-01
 ---
 
-# Hey there, I'm DeiAsPie 👋
+# Hey there, I'm DeiAsPie
 
 The days of knowledge scarcity are long gone. We are drowning in constant noise, yet the need to think critically and independently remains.
 
@@ -18,7 +18,7 @@ Critical thinking requires cutting out unwanted noise and taking privacy serious
 
 When everything from your birth certificate to your personal notes is digitized, and tech companies treat personal attention as an untapped market, taking control of your tools becomes practical necessity.
 
-**[Browse Privacy & Security Recommendations →](/recommendations/)**
+[Browse Privacy & Security Recommendations](/recommendations/)
 
 ---
 

@@ -13,13 +13,9 @@ summary: "Chromium browser with built-in ad/tracker blocking and Tor support."
 
 Brave blocks ads and trackers by default. Built on Chromium, it maintains compatibility with existing websites and Chrome extensions.
 
-Features:
-
 - Blocks ads and trackers by default
 - Brave Shields for privacy control
 - Tor mode in private windows
 - HTTPS Everywhere
 - Optional Brave Rewards system
 - Chromium-based for compatibility
-
-Good for users wanting privacy without losing site compatibility.

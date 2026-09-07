@@ -13,8 +13,6 @@ summary: "Free office suite with exceptional Microsoft Office compatibility."
 
 OnlyOffice is a free office suite developed by Ascensio System SIA, headquartered in Riga, Latvia. It includes cloud and desktop applications for documents, spreadsheets, presentations, and project management.
 
-**Key Features:**
-
 - Compatible with Microsoft Office formats
 - Document editors, spreadsheets, and presentations
 - Collaboration features
