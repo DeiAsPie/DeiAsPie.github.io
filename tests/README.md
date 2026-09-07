@@ -5,11 +5,8 @@
 ### Quick Start
 
 ```bash
-# Run all tests (chromium + firefox)
+# Run all E2E tests (chromium + firefox)
 npm run test:e2e
-
-# Run quick tests (chromium + firefox, excludes webkit)
-npm run test:quick
 
 # Run smoke tests only (fast validation)
 npm run test:smoke
@@ -19,25 +16,25 @@ npm run test:smoke
 
 ```bash
 # Run tests in specific browsers
-npm run test:e2e:chromium   # Chromium/Chrome only
-npm run test:e2e:firefox    # Firefox only
-npm run test:e2e:webkit     # WebKit/Safari (requires setup - see below)
+npx playwright test --project=chromium   # Chromium/Chrome only
+npx playwright test --project=firefox    # Firefox only
+npx playwright test --project=webkit     # WebKit/Safari (requires setup - see below)
 ```
 
 ### Interactive & Debug Modes
 
 ```bash
 # Run with browser visible (headed mode)
-npm run test:e2e:headed
+npx playwright test --headed
 
 # Debug mode with Playwright Inspector
-npm run test:e2e:debug
+npx playwright test --debug
 
 # UI mode for interactive test exploration
-npm run test:e2e:ui
+npx playwright test --ui
 
 # View last test report
-npm run test:e2e:report
+npx playwright show-report
 ```
 
 ### Advanced Options
@@ -55,7 +52,7 @@ npm run test:e2e -- --grep "homepage"
 npm run test:e2e -- --reporter=list
 
 # Run in headed mode for specific browser
-npm run test:e2e:firefox -- --headed
+npx playwright test --project=firefox --headed
 
 # Update snapshots
 npm run test:e2e -- --update-snapshots
@@ -106,7 +103,7 @@ To enable WebKit testing:
 
 1. Install dependencies (see guide)
 2. Uncomment the webkit project in `playwright.config.ts`
-3. Run: `npm run test:e2e:webkit`
+3. Run: `npx playwright test --project=webkit`
 
 ## CI/CD Integration
 

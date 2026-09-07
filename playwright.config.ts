@@ -5,15 +5,7 @@ import { defineConfig, devices } from "@playwright/test";
  * @see https://playwright.dev/docs/test-configuration
  *
  * Quick Commands:
- * - npm run test:e2e              # Run all tests (chromium, firefox, webkit)
- * - npm run test:quick            # Run only chromium & firefox (faster)
- * - npm run test:e2e:chromium     # Run chromium only
- * - npm run test:e2e:firefox      # Run firefox only
- * - npm run test:e2e:webkit       # Run webkit only (requires system deps)
- * - npm run test:e2e:headed       # Run with browser visible
- * - npm run test:e2e:debug        # Run in debug mode with Playwright Inspector
- * - npm run test:e2e:ui           # Run with Playwright UI mode
- * - npm run test:e2e:report       # View last test report
+ * - npm run test:e2e              # Run E2E tests (chromium, firefox)
  * - npm run test:smoke            # Run quick smoke tests only
  */
 export default defineConfig({
