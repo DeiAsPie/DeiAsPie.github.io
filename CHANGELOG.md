@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.1...DeiAsPie.github.io-v3.3.2) (2026-09-07)
+
+
+### Documentation
+
+* rewrite site and readme prose to remove ai writing patterns ([#69](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/69)) ([ccada6f](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/ccada6fbeb37924604e6bca5d41ebe36b6022377))
+
 ## [3.3.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.0...DeiAsPie.github.io-v3.3.1) (2026-09-07)
 
 
