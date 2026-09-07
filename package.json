@@ -40,5 +40,5 @@
     "test:e2e": "playwright test --project=chromium --project=firefox",
     "test:smoke": "playwright test --project=smoke-tests"
   },
-  "version": "3.3.0"
+  "version": "3.3.1"
 }

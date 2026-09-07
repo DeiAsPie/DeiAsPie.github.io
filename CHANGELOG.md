@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.0...DeiAsPie.github.io-v3.3.1) (2026-09-07)
+
+
+### Bug Fixes
+
+* correct image budget enforcement ([#67](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/67)) ([b30acd3](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/b30acd3be762aad916ea56e814280a1ab8289307))
+
 ## [3.3.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.2.3...DeiAsPie.github.io-v3.3.0) (2026-09-06)
 
 
