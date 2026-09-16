@@ -6,11 +6,8 @@
 
 # Generated assets
 /assets/gen/
-/assets/gen/tailwind.css
 
 # Build artifacts
-css-size-kib.txt
-css-budget-kib.txt
 hugo_stats.json
 
 # Audit artifacts & reports
@@ -82,4 +79,3 @@ playwright-report/
 test-results/
 todos/
 docs
-0
