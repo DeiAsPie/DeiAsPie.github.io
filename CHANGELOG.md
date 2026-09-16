@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.4](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.3...DeiAsPie.github.io-v3.3.4) (2026-09-16)
+
+
+### Miscellaneous Chores
+
+* repo hygiene ([#73](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/73)) ([375ab46](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/375ab468d1558a7192a30cfa8f5ca45b7bce5686))
+
 ## [3.3.3](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.2...DeiAsPie.github.io-v3.3.3) (2026-09-16)
 
 
