@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 /**
  * check_content_quality.js
- * - Lints markdown and HTML content for common issues
+ * - Lints markdown under content/ for common issues
  * - Checks heading hierarchies, missing alt text, broken internal links
  * - Validates front matter and content structure
+ *
+ * Hugo templates under layouts/ are not linted here; inline event handlers
+ * in templates are covered by tests/test_forbidden_templates.py.
  *
  * Usage:
  *   node scripts/check_content_quality.js                # lint all content
@@ -15,7 +18,7 @@ const path = require("node:path");
 const matter = require("gray-matter");
 
 // Configuration
-const CONTENT_DIRS = ["content", "themes/curated/layouts"];
+const CONTENT_DIRS = ["content"];
 
 const REQUIRED_FRONTMATTER = ["title", "date"];
 

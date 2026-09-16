@@ -107,7 +107,6 @@
   --color-border-secondary: rgb(0 0 6 / 18%);
 
   --color-interactive-primary: var(--adw-accent);
-  --color-interactive-hover: #1c71d8; /* GNOME palette Blue 4 */
 
   --color-focus-ring: var(--adw-accent);
   --color-focus-ring-offset: var(--adw-view-bg);
@@ -147,7 +146,6 @@
   --color-border-secondary: rgb(255 255 255 / 18%);
 
   --color-interactive-primary: var(--adw-accent);
-  --color-interactive-hover: #62a0ea; /* GNOME palette Blue 2 */
 
   --color-focus-ring: var(--adw-accent);
   --color-focus-ring-offset: var(--adw-view-bg);
