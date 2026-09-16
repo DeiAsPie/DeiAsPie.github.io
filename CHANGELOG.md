@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.3](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.2...DeiAsPie.github.io-v3.3.3) (2026-09-16)
+
+
+### Miscellaneous Chores
+
+* remove dead content-lint path and unused css variable ([#71](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/71)) ([4b99c5f](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/4b99c5fea476764f3516717d60a4a3c44e957af2))
+
 ## [3.3.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.1...DeiAsPie.github.io-v3.3.2) (2026-09-07)
 
 
