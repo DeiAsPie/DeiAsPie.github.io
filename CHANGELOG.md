@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.4...DeiAsPie.github.io-v3.4.0) (2026-10-04)
+
+
+### Features
+
+* **quality:** ci hardening ([#75](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/75)) ([4741dee](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/4741dee8f44027fa8156e73b0887cd2c5765066b))
+
 ## [3.3.4](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.3...DeiAsPie.github.io-v3.3.4) (2026-09-16)
 
 
