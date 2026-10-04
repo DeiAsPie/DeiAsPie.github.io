@@ -13,6 +13,6 @@ jobs:
     steps:
       # Squashed PR titles become the commit subjects release-please parses,
       # so a non-conventional title silently produces no release.
-      - uses: amannn/action-semantic-pull-request@v5
+      - uses: amannn/action-semantic-pull-request@e32d7e603df1aa1ba07e981f2a23455dee596825 # v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
