@@ -26,6 +26,10 @@ def run_build() -> None:
     try:
         subprocess.run(["npm", "run", "build"], check=True, capture_output=True)
     except subprocess.CalledProcessError as e:
+        if e.stdout:
+            sys.stderr.write(e.stdout.decode(errors="replace"))
+        if e.stderr:
+            sys.stderr.write(e.stderr.decode(errors="replace"))
         sys.exit(1)
 
 def get_used_classes() -> set[str]:
@@ -129,7 +133,7 @@ def audit_static_images() -> int:
     for img in static_images:
         found = False
         try:
-            subprocess.run(["grep", "-r", img, *SEARCH_DIRS], check=True, capture_output=True)
+            subprocess.run(["grep", "-r", "-F", img, *SEARCH_DIRS], check=True, capture_output=True)
             found = True
         except subprocess.CalledProcessError:
             pass
