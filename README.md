@@ -70,7 +70,7 @@ Key paths used by the site:
   - `content/recommendations/` - All recommendations
   - `content/recommendations/courses/` - Courses hub. Each course is a page with an `area` for grouping
   - `content/about/` - About page
-- `themes/curated/` - Theme templates and partials
+- `layouts/` - Theme templates and partials
 - `assets/css/main.css` - Tailwind entry and small component styles
 - `static/` - Images and static assets served as-is
 
@@ -100,26 +100,6 @@ Manual usage (normally not required):
 ```
 
 Future ideas: AVIF source, blur placeholder, selective hero preloading.
-
-### Fonts
-
-System stack by default. Optional non-blocking Google Fonts load via `params.googleFonts` (query portion after `css2?`). Example:
-
-```toml
-[params]
-googleFonts = "family=Inter:wght@400;600;700&display=swap"
-```
-
-The `fonts.html` partial:
-
-- Adds `preconnect` hints
-- Preloads the stylesheet + media swap (`media="print"` → onload set to `all`)
-- Ensures `display=swap`
-- Provides `<noscript>` fallback
-
-Remove the param to revert to system fonts only.
-
-Self-host recommendation: download stylesheet & woff2 files, place in `static/fonts/`, add `@font-face` rules in `assets/css/fonts.css`, import from `main.css`.
 
 ### Predictive prefetch
 
@@ -284,7 +264,7 @@ sh .husky/pre-push
 
 ### On every push and pull request (`.github/workflows/ci.yml`)
 
-Build, ESLint, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, the Playwright smoke tests, and the Lighthouse and axe audits (`scripts/audit.sh`).
+Build, Biome, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, the Playwright smoke tests, and the Lighthouse and axe audits (`scripts/audit.sh`).
 
 CI passes `--no-sandbox` to Chromium so the accessibility and performance checks run in the runner environment.
 
