@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.4.0...DeiAsPie.github.io-v3.4.1) (2026-10-04)
+
+
+### Miscellaneous Chores
+
+* ci hardening and audit test coverage ([#77](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/77)) ([3adc1b2](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/3adc1b26074d309d1f996e5f585852fbff18f4c6))
+
 ## [3.4.0](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.3.4...DeiAsPie.github.io-v3.4.0) (2026-10-04)
 
 
