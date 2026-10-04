@@ -350,6 +350,90 @@ class TestMainExitCode(unittest.TestCase):
                 audit_artifacts.CONTENT_DIR = original_content
 
 
+class TestRunBuild(unittest.TestCase):
+    """Test run_build function error handling."""
+
+    def test_run_build_failure_exits_with_code_1(self):
+        """run_build exits 1 when subprocess.run raises CalledProcessError."""
+        import subprocess as subprocess_module
+
+        original_run = subprocess_module.run
+
+        def mock_run(*args, **kwargs):
+            err = subprocess_module.CalledProcessError(
+                returncode=1,
+                cmd=["npm", "run", "build"],
+            )
+            err.stdout = b"Build stdout message"
+            err.stderr = b"Build stderr message"
+            raise err
+
+        try:
+            subprocess_module.run = mock_run
+            audit_artifacts.subprocess.run = mock_run
+
+            with self.assertRaises(SystemExit) as cm:
+                audit_artifacts.run_build()
+
+            self.assertEqual(cm.exception.code, 1)
+        finally:
+            subprocess_module.run = original_run
+            audit_artifacts.subprocess.run = original_run
+
+    def test_run_build_writes_output_to_stderr(self):
+        """run_build writes stdout/stderr to sys.stderr on error."""
+        import subprocess as subprocess_module
+        import io
+
+        original_run = subprocess_module.run
+        original_stderr = sys.stderr
+
+        def mock_run(*args, **kwargs):
+            err = subprocess_module.CalledProcessError(
+                returncode=1,
+                cmd=["npm", "run", "build"],
+            )
+            err.stdout = b"Build error output"
+            err.stderr = b"Build error details"
+            raise err
+
+        try:
+            sys.stderr = io.StringIO()
+            subprocess_module.run = mock_run
+            audit_artifacts.subprocess.run = mock_run
+
+            try:
+                audit_artifacts.run_build()
+            except SystemExit:
+                pass
+
+            output = sys.stderr.getvalue()
+            self.assertIn("Build error output", output)
+            self.assertIn("Build error details", output)
+        finally:
+            sys.stderr = original_stderr
+            subprocess_module.run = original_run
+            audit_artifacts.subprocess.run = original_run
+
+
+class TestGetUsedClasses(unittest.TestCase):
+    """Test get_used_classes function error handling."""
+
+    def test_get_used_classes_missing_stats_file_exits_2(self):
+        """get_used_classes exits 2 when STATS_FILE does not exist."""
+        original_stats = audit_artifacts.STATS_FILE
+
+        try:
+            audit_artifacts.STATS_FILE = "/nonexistent/path/hugo_stats.json"
+
+            with self.assertRaises(SystemExit) as cm:
+                audit_artifacts.get_used_classes()
+
+            self.assertEqual(cm.exception.code, 2)
+        finally:
+            audit_artifacts.STATS_FILE = original_stats
+
+
 class TestAuditLeafSampling(unittest.TestCase):
     """Test deterministic rotational leaf recommendation page sampling."""
 

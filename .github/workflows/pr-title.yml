@@ -10,6 +10,7 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       # Squashed PR titles become the commit subjects release-please parses,
       # so a non-conventional title silently produces no release.
