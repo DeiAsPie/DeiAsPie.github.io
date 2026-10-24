@@ -5,7 +5,6 @@ draft: false
 categories: ["Courses"]
 tags: ["course"]
 link: "https://www.coursera.org/learn/html-css-javascript-for-web-developers"
-video: "https://www.coursera.org/learn/html-css-javascript-for-web-developers"
 description: "Johns Hopkins' course on HTML, CSS, and JavaScript covering responsive design and front-end development."
 image_alt: "Johns Hopkins University logo"
 summary: "HTML, CSS and JavaScript course by Johns Hopkins University"

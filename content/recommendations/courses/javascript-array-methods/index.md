@@ -8,7 +8,6 @@ draft: false
 categories: ["Courses", "Programming"]
 tags: ["course", "javascript"]
 link: "https://youtube.com/playlist?list=PLgBH1CvjOA62PBFIDq55-S6Beivje30A2&si=lj2foBDJ0c_zHrCb"
-video: "https://youtube.com/playlist?list=PLgBH1CvjOA62PBFIDq55-S6Beivje30A2&si=lj2foBDJ0c_zHrCb"
 summary: "JavaScript array methods: map, filter, reduce, and related functions."
 ---
 

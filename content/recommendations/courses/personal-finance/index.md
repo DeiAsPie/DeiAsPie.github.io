@@ -8,7 +8,6 @@ draft: false
 categories: ["Courses", "Finance"]
 tags: ["course", "personal-finance"]
 link: "https://youtube.com/playlist?list=PLi01XoE8jYogiDUfZ42gejQnVnQx0XPqw&si=idmPbwrnWqBoRvMw"
-video: "https://youtube.com/playlist?list=PLi01XoE8jYogiDUfZ42gejQnVnQx0XPqw&si=idmPbwrnWqBoRvMw"
 summary: "Personal finance covering budgeting, debt management, and wealth-building habits."
 ---
 
