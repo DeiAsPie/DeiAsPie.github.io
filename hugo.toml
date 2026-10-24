@@ -31,10 +31,9 @@ term = ["HTML"]
 [params]
 description = "Recommendations for privacy-focused tools and services."
 author = "DeiAsPie"
-prefetch = ["/recommendations/", "/recommendations/courses/"]
 
 [params.odysee]
-channels = ["@DeiAsPieBlog:f", "@DeiAsPie:1", "@DeiAsPieMindSpace:7"]
+channels = ["@DeiAsPieBlog:f", "@DeiAsPie:1"]
 
 [params.social]
 signal = "https://signal.me/#eu/wnMYTNtNQ3FetbthOQzkOGQKtqWJU5Bb5LHHmmhdo3-i9Ts59hlI1pxu1pZGr2rN"

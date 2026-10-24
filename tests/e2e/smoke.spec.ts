@@ -490,20 +490,15 @@ test.describe("Performance & Accessibility", () => {
     expect(prefetchNavRequests).toHaveLength(0);
   });
 
-  test("static prefetch links still render on home page", async ({ page }) => {
-    await page.goto("/");
-
-    // The params.prefetch path is unchanged and still .IsHome-gated
-    const prefetchLinks = page.locator('link[rel="prefetch"]');
-
-    // params.prefetch lists two URLs and the block is .IsHome-gated, so the
-    // home page must carry them. `>= 0` would be a tautology.
-    const count = await prefetchLinks.count();
-    expect(count).toBeGreaterThan(0);
-
-    const hrefs = await prefetchLinks.evaluateAll((links) =>
-      links.map((l) => l.getAttribute("href")),
-    );
-    expect(hrefs).toContain("/recommendations/");
+  test("speculation rules are the only prefetch mechanism", async ({
+    page,
+  }) => {
+    for (const path of ["/", "/about/"]) {
+      await page.goto(path);
+      await expect(page.locator('script[type="speculationrules"]')).toHaveCount(
+        1,
+      );
+      await expect(page.locator('link[rel="prefetch"]')).toHaveCount(0);
+    }
   });
 });
