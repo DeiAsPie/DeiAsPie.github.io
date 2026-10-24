@@ -1,0 +1,14 @@
+{{- /*
+Tags on fewer than two articles get no page: an unrendered term page replaces
+the one Hugo would generate. Rebuilding after a second article adds the tag
+drops the override, so the page returns without any manual step.
+*/ -}}
+{{- $counts := dict -}}
+{{- range partial "tag-keys-under.html" "content" -}}
+  {{- $counts = merge $counts (dict . (add 1 (index $counts . | default 0))) -}}
+{{- end -}}
+{{- range $key, $count := $counts -}}
+  {{- if lt $count 2 -}}
+    {{- $.AddPage (dict "path" $key "build" (dict "render" "never")) -}}
+  {{- end -}}
+{{- end -}}

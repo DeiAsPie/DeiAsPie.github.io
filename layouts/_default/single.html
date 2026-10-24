@@ -24,11 +24,13 @@
         class="text-xs px-2 py-1 rounded-full category-tag"
         href='{{ (printf "/categories/%s/" (urlize .)) | relURL }}'
         >{{ . }}</a
-      >{{ end }} {{ range .Params.tags }}<a
+      >{{ end }} {{ range .Params.tags }}{{ if partial "tag-has-page.html" . }}<a
         class="text-xs px-2 py-1 rounded-full tag-pill"
         href='{{ (printf "/tags/%s/" (urlize .)) | relURL }}'
         >#{{ . }}</a
-      >{{ end }}
+      >{{ else }}<span class="text-xs px-2 py-1 rounded-full tag-pill"
+        >#{{ . }}</span
+      >{{ end }}{{ end }}
     </div>
   </header>
 

@@ -1,0 +1,5 @@
+{{- /*
+True when a tag page is generated for the given tag, which is the case for tags
+on two or more articles. content/tags/_content.gotmpl applies the same rule.
+*/ -}}
+{{- return (ge (len (index site.Taxonomies.tags (urlize .))) 2) -}}
