@@ -28,6 +28,5 @@ Software recommended here generally meets these criteria:
 
 - [LBRY/Odysee Tech Blog](https://odysee.com/@DeiAsPieBlog:f): Guides and tutorials
 - [LBRY/Odysee Tech Videos](https://odysee.com/@DeiAsPie:1): Video reviews and walkthroughs
-- [LBRY/Odysee Mind Space](https://odysee.com/@DeiAsPieMindSpace:7): Thoughts on privacy and technology
 
 _I keep things practical. If a tool is listed here, I've tested it and found it reliable._

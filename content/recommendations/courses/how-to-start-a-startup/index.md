@@ -8,7 +8,6 @@ draft: false
 categories: ["Courses", "Finance"]
 tags: ["course", "entrepreneurship"]
 link: "https://youtube.com/playlist?list=PL5q_lef6zVkaTY_cT1k7qFNF2TidHCe-1&si=_rjnRNF3sl6cHj3W"
-video: "https://youtube.com/playlist?list=PL5q_lef6zVkaTY_cT1k7qFNF2TidHCe-1&si=_rjnRNF3sl6cHj3W"
 summary: "Lecture series from Paul Graham, Sam Altman, Peter Thiel, Marc Andreessen, and other YC founders."
 ---
 

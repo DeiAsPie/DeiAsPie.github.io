@@ -39,8 +39,4 @@ default .Site.Params.description | default .Site.Title | plainify | htmlEscape
   href="{{ .Site.BaseURL }}index.xml"
   title="RSS"
 />
-{{ if .IsHome }} {{ with .Site.Params.prefetch }} {{ $current := $.RelPermalink
-}} {{ range . }} {{ if ne . $current }}
-<link rel="prefetch" href="{{ . | relURL }}" as="document" />
-{{ end }} {{ end }} {{ end }} {{ end }} {{ if .IsPage }} {{ partial
-"seo-jsonld.html" . }} {{ end }}
+{{ if .IsPage }} {{ partial "seo-jsonld.html" . }} {{ end }}

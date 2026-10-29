@@ -6,7 +6,6 @@ categories: ["Courses", "Finance", "Finance"]
 tags: ["course", "economics", "economics"]
 area: "Economics"
 link: "https://ocw.mit.edu/14-01F18"
-video: "https://youtube.com/playlist?list=PLUl4u3cNGP62oJSoqb4Rf-vZMGUBe59G-&si=S70wkDF2prInADC_"
 description: "MIT's microeconomics course covering supply and demand, consumer theory, elasticity, and market structures."
 image_alt: "MIT OpenCourseWare logo"
 summary: "This introductory undergraduate course covers the fundamentals of microeconomics."

@@ -1,15 +1,14 @@
-# Yet Another Educational Resource
+# DeiAsPie - Privacy & Security Recommendations
 
 Curated by DeiAsPie
 
-A minimalist, fast personal site for sharing recommendations for tools, services, and courses. Built with Hugo + Tailwind, deployed to GitHub Pages.
+A minimalist, fast personal site of privacy and security recommendations. Built with Hugo + Tailwind, deployed to GitHub Pages.
 
-Dark mode is the default. Use the Theme toggle in the header to switch; your choice is remembered in localStorage.
+The site also lists Economics and Finance courses as secondary content, outside that scope.
 
 ## Features
 
 - WebP images with responsive srcsets, lazy loading, speculation-rules prefetching
-- WCAG 2.2 compliant, ARIA best practices, keyboard navigation, screen reader optimized
 - Content Security Policy, Subresource Integrity, secure Hugo configuration
 - Hugo + Tailwind CSS v4, responsive design, dark mode support
 - Playwright E2E, Axe accessibility audits, Lighthouse performance checks
@@ -103,16 +102,9 @@ Future ideas: AVIF source, blur placeholder, selective hero preloading.
 
 ### Predictive prefetch
 
-Configure likely next pages to prefetch (speeds perceived navigation):
+Prefetching uses speculation rules only. `assets/speculation-rules.json` is inlined on every page and prefetches same-site links inside `nav` with `moderate` eagerness in browsers that support it. The inline script is covered by a CSP hash, so changing the file changes that hash.
 
-```toml
-[params]
-prefetch = ["/recommendations/", "/recommendations/courses/"]
-```
-
-Output: `<link rel="prefetch" as="document">` for each path (except the current). A small script prefetches nav destinations on first hover/focus if supported. Keep list short (2-4) to avoid waste. Remove or empty to disable.
-
-Future enhancements: home-only static prefetch, upgrade single target to `prerender`.
+Future enhancement: upgrade a single target to `prerender`.
 
 ### Courses hierarchy (bundle-first)
 
@@ -159,7 +151,7 @@ git add resources/_gen && git commit -m "chore: purge and regenerate Hugo resour
 
 ## Deploy
 
-Push to `main`. GitHub Actions builds with Hugo and deploys to the `gh-pages` branch via Pages.
+Pushes to `main` run one pipeline in `.github/workflows/ci.yml`. The `verify` job builds the site and runs all checks first. If it passes, the `publish` job deploys that same verified build to GitHub Pages with the Pages deploy action.
 
 CI notes:
 
@@ -203,7 +195,7 @@ Provide a concise `description` in front matter for best control. Leave blank to
 
 The `seo-jsonld.html` partial (auto-included for pages) emits a Schema.org graph with:
 
-- `Article` (every page): `headline`, `description`, `author`/`publisher` as site title, publish/modified dates if present.
+- `Article` (single content pages): `headline`, `description`, `author`/`publisher` as site title, publish/modified dates if present.
 - `Course` (pages under `/recommendations/courses/`): `name`, `description`, `provider`.
 - `BreadcrumbList`: Home → section segments → current page.
 
@@ -211,7 +203,7 @@ Extending: add additional types (e.g. `SoftwareApplication`) by updating the par
 
 ### Custom 404 page
 
-`layouts/404.html` supplies a minimalist not-found page with helpful links (Home, Recommendations, Courses) and `noindex` to keep it out of search results.
+`layouts/404.html` supplies a minimalist not-found page with helpful links (Home, Recommendations, Courses).
 
 ### Open Graph images
 
@@ -248,7 +240,7 @@ Main and mobile navigation `<nav>` elements include `aria-label`. Active menu li
 
 ## Verification: what runs where
 
-Verification runs both locally and in CI before deployment.
+Verification runs both locally and in CI before deployment. In CI, the fast checks in the `verify` job gate publishing. The browser smoke tests and the Lighthouse and axe audit run alongside in the `browser-audit` job and do not block publishing.
 
 ### Before every push (`.husky/pre-push`)
 
@@ -264,22 +256,19 @@ sh .husky/pre-push
 
 ### On every push and pull request (`.github/workflows/ci.yml`)
 
-Build, Biome, markdownlint, content lint, pytest, the CSS size budget (against the committed `css-baseline-kib.txt`), the per-bundle image budgets, the Playwright smoke tests, and the Lighthouse and axe audits (`scripts/audit.sh`).
+Triggers: every push, pull requests, and manual runs. Three jobs:
+
+**Gating (`verify`):** production build, CSS size budget (against the committed `css-baseline-kib.txt`), per-bundle image budgets, content lint, markdown lint, Biome, and pytest. On a push or manual run on `main`, it also uploads the Pages artifact. `publish` waits for it.
+
+**Non-blocking (`browser-audit`):** the Playwright smoke tests (Chromium only) and the Lighthouse and axe audits (`scripts/audit.sh`). It runs alongside `verify` and does not gate `publish`. A failure here still marks the workflow run as failed.
+
+**Publish (`publish`):** runs only on a push or manual run on `main`, after `verify` passes. It deploys the artifact that `verify` uploaded, so the published site is the build that passed the checks. Pull requests never publish.
 
 CI passes `--no-sandbox` to Chromium so the accessibility and performance checks run in the runner environment.
 
-## CSP rollout
+## Content Security Policy
 
-Goldmark is configured with `unsafe = false` for improved security; raw HTML in markdown is disallowed and shortcodes are used instead when custom markup is required. A meta CSP in report-only mode provides defense-in-depth:
-
-```html
-<meta
-  http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; connect-src 'self' https:; report-uri /csp-report-endpoint"
-/>
-```
-
-To enforce later, progressively remove `'unsafe-inline'` by moving inline scripts/styles to external files and relaxing directives for required external services (fonts, analytics) as needed.
+Goldmark is configured with `unsafe = false` for improved security; raw HTML in markdown is disallowed and shortcodes are used instead when custom markup is required. A meta CSP limits sources to `'self'` (images also allow `https:`), and allows the two inline scripts by SHA-256 hash instead of `'unsafe-inline'`.
 
 ## Images and LCP preloading
 

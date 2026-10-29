@@ -1,0 +1,22 @@
+{{- /*
+Returns the urlized tag keys found in the front matter of every .md file under
+the given directory, one entry per tag per file. Content adapters run before
+pages exist, so site.RegularPages is unavailable there and files are read
+directly. Front matter is YAML in all content files.
+*/ -}}
+{{- $dir := . -}}
+{{- $keys := slice -}}
+{{- range os.ReadDir $dir -}}
+  {{- $path := path.Join $dir .Name -}}
+  {{- if .IsDir -}}
+    {{- $keys = $keys | append (partial "tag-keys-under.html" $path) -}}
+  {{- else if strings.HasSuffix .Name ".md" -}}
+    {{- $front := index (split (os.ReadFile $path) "---") 1 -}}
+    {{- $page_keys := slice -}}
+    {{- range (transform.Unmarshal (dict "format" "yaml") $front).tags -}}
+      {{- $page_keys = $page_keys | append (urlize .) -}}
+    {{- end -}}
+    {{- $keys = $keys | append (uniq $page_keys) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $keys -}}

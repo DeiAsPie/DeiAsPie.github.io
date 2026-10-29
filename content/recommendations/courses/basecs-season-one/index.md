@@ -7,7 +7,6 @@ draft: false
 categories: ["Courses"]
 tags: ["course"]
 area: "Computer Science"
-video: "https://www.youtube.com/watch?v=Po1nQOBBig0&list=PL8Bb2WLXhUaDaL2PlxP_jpAm2sSKEJ0hS"
 summary: "Computer science fundamentals explained through visual storytelling and clear analogies."
 ---
 

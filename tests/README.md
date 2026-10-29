@@ -109,14 +109,11 @@ To enable WebKit testing:
 
 Tests run automatically in GitHub Actions on:
 
+- Every push
 - Pull requests
-- Pushes to main branch
+- Manual runs (`workflow_dispatch`)
 
-CI runs:
-
-- Chromium tests
-- Firefox tests
-- WebKit tests (in Docker environment)
+CI runs only the smoke project (`npm run test:smoke`, Chromium) in the `browser-audit` job. That job does not gate publishing. Firefox and WebKit are not run in CI.
 
 ## Troubleshooting
 

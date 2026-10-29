@@ -8,7 +8,6 @@ categories: ["Courses"]
 tags: ["course"]
 area: "Systems"
 link: "https://www.edx.org/course/introduction-to-linux"
-video: "https://www.edx.org/course/introduction-to-linux"
 summary: "Linux (Both GUI and CLI) introductory course The Linux Foundation"
 aliases: ["/recommendations/linux/"]
 ---

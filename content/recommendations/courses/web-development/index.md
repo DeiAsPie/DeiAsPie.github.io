@@ -7,7 +7,6 @@ draft: false
 categories: ["Courses"]
 tags: ["course"]
 link: "https://www.freecodecamp.org/news/become-a-full-stack-developer-with-svelte/"
-video: "https://redirect.invidious.io/watch?v=OUzaUJ3gEug"
 summary: "Full-stack web development course by FreeCodeCamp using Svelte"
 aliases: ["/recommendations/web-development/"]
 ---
