@@ -266,7 +266,7 @@ Triggers: every push, pull requests, and manual runs. Three jobs:
 
 CI passes `--no-sandbox` to Chromium so the accessibility and performance checks run in the runner environment.
 
-## CSP rollout
+## Content Security Policy
 
 Goldmark is configured with `unsafe = false` for improved security; raw HTML in markdown is disallowed and shortcodes are used instead when custom markup is required. A meta CSP limits sources to `'self'` (images also allow `https:`), and allows the two inline scripts by SHA-256 hash instead of `'unsafe-inline'`.
 
