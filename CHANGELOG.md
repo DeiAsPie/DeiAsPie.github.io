@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.2](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.4.1...DeiAsPie.github.io-v3.4.2) (2026-10-29)
+
+
+### Performance
+
+* minor optimizations ([#85](https://github.com/DeiAsPie/DeiAsPie.github.io/issues/85)) ([2664502](https://github.com/DeiAsPie/DeiAsPie.github.io/commit/26645025b9655b1348953ed4188c5f756d396e5a))
+
 ## [3.4.1](https://github.com/DeiAsPie/DeiAsPie.github.io/compare/DeiAsPie.github.io-v3.4.0...DeiAsPie.github.io-v3.4.1) (2026-10-04)
 
 
